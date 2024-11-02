@@ -51,7 +51,7 @@ const LandingPage = () => {
                         <Input
                             type="text"
                             value={searchText}
-                            placeholder="Search events by its name or club name."
+                            placeholder="Search events by its Name or Club Name."
                             onChange={(e) => setSearchText(e.target.value)}
                             className="pl-10 shadow-lg"
                             onKeyDown={(e) => keyDown(e)}
