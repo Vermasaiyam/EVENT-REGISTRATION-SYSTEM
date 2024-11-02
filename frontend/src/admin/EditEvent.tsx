@@ -7,6 +7,14 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
@@ -23,6 +31,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
     const [input, setInput] = useState<EventFormSchema>({
         name: "",
         description: "",
+        mode: "Offline", // default
         registrationFee: 0,
         registrationEndDate: new Date().toISOString().split("T")[0],
         eventStartDate: new Date().toISOString().split("T")[0],
@@ -77,6 +86,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
         setInput({
             name: selectedEvent?.name || "",
             description: selectedEvent?.description || "",
+            mode: selectedEvent?.mode || "Offline",
             registrationFee: selectedEvent?.registrationFee || 0,
             registrationEndDate: selectedEvent?.registrationEndDate || "",
             eventStartDate: selectedEvent?.eventStartDate || "",
@@ -124,6 +134,31 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                         {error && (
                             <span className="text-xs font-medium text-red-600">
                                 {error.description}
+                            </span>
+                        )}
+                    </div>
+                    <div>
+                        <Label>Event Mode</Label>
+                        <Select
+                            // onValueChange={(newMode) => handleModeChange(newMode)}
+                            defaultValue={input.mode} // Ensure you have a mode property in your input state
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Event Mode" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {["Online", "Offline"].map((mode: string, index: number) => (
+                                        <SelectItem key={index} value={mode.toLowerCase()}>
+                                            {mode}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                        {error && (
+                            <span className="text-xs font-medium text-red-600">
+                                {error.mode}
                             </span>
                         )}
                     </div>

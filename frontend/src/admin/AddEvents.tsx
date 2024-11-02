@@ -8,6 +8,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
@@ -20,6 +28,7 @@ const AddEvents = () => {
     const [input, setInput] = useState<EventFormSchema>({
         name: "",
         description: "",
+        mode: "Offline", // default
         registrationFee: 0,
         registrationEndDate: new Date().toISOString().split("T")[0],
         eventStartDate: new Date().toISOString().split("T")[0],
@@ -55,6 +64,7 @@ const AddEvents = () => {
             const formData = new FormData();
             formData.append("name", input.name);
             formData.append("description", input.description);
+            formData.append("mode", input.mode);
             formData.append("registrationFee", input.registrationFee.toString());
             formData.append("registrationEndDate", input.registrationEndDate);
             formData.append("eventStartDate", input.eventStartDate);
@@ -78,6 +88,7 @@ const AddEvents = () => {
         {
             name: "HacoVerse",
             description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
+            mode: "Offline",
             registrationFee: 69,
             registrationEndDate: "2024-11-15",
             eventStartDate: "2024-11-16",
@@ -87,6 +98,7 @@ const AddEvents = () => {
         {
             name: "KT Session",
             description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
+            mode: "Offline",
             registrationFee: 69,
             registrationEndDate: "2024-11-20",
             eventStartDate: "2024-11-21",
@@ -133,20 +145,31 @@ const AddEvents = () => {
                                 )}
                             </div>
                             <div>
-                                <Label>Description</Label>
-                                <Input
-                                    type="text"
-                                    name="description"
-                                    value={input.description}
-                                    onChange={changeEventHandler}
-                                    placeholder="Enter Event Description"
-                                />
+                                <Label>Event Mode</Label>
+                                <Select
+                                    // onValueChange={(newMode) => handleModeChange(newMode)}
+                                    defaultValue={input.mode}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Event Mode" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            {["Online", "Offline"].map((mode: string, index: number) => (
+                                                <SelectItem key={index} value={mode.toLowerCase()}>
+                                                    {mode}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
                                 {error && (
                                     <span className="text-xs font-medium text-red-600">
-                                        {error.description}
+                                        {error.mode}
                                     </span>
                                 )}
                             </div>
+
                             <div>
                                 <Label>Registration Fee</Label>
                                 <Input
@@ -275,6 +298,11 @@ const AddEvents = () => {
                                     <span className="font-semibold">Event End Date: </span>
                                     {event.eventEndDate}
                                 </div>
+                                {/* New mode field */}
+                                <div className="text-sm text-gray-700 dark:text-gray-400">
+                                    <span className="font-semibold">Mode: </span>
+                                    <span className="capitalize">{event.mode}</span> {/* Capitalize for better display */}
+                                </div>
                             </div>
                         </div>
                         <Button
@@ -289,7 +317,6 @@ const AddEvents = () => {
                         </Button>
                     </div>
                 </div>
-
             ))}
             {
                 (eventItems.length === 0) && (

@@ -3,6 +3,7 @@ import { z } from "zod";
 export const eventSchema = z.object({
     name: z.string().nonempty({ message: "Name is required" }),
     description: z.string().nonempty({ message: "Description is required" }),
+    mode: z.enum(["Online", "Offline"], { message: "Mode must be either 'online' or 'offline'." }),
     registrationFee: z.number().min(0, { message: "Price can't be negative" }),
     registrationEndDate: z.string().date().nonempty({message: "Registration End Date is required."}),
     eventStartDate: z.string().date().nonempty({message: "Event start Date is required."}),
