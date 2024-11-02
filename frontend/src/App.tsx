@@ -6,6 +6,7 @@ import LandingPage from "./components/LandingPage"
 import Login from "./auth/Login"
 import Signup from "./auth/Signup"
 import ResetPassword from "./auth/ResetPassword"
+import ForgotPassword from "./auth/ForgotPassword"
 
 const appRouter = createBrowserRouter([
   {
@@ -78,13 +79,13 @@ const appRouter = createBrowserRouter([
       <Signup />
     //</AuthenticatedUser>,
   },
-  // {
-  //   path: "/forgot-password",
-  //   element: 
-  //   //<AuthenticatedUser>
-  //     <ForgotPassword />
-  //     //</AuthenticatedUser>,
-  // },
+  {
+    path: "/forgot-password",
+    element: 
+    //<AuthenticatedUser>
+      <ForgotPassword />
+      //</AuthenticatedUser>,
+  },
   {
     path: '/reset-password',
     element: <ResetPassword />
