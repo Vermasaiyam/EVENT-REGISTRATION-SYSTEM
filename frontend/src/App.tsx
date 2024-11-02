@@ -12,6 +12,7 @@ import Profile from "./components/Profile"
 import Club from "./admin/Club"
 import AddEvents from "./admin/AddEvents"
 import SearchPage from "./components/SearchPage"
+import ClubPage from "./components/ClubPage"
 
 const appRouter = createBrowserRouter([
   {
@@ -33,14 +34,10 @@ const appRouter = createBrowserRouter([
         path: "/search/:id",
         element: <SearchPage />
       },
-      //   {
-      //     path: "/restaurant/:id",
-      //     element: <RestaurantPage />
-      //   },
-      //   {
-      //     path: "/cart",
-      //     element: <Cart />
-      //   },
+      {
+        path: "/club/:id",
+        element: <ClubPage />
+      },
       //   {
       //     path: "/order/status",
       //     element: <Success />
