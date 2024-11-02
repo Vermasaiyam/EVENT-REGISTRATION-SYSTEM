@@ -8,7 +8,7 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import { Button } from "./ui/button";
-import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Route, Sun, User, User2 } from "lucide-react";
+import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Route, Sun, User, User2, Users } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
@@ -66,6 +66,9 @@ const Navbar = () => {
                                     </Link>
                                     <Link to="/admin/events">
                                         <MenubarItem className="cursor-pointer">My Events</MenubarItem>
+                                    </Link>
+                                    <Link to="/admin/participants">
+                                        <MenubarItem className="cursor-pointer">Participants</MenubarItem>
                                     </Link>
                                 </MenubarContent>
                             </MenubarMenu>
@@ -206,13 +209,6 @@ const MobileNavbar = () => {
                         <Route />
                         <span>My Journey</span>
                     </Link>
-                    {/* <Link
-                        to="/cart"
-                        className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
-                    >
-                        <ShoppingCart />
-                        <span>Cart ({cart.length})</span>
-                    </Link> */}
                     <div className="my-2">
                         <Separator />
                     </div>
@@ -232,6 +228,13 @@ const MobileNavbar = () => {
                             >
                                 <Calendar1 />
                                 <span>My Events</span>
+                            </Link>
+                            <Link
+                                to="/admin/participants"
+                                className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                            >
+                                <Users />
+                                <span>Participants</span>
                             </Link>
                         </>
                     )}
