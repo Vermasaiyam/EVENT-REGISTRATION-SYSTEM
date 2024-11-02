@@ -257,13 +257,29 @@ const AddEvents = () => {
                                 {event.name}
                             </h1>
                             <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">{event.description}</p>
+
                             <h2 className="text-md font-semibold mt-2 flex items-center">
                                 Registration Fee: <span className="text-green dark:text-yellow-100 flex items-center mx-2">₹{event.registrationFee}</span>
                             </h2>
+
+                            <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
+                                <div className="text-sm text-gray-700 dark:text-gray-400">
+                                    <span className="font-semibold">Registration End Date: </span>
+                                    {event.registrationEndDate}
+                                </div>
+                                <div className="text-sm text-gray-700 dark:text-gray-400">
+                                    <span className="font-semibold">Event Start Date: </span>
+                                    {event.eventStartDate}
+                                </div>
+                                <div className="text-sm text-gray-700 dark:text-gray-400">
+                                    <span className="font-semibold">Event End Date: </span>
+                                    {event.eventEndDate}
+                                </div>
+                            </div>
                         </div>
                         <Button
                             onClick={() => {
-                                setSelectedevent(event);
+                                setSelectedEvent(event);
                                 setEditOpen(true);
                             }}
                             size={"sm"}
@@ -273,6 +289,7 @@ const AddEvents = () => {
                         </Button>
                     </div>
                 </div>
+
             ))}
             {
                 (eventItems.length === 0) && (
