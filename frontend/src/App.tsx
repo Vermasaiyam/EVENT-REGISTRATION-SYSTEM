@@ -2,6 +2,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import MainLayout from './MainLayout'
 import UnderConstruction from "./components/UnderConstruction"
+import LandingPage from "./components/LandingPage"
 
 const appRouter = createBrowserRouter([
   {
@@ -11,10 +12,10 @@ const appRouter = createBrowserRouter([
       <MainLayout />,
       // </ProtectedRoutes>,
     children: [
-    //   {
-    //     path: "/",
-    //     element: <LandingPage />
-    //   },
+      {
+        path: "/",
+        element: <LandingPage />
+      },
     //   {
     //     path: "/profile",
     //     element: <Profile />
