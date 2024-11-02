@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
 import { Loader2, Plus } from "lucide-react";
 import { FormEvent, useState } from "react";
-// import Editevent from "./Editevent";
+import EditEvent from "./EditEvent";
 
 
 const AddEvents = () => {
@@ -28,7 +28,7 @@ const AddEvents = () => {
     });
     const [open, setOpen] = useState<boolean>(false);
     const [editOpen, setEditOpen] = useState<boolean>(false);
-    const [selectedevent, setSelectedevent] = useState<any>();
+    const [selectedEvent, setSelectedEvent] = useState<any>();
     const loading: boolean = false;
 
 
@@ -298,11 +298,11 @@ const AddEvents = () => {
                     </div>
                 )
             }
-            {/* <Editevent
-                selectedevent={selectedevent}
+            <EditEvent
+                selectedEvent={selectedEvent}
                 editOpen={editOpen}
                 setEditOpen={setEditOpen}
-            /> */}
+            />
         </div>
     )
 }
