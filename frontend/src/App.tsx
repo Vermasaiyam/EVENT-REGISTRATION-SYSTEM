@@ -10,6 +10,7 @@ import ForgotPassword from "./auth/ForgotPassword"
 import VerifyEmail from "./auth/VerifyEmail"
 import Profile from "./components/Profile"
 import Club from "./admin/Club"
+import AddEvents from "./admin/AddEvents"
 
 const appRouter = createBrowserRouter([
   {
@@ -55,10 +56,13 @@ const appRouter = createBrowserRouter([
           <Club />
         //</AdminRoute>
       },
-      //   {
-      //     path: "/admin/menu",
-      //     element: <AdminRoute><AddMenu /></AdminRoute>,
-      //   },
+      {
+        path: "/admin/events",
+        element:
+          //<AdminRoute>
+          <AddEvents />
+        //</AdminRoute>,
+      },
       //   {
       //     path: "/admin/orders",
       //     element: <AdminRoute><Orders /></AdminRoute>,
