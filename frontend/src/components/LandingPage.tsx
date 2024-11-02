@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-// import HelpingSection from "./HelpingSection";
 import Typed from 'typed.js';
+import HelpingSection from "./HelpingSection";
 
 const LandingPage = () => {
     const [searchText, setSearchText] = useState<string>("");
@@ -69,7 +69,7 @@ const LandingPage = () => {
                     />
                 </div>
             </div>
-            {/* <HelpingSection /> */}
+            <HelpingSection />
         </div>
     )
 }
