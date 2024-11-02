@@ -5,6 +5,7 @@ import UnderConstruction from "./components/UnderConstruction"
 import LandingPage from "./components/LandingPage"
 import Login from "./auth/Login"
 import Signup from "./auth/Signup"
+import ResetPassword from "./auth/ResetPassword"
 
 const appRouter = createBrowserRouter([
   {
@@ -79,12 +80,15 @@ const appRouter = createBrowserRouter([
   },
   // {
   //   path: "/forgot-password",
-  //   element: <AuthenticatedUser><ForgotPassword /></AuthenticatedUser>,
+  //   element: 
+  //   //<AuthenticatedUser>
+  //     <ForgotPassword />
+  //     //</AuthenticatedUser>,
   // },
-  // {
-  //   path: '/reset-password',
-  //   element: <ResetPassword />
-  // },
+  {
+    path: '/reset-password',
+    element: <ResetPassword />
+  },
   // {
   //   path: '/verify-email',
   //   element: <VerifyEmail />,
