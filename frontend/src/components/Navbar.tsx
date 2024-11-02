@@ -8,7 +8,7 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import { Button } from "./ui/button";
-import { HandPlatter, Loader2, LogOut, Menu, Moon, PackageCheck, ShoppingCart, SquareMenu, Sun, User, User2, UtensilsCrossed } from "lucide-react";
+import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Route, Sun, User, User2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
@@ -39,7 +39,6 @@ import { Separator } from "./ui/separator";
 const Navbar = () => {
     //   const { user, logout } = useUserStore();
     const admin: boolean = true;
-    const cart = [1, 2, 3];
 
     //   const { cart } = useCartStore();
     //   const {setTheme} = useThemeStore();
@@ -196,19 +195,19 @@ const MobileNavbar = () => {
                         <span>Profile</span>
                     </Link>
                     <Link to="/events" className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium">
-                        <SquareMenu />
+                        <Calendar />
                         <span>Events</span>
                     </Link>
                     <Link to="/clubs" className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium">
-                        <UtensilsCrossed />
+                        <Newspaper />
                         <span>Clubs</span>
                     </Link>
                     <Link
                         to="/participation/status"
                         className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
                     >
-                        <HandPlatter />
-                        <span>My Orders</span>
+                        <Route />
+                        <span>My Journey</span>
                     </Link>
                     {/* <Link
                         to="/cart"
@@ -227,14 +226,14 @@ const MobileNavbar = () => {
                                 to="/admin/club"
                                 className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
                             >
-                                <SquareMenu />
+                                <Newspaper />
                                 <span>My ClubSpace</span>
                             </Link>
                             <Link
                                 to="/admin/events"
                                 className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
                             >
-                                <UtensilsCrossed />
+                                <Calendar1 />
                                 <span>My Events</span>
                             </Link>
                         </>
