@@ -48,6 +48,7 @@ const appRouter = createBrowserRouter([
       //     path: "/restaurants",
       //     element: <AllRestaurants />
       //   },
+      
       //   //admin
       {
         path: "/admin/club",
@@ -63,10 +64,6 @@ const appRouter = createBrowserRouter([
           <AddEvents />
         //</AdminRoute>,
       },
-      //   {
-      //     path: "/admin/orders",
-      //     element: <AdminRoute><Orders /></AdminRoute>,
-      //   },
 
       // Under construction page
       {
