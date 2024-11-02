@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Loader2, LockKeyhole, Mail } from "lucide-react"
+import { Eye, EyeOff, Loader2, LockKeyhole, Mail } from "lucide-react"
 import { ChangeEvent, useState } from "react"
 import { Link } from "react-router-dom"
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { LoginInputState, userLoginSchema } from "@/schema/userSchema"
 // import { useUserStore } from "@/store/useUserStore"
 
@@ -101,7 +100,7 @@ const Login = () => {
                                 handleClick();
                             }}
                         >
-                            {show ? <ViewOffIcon /> : <ViewIcon />}
+                            {show ? <Eye /> : <EyeOff />}
                         </button>
                     </div>
                 </div>
