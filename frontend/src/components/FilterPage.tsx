@@ -8,12 +8,16 @@ export type FilterOptionsState = {
 };
 
 const filterOptions: FilterOptionsState[] = [
-    { id: "hackathons", label: "Hackathons" },
-    { id: "thali", label: "Thali" },
-    { id: "biryani", label: "Biryani" },
-    { id: "momos", label: "Momos" },
-    { id: "chaap", label: "Chaap" },
-    { id: "noodles", label: "Noodles" },
+    { id: "hackathon", label: "Hackathon" },
+    { id: "quiz", label: "Quiz" },
+    { id: "nukkad", label: "Nukkad" },
+    { id: "workshop", label: "Workshop" },
+    { id: "seminar", label: "Seminar" },
+    { id: "webinar", label: "Webinar" },
+    { id: "tech_talk", label: "Tech Talk" },
+    { id: "coding_contest", label: "Coding Contest" },
+    { id: "debate_competition", label: "Debate Competition" },
+    { id: "networking_event", label: "Networking Event" },
 ];
 
 const FilterPage = () => {
@@ -24,7 +28,7 @@ const FilterPage = () => {
     return (
         <div className="md:w-72 mx-2">
             <div className="flex items-center justify-between">
-                <h1 className="font-medium text-lg">Filter by cuisines</h1>
+                <h1 className="font-medium text-lg">Filter by Types of Events</h1>
                 <Button variant={"link"}>Reset</Button>
             </div>
             {filterOptions.map((option) => (

@@ -11,6 +11,7 @@ import VerifyEmail from "./auth/VerifyEmail"
 import Profile from "./components/Profile"
 import Club from "./admin/Club"
 import AddEvents from "./admin/AddEvents"
+import SearchPage from "./components/SearchPage"
 
 const appRouter = createBrowserRouter([
   {
@@ -28,10 +29,10 @@ const appRouter = createBrowserRouter([
         path: "/profile",
         element: <Profile />
       },
-      //   {
-      //     path: "/search/:id",
-      //     element: <SearchPage />
-      //   },
+      {
+        path: "/search/:id",
+        element: <SearchPage />
+      },
       //   {
       //     path: "/restaurant/:id",
       //     element: <RestaurantPage />
@@ -48,7 +49,7 @@ const appRouter = createBrowserRouter([
       //     path: "/restaurants",
       //     element: <AllRestaurants />
       //   },
-      
+
       //   //admin
       {
         path: "/admin/club",
