@@ -1,6 +1,7 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import MainLayout from './MainLayout'
+import UnderConstruction from "./components/UnderConstruction"
 
 const appRouter = createBrowserRouter([
   {
@@ -83,7 +84,7 @@ const appRouter = createBrowserRouter([
   // {
   //   path: '*',
   //   element: <UnderConstruction />
-  },
+  // },
 ])
 
 function App() {
