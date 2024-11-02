@@ -4,6 +4,7 @@ import MainLayout from './MainLayout'
 import UnderConstruction from "./components/UnderConstruction"
 import LandingPage from "./components/LandingPage"
 import Login from "./auth/Login"
+import Signup from "./auth/Signup"
 
 const appRouter = createBrowserRouter([
   {
@@ -67,12 +68,15 @@ const appRouter = createBrowserRouter([
     element:
       // <AuthenticatedUser>
       <Login />
-      // </AuthenticatedUser>,
+    // </AuthenticatedUser>,
   },
-  // {
-  //   path: "/signup",
-  //   element: <AuthenticatedUser><Signup /></AuthenticatedUser>,
-  // },
+  {
+    path: "/signup",
+    element:
+      //<AuthenticatedUser>
+      <Signup />
+    //</AuthenticatedUser>,
+  },
   // {
   //   path: "/forgot-password",
   //   element: <AuthenticatedUser><ForgotPassword /></AuthenticatedUser>,
