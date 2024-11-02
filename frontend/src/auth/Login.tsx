@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Loader2, LockKeyhole, Mail } from "lucide-react"
 import { ChangeEvent, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { LoginInputState, userLoginSchema } from "@/schema/userSchema"
 // import { useUserStore } from "@/store/useUserStore"
@@ -13,7 +13,7 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [errors, setErrors] = useState<Partial<LoginInputState>>({});
 
