@@ -9,6 +9,7 @@ import ResetPassword from "./auth/ResetPassword"
 import ForgotPassword from "./auth/ForgotPassword"
 import VerifyEmail from "./auth/VerifyEmail"
 import Profile from "./components/Profile"
+import Club from "./admin/Club"
 
 const appRouter = createBrowserRouter([
   {
@@ -47,10 +48,13 @@ const appRouter = createBrowserRouter([
       //     element: <AllRestaurants />
       //   },
       //   //admin
-      //   {
-      //     path: "/admin/restaurant",
-      //     element: <AdminRoute><Restaurant /></AdminRoute>,
-      //   },
+      {
+        path: "/admin/club",
+        element:
+          //<AdminRoute>
+          <Club />
+        //</AdminRoute>
+      },
       //   {
       //     path: "/admin/menu",
       //     element: <AdminRoute><AddMenu /></AdminRoute>,
