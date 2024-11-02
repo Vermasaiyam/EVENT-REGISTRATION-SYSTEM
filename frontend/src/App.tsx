@@ -8,6 +8,7 @@ import Signup from "./auth/Signup"
 import ResetPassword from "./auth/ResetPassword"
 import ForgotPassword from "./auth/ForgotPassword"
 import VerifyEmail from "./auth/VerifyEmail"
+import Profile from "./components/Profile"
 
 const appRouter = createBrowserRouter([
   {
@@ -21,10 +22,10 @@ const appRouter = createBrowserRouter([
         path: "/",
         element: <LandingPage />
       },
-      //   {
-      //     path: "/profile",
-      //     element: <Profile />
-      //   },
+      {
+        path: "/profile",
+        element: <Profile />
+      },
       //   {
       //     path: "/search/:id",
       //     element: <SearchPage />
@@ -82,10 +83,10 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/forgot-password",
-    element: 
-    //<AuthenticatedUser>
+    element:
+      //<AuthenticatedUser>
       <ForgotPassword />
-      //</AuthenticatedUser>,
+    //</AuthenticatedUser>,
   },
   {
     path: '/reset-password',
