@@ -16,7 +16,7 @@ const Club = () => {
     const [errors, setErrors] = useState<Partial<ClubFormSchema>>({});
 
     const loading: boolean = false;
-    const club: boolean = false;
+    const club: boolean = true;
 
     const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type } = e.target;
