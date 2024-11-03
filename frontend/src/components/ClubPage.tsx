@@ -40,9 +40,9 @@ const ClubPage = () => {
 
                         <div className="flex gap-2 my-2 flex-wrap">
                             {/* {
-                                    singleClub?.events &&
-                                    <Event events={singleClub?.events!} />
-                                } */}
+                                singleClub?.events &&
+                                <Event events={singleClub?.events!} />
+                            } */}
                             {/* <Event /> */}
                         </div>
                         <h1 className="font-medium text-xl">
