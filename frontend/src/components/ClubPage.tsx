@@ -2,6 +2,7 @@ import { Badge } from "./ui/badge"
 // import Event from "./Event"
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Event from "./Event";
 
 
 const ClubPage = () => {
@@ -27,7 +28,7 @@ const ClubPage = () => {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between">
                     <div className="my-5">
-                        <h1 className="font-medium text-2xl">
+                        <h1 className="font-bold text-2xl">
                             {/* {singleClub?.clubName || "Loading..."} */}
                             DataVerse
                         </h1>
@@ -43,7 +44,7 @@ const ClubPage = () => {
                                 singleClub?.events &&
                                 <Event events={singleClub?.events!} />
                             } */}
-                            {/* <Event /> */}
+                            <Event />
                         </div>
                         <h1 className="font-medium text-xl">
                             Core Team
