@@ -30,15 +30,14 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { Separator } from "./ui/separator";
+import { useThemeStore } from "@/store/useThemeStore";
 // import { useUserStore } from "@/store/useUserStore";
-// import { useThemeStore } from "@/store/useThemeStore";
 
 const Navbar = () => {
     //   const { user, logout } = useUserStore();
     const admin: boolean = true;
 
-    //   const { cart } = useCartStore();
-    //   const {setTheme} = useThemeStore();
+    const { setTheme } = useThemeStore();
 
     return (
         <nav className="bg-white dark:bg-[#020817] px-4 shadow-sm">
@@ -88,10 +87,8 @@ const Navbar = () => {
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                {/* <DropdownMenuItem onClick={()=> setTheme('light')}>Light</DropdownMenuItem>
-                                    <DropdownMenuItem onClick={()=> setTheme('dark')}>Dark</DropdownMenuItem> */}
-                                <DropdownMenuItem >Light</DropdownMenuItem>
-                                <DropdownMenuItem >Dark</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
@@ -140,11 +137,9 @@ const Navbar = () => {
 export default Navbar
 
 const MobileNavbar = () => {
-    // const { setTheme } = useThemeStore();
+    const { setTheme } = useThemeStore();
 
     //   const { user, loading, logout } = useUserStore();
-    //   const { cart } = useCartStore();
-    //   const {setTheme} = useThemeStore();
 
     const admin: boolean = true;
     const loading: boolean = false;
@@ -163,7 +158,6 @@ const MobileNavbar = () => {
             <SheetContent className="flex flex-col">
                 <SheetHeader className="flex flex-row items-center justify-between mt-2">
                     <SheetTitle className="text-hoverGreen">
-                        {/* ABES - EventHub */}
                         <Link to={'/'} className="flex items-center">
                             <img src="/logo.png" alt="ABES Logo" className="md:h-10 h-6 my-2 mr-2" />
                             <span className="md:font-bold md:text-xl font-semibold text-lg text-hoverGreen dark:text-yellow-100">ABES - EventHub</span>
@@ -178,10 +172,8 @@ const MobileNavbar = () => {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                            {/* <DropdownMenuItem onClick={()=> setTheme('light')}>Light</DropdownMenuItem>
-                                <DropdownMenuItem onClick={()=> setTheme('dark')}>Dark</DropdownMenuItem> */}
-                            <DropdownMenuItem >Light</DropdownMenuItem>
-                            <DropdownMenuItem >Dark</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </SheetHeader>

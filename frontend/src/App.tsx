@@ -14,6 +14,8 @@ import AddEvents from "./admin/AddEvents"
 import SearchPage from "./components/SearchPage"
 import ClubPage from "./components/ClubPage"
 import EventPage from "./components/EventPage"
+import { useThemeStore } from "./store/useThemeStore"
+import { useEffect } from "react"
 
 const appRouter = createBrowserRouter([
   {
@@ -112,6 +114,14 @@ const appRouter = createBrowserRouter([
 ])
 
 function App() {
+
+  const initializeTheme = useThemeStore((state: any) => state.initializeTheme);
+  // checking auth every time when page is loaded
+  useEffect(() => {
+    // checkAuthentication();
+    initializeTheme();
+  }, []);
+
 
   return (
     <>
