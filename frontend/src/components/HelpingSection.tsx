@@ -42,7 +42,8 @@ const HelpingSection = () => {
 
 
     return (
-        <div className="container mx-auto py-12 px-4 md:px-8">
+        <div className="container mx-auto pb-12 px-4 md:px-8">
+            <h1 className='text-2xl font-semibold mb-4'>What We Offer</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {features.map((feature, index) => (
                     <Feature
