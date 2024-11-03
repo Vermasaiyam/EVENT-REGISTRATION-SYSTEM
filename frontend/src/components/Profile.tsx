@@ -5,6 +5,7 @@ import { Input } from "./ui/input";
 import { useRef, useState } from "react";
 import { Label } from "./ui/label";
 import { Link } from "react-router-dom";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 // import { useUserStore } from "@/store/useUserStore";
 
 
@@ -28,7 +29,7 @@ const Profile = () => {
         email: user?.email || "",
         // roll_no: user?.roll_no || "",
         addmission_no: user?.admission_no || "",
-        current_year: user?.current_year || "",
+        current_year: user?.current_year || "1st",
         branch: user?.branch || "",
         profilePicture: user?.profilePicture || "",
     });
@@ -63,7 +64,7 @@ const Profile = () => {
 
         // api
 
-        
+
     };
 
     return (
@@ -129,12 +130,23 @@ const Profile = () => {
                     <CalendarFold className="text-gray-500 dark:text-white" />
                     <div className="w-full">
                         <Label>Current Year</Label>
-                        <input
-                            name="current_year"
-                            value={profileData.current_year}
-                            onChange={changeHandler}
-                            className="w-full text-gray-600  dark:text-white bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
-                        />
+                        <Select
+                            onValueChange={(newYear) => setProfileData({ ...profileData, current_year: newYear })}
+                            defaultValue={profileData.current_year}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Event Mode" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {["1st","2nd","3rd","4th"].map((year: string, index: number) => (
+                                        <SelectItem key={index} value={year}>
+                                            {year}
+                                        </SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
                 <div className="flex items-center gap-4 rounded-sm p-2 bg-gray-200 dark:bg-[#2E3A52]">
