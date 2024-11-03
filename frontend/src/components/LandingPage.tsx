@@ -72,7 +72,7 @@ const LandingPage = () => {
             </div>
             {/* All Clubs */}
             <div className="md:px-10 px-6 py-8">
-                <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">All Clubs</h1>
+                <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">Our Clubs & Societies</h1>
                 <AllClubs />
             </div>
             
