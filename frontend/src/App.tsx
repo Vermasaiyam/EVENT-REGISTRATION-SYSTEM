@@ -13,6 +13,7 @@ import Club from "./admin/Club"
 import AddEvents from "./admin/AddEvents"
 import SearchPage from "./components/SearchPage"
 import ClubPage from "./components/ClubPage"
+import EventPage from "./components/EventPage"
 
 const appRouter = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/club/:id",
         element: <ClubPage />
+      },
+      {
+        path: "/club/:id/:id",
+        element: <EventPage />
       },
       //   {
       //     path: "/order/status",
