@@ -16,6 +16,7 @@ import ClubPage from "./components/ClubPage"
 import EventPage from "./components/EventPage"
 import { useThemeStore } from "./store/useThemeStore"
 import { useEffect } from "react"
+import AllClubs from "./components/AllClubs"
 
 const appRouter = createBrowserRouter([
   {
@@ -49,10 +50,10 @@ const appRouter = createBrowserRouter([
       //     path: "/order/status",
       //     element: <Success />
       //   },
-      //   {
-      //     path: "/restaurants",
-      //     element: <AllRestaurants />
-      //   },
+        {
+          path: "/clubs",
+          element: <AllClubs />
+        },
 
       //   //admin
       {
