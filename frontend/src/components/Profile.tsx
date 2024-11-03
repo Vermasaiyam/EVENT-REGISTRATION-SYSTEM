@@ -118,7 +118,7 @@ const Profile = () => {
                     <div className="w-full">
                         <Label>Addmission Number</Label>
                         <input
-                            name="address"
+                            name="addmission_no"
                             value={profileData.addmission_no}
                             onChange={changeHandler}
                             className="w-full text-gray-600  dark:text-white bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
@@ -130,7 +130,7 @@ const Profile = () => {
                     <div className="w-full">
                         <Label>Current Year</Label>
                         <input
-                            name="city"
+                            name="current_year"
                             value={profileData.current_year}
                             onChange={changeHandler}
                             className="w-full text-gray-600  dark:text-white bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
@@ -142,7 +142,7 @@ const Profile = () => {
                     <div className="w-full">
                         <Label>Branch</Label>
                         <input
-                            name="country"
+                            name="branch"
                             value={profileData.branch}
                             onChange={changeHandler}
                             className="w-full text-gray-600  dark:text-white bg-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none border-none"
