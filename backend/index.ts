@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import connectDB from "./db/connectDB";
 
 dotenv.config();
 
@@ -21,6 +22,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.listen(PORT, () => {
-    // connectDB();
+    connectDB();
     console.log(`Server started at port ${PORT}`);
 });
