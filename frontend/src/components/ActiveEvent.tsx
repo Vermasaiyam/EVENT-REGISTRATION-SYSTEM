@@ -1,10 +1,10 @@
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 
-const Event = () => {
+const ActiveEvent = () => {
 
     return (
-        <div className="my-2">
+        <div className="my-4">
             <h1 className="text-xl md:text-xl font-semibold mb-6">
                 Active Events
             </h1>
@@ -42,4 +42,4 @@ const Event = () => {
     )
 }
 
-export default Event
+export default ActiveEvent

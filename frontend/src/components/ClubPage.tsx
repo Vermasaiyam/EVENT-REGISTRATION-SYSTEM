@@ -2,7 +2,8 @@ import { Badge } from "./ui/badge"
 // import Event from "./Event"
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import Event from "./Event";
+import ActiveEvent from "./ActiveEvent";
+import PastEvent from "./PastEvents";
 
 
 const ClubPage = () => {
@@ -42,10 +43,19 @@ const ClubPage = () => {
                         <div className="flex gap-2 my-2 flex-wrap">
                             {/* {
                                 singleClub?.events &&
-                                <Event events={singleClub?.events!} />
+                                <Event events={singleClub?.activeEvents!} />
                             } */}
-                            <Event />
+                            <ActiveEvent />
                         </div>
+
+                        <div className="flex gap-2 my-2 flex-wrap">
+                            {/* {
+                                singleClub?.events &&
+                                <Event events={singleClub?.pastEvents!} />
+                            } */}
+                            <PastEvent />
+                        </div>
+
                         <h1 className="font-medium text-xl">
                             Core Team
                         </h1>
