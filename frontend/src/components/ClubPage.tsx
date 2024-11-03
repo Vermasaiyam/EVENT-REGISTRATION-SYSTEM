@@ -1,4 +1,3 @@
-import { Timer } from "lucide-react"
 import { Badge } from "./ui/badge"
 // import Event from "./Event"
 import { useParams } from "react-router-dom";
@@ -28,7 +27,7 @@ const ClubPage = () => {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between">
                     <div className="my-5">
-                        <h1 className="font-medium text-xl">
+                        <h1 className="font-medium text-2xl">
                             {/* {singleClub?.clubName || "Loading..."} */}
                             DataVerse
                         </h1>
@@ -38,25 +37,24 @@ const ClubPage = () => {
                                 <Badge key={idx}>{event}</Badge>
                             ))}
                         </div>
-                        <div className="flex md:flex-row flex-col gap-2 my-5">
-                            <div className="flex items-center gap-2">
-                                <Timer className="w-5 h-5" />
-                                <h1 className="flex items-center gap-2 font-medium">
-                                    Delivery Time:
-                                    <span className="text-green dark:text-yellow-100">
-                                        {/* {singleClub?.deliveryTime || "NA"} mins */}
-                                        30 mins
-                                    </span>
-                                </h1>
-                            </div>
+
+                        <div className="flex gap-2 my-2 flex-wrap">
+                            {/* {
+                                    singleClub?.events &&
+                                    <Event events={singleClub?.events!} />
+                                } */}
+                            {/* <Event /> */}
+                        </div>
+                        <h1 className="font-medium text-xl">
+                            Core Team
+                        </h1>
+                        <div className="flex gap-2 my-2 flex-wrap">
+                            {["Piyush Pandey", "Amritansh Tripathi", "Shally Agarwal"].map((event: string, idx: number) => (
+                                <Badge variant={"secondary"} key={idx}>{event}</Badge>
+                            ))}
                         </div>
                     </div>
                 </div>
-                {/* {
-                    singleClub?.events &&
-                    <Event events={singleClub?.events!} />
-                } */}
-                {/* <Event /> */}
             </div>
         </div>
     )
