@@ -36,7 +36,10 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
         registrationEndDate: new Date().toISOString().split("T")[0],
         eventStartDate: new Date().toISOString().split("T")[0],
         eventEndDate: new Date().toISOString().split("T")[0],
+        startTime: "",
+        endTime: "",
         image: undefined,
+        qrCode: undefined,
     });
 
     const loading: boolean = false;
@@ -63,14 +66,24 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
             const formData = new FormData();
             formData.append("name", input.name);
             formData.append("description", input.description);
+            formData.append("mode", input.mode);
             formData.append("registrationFee", input.registrationFee.toString());
             formData.append("registrationEndDate", input.registrationEndDate);
             formData.append("eventStartDate", input.eventStartDate);
             formData.append("eventEndDate", input.eventEndDate);
 
+            // Add new fields
+            formData.append("startTime", input.startTime);
+            formData.append("endTime", input.endTime);
+
             if (input.image) {
                 formData.append("image", input.image);
             }
+
+            if (input.qrCode) {
+                formData.append("qrCodeImage", input.qrCode);
+            }
+
 
             // api function
 
@@ -91,7 +104,10 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
             registrationEndDate: selectedEvent?.registrationEndDate || "",
             eventStartDate: selectedEvent?.eventStartDate || "",
             eventEndDate: selectedEvent?.eventEndDate || "",
+            startTime: selectedEvent?.startTime || "",
+            endTime: selectedEvent?.endTime || "",
             image: undefined,
+            qrCode: undefined,
         });
     }, [selectedEvent]);
 
@@ -99,7 +115,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
 
     return (
         <Dialog open={editOpen} onOpenChange={setEditOpen}>
-            <DialogContent>
+            <DialogContent className="max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Edit Event</DialogTitle>
                     <DialogDescription>
@@ -225,6 +241,37 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                         )}
                     </div>
                     <div>
+                        <Label>Event Start Time</Label>
+                        <Input
+                            type="time"
+                            name="startTime"
+                            value={input.startTime}
+                            onChange={changeEventHandler}
+                            placeholder="Select Event Start Time"
+                        />
+                        {error && (
+                            <span className="text-xs font-medium text-red-600">
+                                {error.startTime}
+                            </span>
+                        )}
+                    </div>
+
+                    <div>
+                        <Label>Event End Time</Label>
+                        <Input
+                            type="time"
+                            name="endTime"
+                            value={input.endTime}
+                            onChange={changeEventHandler}
+                            placeholder="Select Event End Time"
+                        />
+                        {error && (
+                            <span className="text-xs font-medium text-red-600">
+                                {error.endTime}
+                            </span>
+                        )}
+                    </div>
+                    <div>
                         <Label>Upload Event Image</Label>
                         <Input
                             type="file"
@@ -242,6 +289,26 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                             </span>
                         )}
                     </div>
+
+                    <div>
+                        <Label>Upload QR Code Image</Label>
+                        <Input
+                            type="file"
+                            name="qrCode"
+                            onChange={(e) =>
+                                setInput({
+                                    ...input,
+                                    qrCode: e.target.files?.[0] || undefined,
+                                })
+                            }
+                        />
+                        {error && (
+                            <span className="text-xs font-medium text-red-600">
+                                {error.qrCode?.name}
+                            </span>
+                        )}
+                    </div>
+
                     <DialogFooter className="mt-5">
                         {loading ? (
                             <Button disabled className="bg-green hover:bg-hoverGreen">

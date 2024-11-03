@@ -5,9 +5,11 @@ export const eventSchema = z.object({
     description: z.string().nonempty({ message: "Description is required" }),
     mode: z.enum(["Online", "Offline"], { message: "Mode must be either 'online' or 'offline'." }),
     registrationFee: z.number().min(0, { message: "Price can't be negative" }),
-    registrationEndDate: z.string().date().nonempty({message: "Registration End Date is required."}),
-    eventStartDate: z.string().date().nonempty({message: "Event start Date is required."}),
-    eventEndDate: z.string().date().nonempty({message: "Event End Date is required."}),
+    registrationEndDate: z.string().date().nonempty({ message: "Registration End Date is required." }),
+    eventStartDate: z.string().date().nonempty({ message: "Event start Date is required." }),
+    eventEndDate: z.string().date().nonempty({ message: "Event End Date is required." }), startTime: z.string().nonempty({ message: "Start Time is required." }),
+    endTime: z.string().nonempty({ message: "End Time is required." }),
     image: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "Image file is required" }),
+    qrCode: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "QR code image is required" })
 });
 export type EventFormSchema = z.infer<typeof eventSchema>;

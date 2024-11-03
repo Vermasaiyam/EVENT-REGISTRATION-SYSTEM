@@ -33,8 +33,12 @@ const AddEvents = () => {
         registrationEndDate: new Date().toISOString().split("T")[0],
         eventStartDate: new Date().toISOString().split("T")[0],
         eventEndDate: new Date().toISOString().split("T")[0],
+        startTime: "",
+        endTime: "",
         image: undefined,
+        qrCode: undefined,
     });
+
     const [open, setOpen] = useState<boolean>(false);
     const [editOpen, setEditOpen] = useState<boolean>(false);
     const [selectedEvent, setSelectedEvent] = useState<any>();
@@ -70,11 +74,20 @@ const AddEvents = () => {
             formData.append("eventStartDate", input.eventStartDate);
             formData.append("eventEndDate", input.eventEndDate);
 
+            // Add new fields
+            formData.append("startTime", input.startTime);
+            formData.append("endTime", input.endTime);
+
             if (input.image) {
                 formData.append("image", input.image);
             }
 
-            // api function
+            if (input.qrCode) {
+                formData.append("qrCodeImage", input.qrCode);
+            }
+
+            // API function
+
 
         } catch (error) {
             console.error("Error submitting form:", error);
@@ -93,7 +106,10 @@ const AddEvents = () => {
             registrationEndDate: "2024-11-15",
             eventStartDate: "2024-11-16",
             eventEndDate: "2024-11-17",
+            startTime: "10:00",
+            endTime: "17:00",
             image: undefined,
+            qrCode: undefined,
         },
         {
             name: "KT Session",
@@ -103,9 +119,13 @@ const AddEvents = () => {
             registrationEndDate: "2024-11-20",
             eventStartDate: "2024-11-21",
             eventEndDate: "2024-11-22",
+            startTime: "14:00",
+            endTime: "18:00",
             image: undefined,
+            qrCode: undefined,
         },
     ];
+
 
 
     return (
@@ -121,7 +141,7 @@ const AddEvents = () => {
                             Add Event
                         </Button>
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="max-h-[80vh] overflow-y-auto">
                         <DialogHeader>
                             <DialogTitle>Add A New Event</DialogTitle>
                             <DialogDescription>
@@ -144,10 +164,11 @@ const AddEvents = () => {
                                     </span>
                                 )}
                             </div>
+
                             <div>
                                 <Label>Event Mode</Label>
                                 <Select
-                                    // onValueChange={(newMode) => handleModeChange(newMode)}
+                                    // onValueChange={(newMode) => setInput({ ...input, mode: newMode })}
                                     defaultValue={input.mode}
                                 >
                                     <SelectTrigger>
@@ -156,7 +177,7 @@ const AddEvents = () => {
                                     <SelectContent>
                                         <SelectGroup>
                                             {["Online", "Offline"].map((mode: string, index: number) => (
-                                                <SelectItem key={index} value={mode.toLowerCase()}>
+                                                <SelectItem key={index} value={mode}>
                                                     {mode}
                                                 </SelectItem>
                                             ))}
@@ -185,6 +206,7 @@ const AddEvents = () => {
                                     </span>
                                 )}
                             </div>
+
                             <div>
                                 <Label>Registration End Date</Label>
                                 <Input
@@ -232,6 +254,39 @@ const AddEvents = () => {
                                     </span>
                                 )}
                             </div>
+
+                            <div>
+                                <Label>Event Start Time</Label>
+                                <Input
+                                    type="time"
+                                    name="startTime"
+                                    value={input.startTime}
+                                    onChange={changeEventHandler}
+                                    placeholder="Select Event Start Time"
+                                />
+                                {error && (
+                                    <span className="text-xs font-medium text-red-600">
+                                        {error.startTime}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div>
+                                <Label>Event End Time</Label>
+                                <Input
+                                    type="time"
+                                    name="endTime"
+                                    value={input.endTime}
+                                    onChange={changeEventHandler}
+                                    placeholder="Select Event End Time"
+                                />
+                                {error && (
+                                    <span className="text-xs font-medium text-red-600">
+                                        {error.endTime}
+                                    </span>
+                                )}
+                            </div>
+
                             <div>
                                 <Label>Upload Event Image</Label>
                                 <Input
@@ -250,6 +305,26 @@ const AddEvents = () => {
                                     </span>
                                 )}
                             </div>
+
+                            <div>
+                                <Label>Upload QR Code Image</Label>
+                                <Input
+                                    type="file"
+                                    name="qrCode"
+                                    onChange={(e) =>
+                                        setInput({
+                                            ...input,
+                                            qrCode: e.target.files?.[0] || undefined,
+                                        })
+                                    }
+                                />
+                                {error && (
+                                    <span className="text-xs font-medium text-red-600">
+                                        {error.qrCode?.name}
+                                    </span>
+                                )}
+                            </div>
+
                             <DialogFooter className="mt-5">
                                 {loading ? (
                                     <Button disabled className="w-full bg-green hover:bg-hoverGreen dark:text-white">
@@ -263,6 +338,7 @@ const AddEvents = () => {
                                 )}
                             </DialogFooter>
                         </form>
+
                     </DialogContent>
                 </Dialog>
 
@@ -298,12 +374,36 @@ const AddEvents = () => {
                                     <span className="font-semibold">Event End Date: </span>
                                     {event.eventEndDate}
                                 </div>
-                                {/* New mode field */}
                                 <div className="text-sm text-gray-700 dark:text-gray-400">
                                     <span className="font-semibold">Mode: </span>
-                                    <span className="capitalize">{event.mode}</span> {/* Capitalize for better display */}
+                                    <span className="capitalize">{event.mode}</span>
                                 </div>
                             </div>
+
+                            {/* New fields: Start Time and End Time */}
+                            <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
+                                <div className="text-sm text-gray-700 dark:text-gray-400">
+                                    <span className="font-semibold">Start Time: </span>
+                                    {event.startTime}
+                                </div>
+                                <div className="text-sm text-gray-700 dark:text-gray-400">
+                                    <span className="font-semibold">End Time: </span>
+                                    {event.endTime}
+                                </div>
+                            </div>
+
+                            {/* QR Code Image Display */}
+                            {/* {event.qrCode && (
+                                <div className="mt-3">
+                                    <span className="font-semibold">QR Code:</span>
+                                    <img
+                                        // src={URL.createObjectURL(event.qrCode)}
+                                        src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
+                                        alt="QR Code"
+                                        className="mt-1 h-16 w-16 object-cover rounded-md shadow"
+                                    />
+                                </div>
+                            )} */}
                         </div>
                         <Button
                             onClick={() => {
@@ -317,6 +417,7 @@ const AddEvents = () => {
                         </Button>
                     </div>
                 </div>
+
             ))}
             {
                 (eventItems.length === 0) && (
