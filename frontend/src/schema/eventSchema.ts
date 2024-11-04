@@ -10,6 +10,6 @@ export const eventSchema = z.object({
     eventEndDate: z.string().date().nonempty({ message: "Event End Date is required." }), startTime: z.string().nonempty({ message: "Start Time is required." }),
     endTime: z.string().nonempty({ message: "End Time is required." }),
     image: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "Image file is required" }),
-    qrCode: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "QR code image is required" })
+    formLink: z.string().nonempty({ message: "Form Link is required" })
 });
 export type EventFormSchema = z.infer<typeof eventSchema>;

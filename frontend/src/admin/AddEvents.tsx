@@ -36,7 +36,7 @@ const AddEvents = () => {
         startTime: "",
         endTime: "",
         image: undefined,
-        qrCode: undefined,
+        formLink: "",
     });
 
     const [open, setOpen] = useState<boolean>(false);
@@ -73,17 +73,12 @@ const AddEvents = () => {
             formData.append("registrationEndDate", input.registrationEndDate);
             formData.append("eventStartDate", input.eventStartDate);
             formData.append("eventEndDate", input.eventEndDate);
-
-            // Add new fields
             formData.append("startTime", input.startTime);
             formData.append("endTime", input.endTime);
+            formData.append("formLink", input.formLink);
 
             if (input.image) {
                 formData.append("image", input.image);
-            }
-
-            if (input.qrCode) {
-                formData.append("qrCodeImage", input.qrCode);
             }
 
             // API function
@@ -109,7 +104,7 @@ const AddEvents = () => {
             startTime: "10:00",
             endTime: "17:00",
             image: undefined,
-            qrCode: undefined,
+            formLink: "",
         },
         {
             name: "KT Session",
@@ -122,7 +117,7 @@ const AddEvents = () => {
             startTime: "14:00",
             endTime: "18:00",
             image: undefined,
-            qrCode: undefined,
+            formLink: "",
         },
     ];
 
@@ -307,20 +302,17 @@ const AddEvents = () => {
                             </div>
 
                             <div>
-                                <Label>Upload QR Code Image</Label>
+                                <Label>Registration From Link</Label>
                                 <Input
-                                    type="file"
-                                    name="qrCode"
-                                    onChange={(e) =>
-                                        setInput({
-                                            ...input,
-                                            qrCode: e.target.files?.[0] || undefined,
-                                        })
-                                    }
+                                    type="text"
+                                    name="formLink"
+                                    value={input.formLink}
+                                    onChange={changeEventHandler}
+                                    placeholder="Enter Registration form Link"
                                 />
                                 {error && (
                                     <span className="text-xs font-medium text-red-600">
-                                        {error.qrCode?.name}
+                                        {error.formLink}
                                     </span>
                                 )}
                             </div>

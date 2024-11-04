@@ -39,7 +39,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
         startTime: "",
         endTime: "",
         image: undefined,
-        qrCode: undefined,
+        formLink: "",
     });
 
     const loading: boolean = false;
@@ -71,19 +71,13 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
             formData.append("registrationEndDate", input.registrationEndDate);
             formData.append("eventStartDate", input.eventStartDate);
             formData.append("eventEndDate", input.eventEndDate);
-
-            // Add new fields
             formData.append("startTime", input.startTime);
             formData.append("endTime", input.endTime);
+            formData.append("formLink", input.formLink);
 
             if (input.image) {
                 formData.append("image", input.image);
             }
-
-            if (input.qrCode) {
-                formData.append("qrCodeImage", input.qrCode);
-            }
-
 
             // api function
 
@@ -107,7 +101,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
             startTime: selectedEvent?.startTime || "",
             endTime: selectedEvent?.endTime || "",
             image: undefined,
-            qrCode: undefined,
+            formLink: selectedEvent?.formLink || "",
         });
     }, [selectedEvent]);
 
@@ -291,20 +285,17 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                     </div>
 
                     <div>
-                        <Label>Upload QR Code Image</Label>
+                        <Label>Registration From Link</Label>
                         <Input
-                            type="file"
-                            name="qrCode"
-                            onChange={(e) =>
-                                setInput({
-                                    ...input,
-                                    qrCode: e.target.files?.[0] || undefined,
-                                })
-                            }
+                            type="text"
+                            name="formLink"
+                            value={input.formLink}
+                            onChange={changeEventHandler}
+                            placeholder="Enter Registration form Link"
                         />
                         {error && (
                             <span className="text-xs font-medium text-red-600">
-                                {error.qrCode?.name}
+                                {error.formLink}
                             </span>
                         )}
                     </div>
