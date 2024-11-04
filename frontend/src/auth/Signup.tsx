@@ -5,7 +5,7 @@ import { Eye, EyeOff, Loader2, LockKeyhole, Mail, PhoneOutgoing, User } from "lu
 import { ChangeEvent, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { SignupInputState, userSignupSchema } from "@/schema/userSchema"
-// import { useUserStore } from "@/store/useUserStore"
+import { useUserStore } from "@/store/useUserStore"
 
 
 const Signup = () => {
@@ -15,11 +15,11 @@ const Signup = () => {
     // const formRef = useRef();
 
     const navigate = useNavigate();
-    // const { signup, loading } = useUserStore();
+    const { signup, loading } = useUserStore();
 
     const [errors, setErrors] = useState<Partial<SignupInputState>>({});
 
-    const loading = false;
+    // const loading = false;
 
     const [input, setInput] = useState<SignupInputState>({
         fullname: "",
@@ -45,12 +45,12 @@ const Signup = () => {
         }
 
         // api
-        // try {
-        //     await signup(input);
-        //     navigate("/verify-email");
-        // } catch (error) {
-        //     console.log(error);
-        // } await signup(input);
+        try {
+            await signup(input);
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        } await signup(input);
 
     };
 

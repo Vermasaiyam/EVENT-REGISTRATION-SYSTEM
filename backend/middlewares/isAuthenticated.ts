@@ -2,36 +2,40 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 declare global {
-    namespace Express{
+    namespace Express {
         interface Request {
             id: string;
         }
     }
 }
 
-export const isAuthenticated = async (req: Request, res: Response, next: NextFunction) => {
+export const isAuthenticated = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const token = req.cookies.token;
         if (!token) {
-            return res.status(401).json({
+            res.status(401).json({
                 success: false,
-                message: "User not authenticated"
+                message: "User not authenticated",
             });
+            return;
         }
 
         const decode = jwt.verify(token, process.env.SECRET_KEY!) as jwt.JwtPayload;
-        
+
         if (!decode) {
-            return res.status(401).json({
+            res.status(401).json({
                 success: false,
-                message: "Invalid Token"
-            })
+                message: "Invalid Token",
+            });
+            return;
         }
+
         req.id = decode.userId;
         next();
     } catch (error) {
-        return res.status(500).json({
-            message: "Internal Server Error"
-        })
+        console.error(error);
+        res.status(500).json({
+            message: "Internal Server Error",
+        });
     }
-}
+};

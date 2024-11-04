@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./db/connectDB";
+import userRoute from "./routes/user.route";
 
 dotenv.config();
 
@@ -11,8 +12,8 @@ const app = express();
 
 const PORT = process.env.PORT || 8000;
 
-app.use(bodyParser.json({ limit: '20mb' }));
-app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(express.json());
 app.use(cookieParser());
 const corsOptions = {
@@ -20,6 +21,11 @@ const corsOptions = {
     credentials: true
 }
 app.use(cors(corsOptions));
+
+
+app.use("/api/user", userRoute);
+
+
 
 app.listen(PORT, () => {
     connectDB();
