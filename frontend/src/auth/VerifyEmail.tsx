@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/store/useUserStore";
 import { Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom";
@@ -10,9 +10,9 @@ const VerifyEmail = () => {
     const inputRef = useRef<any>([]);
     const navigate = useNavigate();
 
-    const loading = false;
+    // const loading = false;
 
-    // const { verifyEmail, loading } = useUserStore();
+    const { verifyEmail, loading } = useUserStore();
 
     const handleChange = (index: number, value: string) => {
         if (/^[a-zA-Z0-9]$/.test(value) || value === "") {
@@ -37,12 +37,12 @@ const VerifyEmail = () => {
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const verificationCode = val.join("");
-        // try {
-        //     await verifyEmail(verificationCode);
-        //     navigate("/");
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            await verifyEmail(verificationCode);
+            navigate("/");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {

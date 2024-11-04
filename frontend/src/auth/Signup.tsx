@@ -47,7 +47,7 @@ const Signup = () => {
         // api
         try {
             await signup(input);
-            navigate("/");
+            navigate("/verify-email");
         } catch (error) {
             console.log(error);
         } await signup(input);
