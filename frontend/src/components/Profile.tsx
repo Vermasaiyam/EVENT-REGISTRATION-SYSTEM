@@ -6,29 +6,28 @@ import { useRef, useState } from "react";
 import { Label } from "./ui/label";
 import { Link } from "react-router-dom";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-// import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/store/useUserStore";
 
 
 const Profile = () => {
     const imageRef = useRef<HTMLInputElement | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const user = {
-        fullname: "Saiyam Verma",
-        email: "saiyam.22b1540145@abes.ac.in",
-        // roll_no: 2200321540145,
-        admission_no: "2022B15401204",
-        current_year: "3rd",
-        branch: "CSE-DS",
-        profilePicture: ""
-    }
+    // const user = {
+    //     fullname: "Saiyam Verma",
+    //     email: "saiyam.22b1540145@abes.ac.in",
+    //     addmission_no: "2022B15401204",
+    //     current_year: "3rd",
+    //     branch: "CSE-DS",
+    //     profilePicture: ""
+    // }
 
-    // const { user, updateProfile } = useUserStore();
+    const { user, updateProfile } = useUserStore();
 
     const [profileData, setProfileData] = useState({
         fullname: user?.fullname || "",
         email: user?.email || "",
         // roll_no: user?.roll_no || "",
-        addmission_no: user?.admission_no || "",
+        addmission_no: user?.addmission_no || "",
         current_year: user?.current_year || "1st",
         branch: user?.branch || "",
         profilePicture: user?.profilePicture || "",
@@ -63,8 +62,13 @@ const Profile = () => {
         e.preventDefault();
 
         // api
-
-
+        try {
+            setIsLoading(true);
+            await updateProfile(profileData);
+            setIsLoading(false);
+        } catch (error) {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -139,7 +143,7 @@ const Profile = () => {
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    {["1st","2nd","3rd","4th"].map((year: string, index: number) => (
+                                    {["1st", "2nd", "3rd", "4th"].map((year: string, index: number) => (
                                         <SelectItem key={index} value={year}>
                                             {year}
                                         </SelectItem>
@@ -169,8 +173,7 @@ const Profile = () => {
                         Please wait
                     </Button>
                 ) : (
-                    // <Button type="submit" onClick={updateProfile} className="bg-green hover:bg-hoverGreen  dark:text-white">Update</Button>
-                    <Button type="submit" className="bg-green hover:bg-hoverGreen  dark:text-white">Update</Button>
+                    <Button type="submit" onClick={updateProfile} className="bg-green hover:bg-hoverGreen  dark:text-white">Update</Button>
                 )}
             </div>
         </form>
