@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import MainLayout from './MainLayout'
 import UnderConstruction from "./components/UnderConstruction"
 import LandingPage from "./components/LandingPage"
@@ -17,14 +17,47 @@ import EventPage from "./components/EventPage"
 import { useThemeStore } from "./store/useThemeStore"
 import { useEffect } from "react"
 import AllClubs from "./components/AllClubs"
+import { useUserStore } from "./store/useUserStore"
+
+const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated, user } = useUserStore();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!user?.isVerified) {
+    return <Navigate to="/verify-email" replace />;
+  }
+  return children;
+};
+
+const AuthenticatedUser = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated, user } = useUserStore();
+  if (isAuthenticated && user?.isVerified) {
+    return <Navigate to="/" replace />
+  }
+  return children;
+};
+
+const AdminRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, isAuthenticated } = useUserStore();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+  if (!user?.admin) {
+    return <Navigate to="/" replace />
+  }
+
+  return children;
+}
 
 const appRouter = createBrowserRouter([
   {
     path: '/',
     element:
-      // <ProtectedRoutes>
-      <MainLayout />,
-    // </ProtectedRoutes>,
+      <ProtectedRoutes>
+      <MainLayout />
+    </ProtectedRoutes>,
     children: [
       {
         path: "/",
@@ -50,25 +83,25 @@ const appRouter = createBrowserRouter([
       //     path: "/order/status",
       //     element: <Success />
       //   },
-        {
-          path: "/clubs",
-          element: <AllClubs />
-        },
+      {
+        path: "/clubs",
+        element: <AllClubs />
+      },
 
-      //   //admin
+      //admin
       {
         path: "/admin/club",
         element:
-          //<AdminRoute>
+          <AdminRoute>
           <Club />
-        //</AdminRoute>
+        </AdminRoute>
       },
       {
         path: "/admin/events",
         element:
-          //<AdminRoute>
+          <AdminRoute>
           <AddEvents />
-        //</AdminRoute>,
+        </AdminRoute>,
       },
 
       // Under construction page
@@ -81,23 +114,23 @@ const appRouter = createBrowserRouter([
   {
     path: "/login",
     element:
-      // <AuthenticatedUser>
+      <AuthenticatedUser>
       <Login />
-    // </AuthenticatedUser>,
+    </AuthenticatedUser>,
   },
   {
     path: "/signup",
     element:
-      //<AuthenticatedUser>
+      <AuthenticatedUser>
       <Signup />
-    //</AuthenticatedUser>,
+    </AuthenticatedUser>,
   },
   {
     path: "/forgot-password",
     element:
-      //<AuthenticatedUser>
+      <AuthenticatedUser>
       <ForgotPassword />
-    //</AuthenticatedUser>,
+    </AuthenticatedUser>,
   },
   {
     path: '/reset-password',
