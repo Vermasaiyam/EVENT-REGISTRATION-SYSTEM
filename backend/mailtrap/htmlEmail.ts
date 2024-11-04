@@ -114,12 +114,12 @@ export const generateWelcomeEmailHtml = (name: string) => {
             <body>
               <div class="email-container">
                 <div class="email-header">
-                  <h1>Welcome to Patel Food!</h1>
+                  <h1>Welcome to ABES - EventHub</h1>
                 </div>
                 <div class="email-body">
                   <p>Hi ${name},</p>
                   <p>Congratulations! Your email has been successfully verified.</p>
-                  <p>We are excited to have you on board at Patel Food. Explore our platform and enjoy our services.</p>
+                  <p>Welcome to ABES Event Management! We’re thrilled to have you onboard. Dive in, explore upcoming events, and make the most of our platform for a seamless event experience.</p>
                   <p>If you have any questions or need assistance, feel free to reach out to us.</p>
                   <p>Best Regards,<br/>ABES</p>
                 </div>
