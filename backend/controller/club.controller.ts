@@ -4,7 +4,7 @@ import { Club } from "../models/club.model";
 import { Multer } from "multer";
 import uploadImageOnCloudinary from "../utils/uploadImage";
 
-export const createClub = async (req: Request, res: Response) => {
+export const createClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const { clubName, eventTypes, coreTeam } = req.body;
         const file = req.file;
@@ -12,16 +12,18 @@ export const createClub = async (req: Request, res: Response) => {
 
         const club = await Club.findOne({ user: req.id });
         if (club) {
-            return res.status(400).json({
+            res.status(400).json({
                 success: false,
                 message: "Club already exists for this user."
             })
+            return;
         }
         if (!file) {
-            return res.status(400).json({
+            res.status(400).json({
                 success: false,
                 message: "Image is required."
             })
+            return;
         }
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
         await Club.create({
@@ -31,46 +33,48 @@ export const createClub = async (req: Request, res: Response) => {
             coreTeam: JSON.parse(coreTeam),
             imageUrl
         });
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
             message: "Club Added Successfully"
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Internal Server Error." })
+        res.status(500).json({ message: "Internal Server Error." })
     }
 }
 
-export const getClub = async (req: Request, res: Response) => {
+export const getClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const club = await Club.findOne({ user: req.id }).populate('events');
         if (!club) {
-            return res.status(404).json({
+            res.status(404).json({
                 success: false,
                 club: [],
                 message: "Club not found."
             })
+            return;
         };
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             club
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Internal Server Error." })
+        res.status(500).json({ message: "Internal Server Error." })
     }
 }
 
-export const updateClub = async (req: Request, res: Response) => {
+export const updateClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const { clubName, eventTypes, coreTeam } = req.body;
         const file = req.file;
         const club = await Club.findOne({ user: req.id });
         if (!club) {
-            return res.status(404).json({
+            res.status(404).json({
                 success: false,
                 message: "Club not found"
             })
+            return;
         };
         club.clubName = clubName;
         club.eventTypes = JSON.parse(eventTypes);
@@ -81,14 +85,14 @@ export const updateClub = async (req: Request, res: Response) => {
             club.imageUrl = imageUrl;
         }
         await club.save();
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             message: "Club Updated.",
             club
         })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Internal Server Error." })
+        res.status(500).json({ message: "Internal Server Error." })
     }
 }
 
@@ -137,7 +141,7 @@ export const updateClub = async (req: Request, res: Response) => {
 //     }
 // }
 
-export const searchClub = async (req: Request, res: Response) => {
+export const searchClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const searchText = req.params.searchText || "";
         const searchQuery = req.query.searchQuery as string || "";
@@ -168,17 +172,17 @@ export const searchClub = async (req: Request, res: Response) => {
         }
 
         const clubs = await Club.find(query);
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             data: clubs
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Internal Server Error." })
+        res.status(500).json({ message: "Internal Server Error." })
     }
 }
 
-export const getSingleClub = async (req: Request, res: Response) => {
+export const getSingleClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const clubId = req.params.id;
         const club = await Club.findById(clubId).populate({
@@ -186,36 +190,38 @@ export const getSingleClub = async (req: Request, res: Response) => {
             options: { createdAt: -1 }
         });
         if (!club) {
-            return res.status(404).json({
+            res.status(404).json({
                 success: false,
                 message: "Club not found."
             })
+            return;
         };
-        return res.status(200).json({ success: true, club });
+        res.status(200).json({ success: true, club });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Internal Server Error." })
+        res.status(500).json({ message: "Internal Server Error." })
     }
 }
 
-export const fetchAllClubs = async (req: Request, res: Response) => {
+export const fetchAllClubs = async (req: Request, res: Response): Promise<void> => {
     try {
         const club = await Club.find().populate('events');
         console.log("from backend", club);
 
         if (!club || club.length === 0) {
-            return res.status(404).json({
+            res.status(404).json({
                 success: false,
                 club: [],
                 message: "No clubs found."
             });
+            return;
         }
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             club
         });
     } catch (error) {
         console.error("Error fetching clubs:", error);
-        return res.status(500).json({ message: error || "Internal Server Error." });
+        res.status(500).json({ message: error || "Internal Server Error." });
     }
 };
