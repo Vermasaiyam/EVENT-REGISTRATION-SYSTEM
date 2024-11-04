@@ -31,11 +31,11 @@ import {
 } from "@/components/ui/sheet"
 import { Separator } from "./ui/separator";
 import { useThemeStore } from "@/store/useThemeStore";
-// import { useUserStore } from "@/store/useUserStore";
+import { useUserStore } from "@/store/useUserStore";
 
 const Navbar = () => {
-    //   const { user, logout } = useUserStore();
-    const admin: boolean = true;
+      const { user, logout } = useUserStore();
+    // const admin: boolean = true;
 
     const { setTheme } = useThemeStore();
 
@@ -54,8 +54,7 @@ const Navbar = () => {
                     <Link to="/clubs" className="hover:text-hoverGreen  font-medium">Clubs</Link>
                     <Link to="/participation/status" className="hover:text-hoverGreen  font-medium">My Journey</Link>
 
-                    {/* {user?.admin && ( */}
-                    {admin && (
+                    {user?.admin && (
                         <Menubar>
                             <MenubarMenu>
                                 <MenubarTrigger className="cursor-pointer">Dashboard</MenubarTrigger>
@@ -97,8 +96,8 @@ const Navbar = () => {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Avatar className="cursor-pointer">
-                                    {/* <AvatarImage src={user?.profilePicture} alt={user?.fullname} /> */}
-                                    <AvatarImage src="" alt="" />
+                                    <AvatarImage src={user?.profilePicture} alt={user?.fullname} />
+                                    {/* <AvatarImage src="" alt="" /> */}
                                     <AvatarFallback>SV</AvatarFallback>
                                 </Avatar>
                             </DropdownMenuTrigger>
@@ -113,7 +112,7 @@ const Navbar = () => {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     {/* <button onClick={logout} className='flex w-fit items-center gap-2 cursor-pointer'> */}
-                                    <button className='flex w-fit items-center gap-2 cursor-pointer'>
+                                    <button onClick={logout}  className='flex w-fit items-center gap-2 cursor-pointer'>
                                         <LogOut />
                                         <Button variant="ghost" >Logout</Button>
                                     </button>
@@ -139,10 +138,10 @@ export default Navbar
 const MobileNavbar = () => {
     const { setTheme } = useThemeStore();
 
-    //   const { user, loading, logout } = useUserStore();
+      const { user, loading, logout } = useUserStore();
 
-    const admin: boolean = true;
-    const loading: boolean = false;
+    // const admin: boolean = true;
+    // const loading: boolean = false;
 
     return (
         <Sheet>
@@ -204,8 +203,8 @@ const MobileNavbar = () => {
                     <div className="my-2">
                         <Separator />
                     </div>
-                    {/* {user?.admin && ( */}
-                    {admin && (
+                    
+                    {user?.admin && (
                         <>
                             <Link
                                 to="/admin/club"
@@ -249,7 +248,7 @@ const MobileNavbar = () => {
                             </Button>
                         ) : (
                             <Button
-                                // onClick={logout}
+                                onClick={logout}
                                 className="bg-green hover:bg-hoverGreen"
                             >
                                 Logout
