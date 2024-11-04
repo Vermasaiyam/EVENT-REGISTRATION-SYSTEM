@@ -16,7 +16,7 @@ const PastEvent = () => {
             startTime: "10:00",
             endTime: "17:00",
             image: undefined,
-            qrCode: undefined,
+            formLink: "",
         },
         {
             name: "Workshop",
@@ -29,7 +29,7 @@ const PastEvent = () => {
             startTime: "14:00",
             endTime: "18:00",
             image: undefined,
-            qrCode: undefined,
+            formLink: "",
         },
     ];
 

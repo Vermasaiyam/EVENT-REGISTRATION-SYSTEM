@@ -17,7 +17,7 @@ const ActiveEvent = () => {
             startTime: "10:00",
             endTime: "17:00",
             image: undefined,
-            qrCode: undefined,
+            formLink: "",
         },
         {
             name: "KT Session",
@@ -30,7 +30,7 @@ const ActiveEvent = () => {
             startTime: "14:00",
             endTime: "18:00",
             image: undefined,
-            qrCode: undefined,
+            formLink: "",
         },
     ];
 

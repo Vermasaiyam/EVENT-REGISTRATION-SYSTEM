@@ -383,19 +383,6 @@ const AddEvents = () => {
                                     {event.endTime}
                                 </div>
                             </div>
-
-                            {/* QR Code Image Display */}
-                            {/* {event.qrCode && (
-                                <div className="mt-3">
-                                    <span className="font-semibold">QR Code:</span>
-                                    <img
-                                        // src={URL.createObjectURL(event.qrCode)}
-                                        src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
-                                        alt="QR Code"
-                                        className="mt-1 h-16 w-16 object-cover rounded-md shadow"
-                                    />
-                                </div>
-                            )} */}
                         </div>
                         <Button
                             onClick={() => {
