@@ -25,10 +25,10 @@ export const sendWelcomeEmail = async (email: string, name: string) => {
         const res = await client.send({
             from: sender,
             to: recipient,
-            subject: 'Welcome to FEASTO',
+            subject: 'Welcome to ABES - EventHub',
             html: htmlContent,
             template_variables: {
-                company_info_name: "FEASTO",
+                company_info_name: "ABES - EventHub",
                 name: name
             }
         });
