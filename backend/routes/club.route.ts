@@ -10,6 +10,6 @@ router.route("/").get(isAuthenticated, getClub);
 router.route("/").put(isAuthenticated, upload.single("imageFile"), updateClub);
 router.route("/search/:searchText").get(isAuthenticated, searchClub);
 router.route("/:id").get(isAuthenticated, getSingleClub);
-router.route("/fetchAllRestaurants").get(isAuthenticated, fetchAllClubs);
+router.route("/fetchAllClubs").get(isAuthenticated, fetchAllClubs);
 
 export default router;

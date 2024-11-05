@@ -96,16 +96,16 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
     }
 }
 
-// export const getRestaurantOrder = async (req: Request, res: Response) => {
+// export const getClubOrder = async (req: Request, res: Response) => {
 //     try {
-//         const restaurant = await Club.findOne({ user: req.id });
-//         if (!restaurant) {
+//         const club = await Club.findOne({ user: req.id });
+//         if (!club) {
 //             return res.status(404).json({
 //                 success: false,
-//                 message: "Restaurant not found."
+//                 message: "Club not found."
 //             })
 //         };
-//         const orders = await Order.find({ restaurant: restaurant._id }).populate('restaurant').populate('user');
+//         const orders = await Order.find({ club: club._id }).populate('club').populate('user');
 //         return res.status(200).json({
 //             success: true,
 //             orders
