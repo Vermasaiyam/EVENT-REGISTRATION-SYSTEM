@@ -25,6 +25,7 @@ import {
     useEffect,
     useState,
 } from "react";
+import { useEventStore } from "@/store/useEventStore";
 
 const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: any, editOpen: boolean, setEditOpen: Dispatch<SetStateAction<boolean>> }) => {
 
@@ -42,7 +43,9 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
         formLink: "",
     });
 
-    const loading: boolean = false;
+    // const loading: boolean = false;
+
+    const { loading, editEvent } = useEventStore();
 
 
     const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +83,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
             }
 
             // api function
-
+            await editEvent(selectedEvent._id, formData);
 
         } catch (error) {
             console.log(error);
