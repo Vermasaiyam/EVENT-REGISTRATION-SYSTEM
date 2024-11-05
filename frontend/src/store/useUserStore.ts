@@ -30,7 +30,7 @@ type UserState = {
     checkAuthentication: () => Promise<void>;
     logout: () => Promise<void>;
     forgotPassword: (email: string) => Promise<void>;
-    resetPassword: (token: string, newPassword: string) => Promise<void>;
+    resetPassword: (input:any) => Promise<void>;
     updateProfile: (input: any) => Promise<void>;
 }
 
@@ -138,10 +138,14 @@ export const useUserStore = create<UserState>()(persist((set) => ({
             set({ loading: false });
         }
     },
-    resetPassword: async (token: string, newPassword: string) => {
+    resetPassword: async (input: any) => {
         try {
             set({ loading: true });
-            const response = await axios.post(`${API_END_POINT}/reset-password/${token}`, { newPassword });
+            const response = await axios.post(`${API_END_POINT}/reset-password`, input, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
             if (response.data.success) {
                 toast.success(response.data.message);
                 set({ loading: false });

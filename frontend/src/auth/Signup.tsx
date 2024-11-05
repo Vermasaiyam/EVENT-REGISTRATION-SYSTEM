@@ -50,7 +50,7 @@ const Signup = () => {
             navigate("/verify-email");
         } catch (error) {
             console.log(error);
-        } await signup(input);
+        }
 
     };
 

@@ -5,8 +5,8 @@ import crypto from "crypto";
 import cloudinary from "../utils/cloudinary";
 import { generateVerificationCode } from "../utils/generateVerificationCode";
 import { generateToken } from "../utils/generateToken";
-import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/email";
-import sendEmail from "../utils/sendEmail";
+import { sendPasswordResetEmail } from "../mailtrap/email";
+import { sendEmail, sendResetSuccessEmail, sendWelcomeEmaill } from "../utils/sendEmail";
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -34,11 +34,11 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
         generateToken(res, user);
 
         // await sendVerificationEmail(email, verificationToken);
-        const message = `your verification token is :-\n${verificationToken} `;
+        const message = `your verification code is :-\n${verificationToken} `;
         // console.log(message);
         await sendEmail({
             email: user.email,
-            subject: `Ecommerce Password Recovery`,
+            subject: `ABES - EventHub verification code.`,
             message,
             verificationToken,
         })
@@ -116,7 +116,17 @@ export const verifyEmail = async (req: Request, res: Response): Promise<void> =>
         await user.save();
 
         // send welcome email
-        await sendWelcomeEmail(user.email, user.fullname);
+        // await sendWelcomeEmail(user.email, user.fullname);
+
+        // nodemailer implementation
+        const message = `Welcome to ABES-EventHub`;
+        // console.log(message);
+        await sendWelcomeEmaill({
+            email: user.email,
+            subject: `Welcome to ABES - EventHub`,
+            message,
+            name: user.fullname,
+        })
 
         res.status(200).json({
             success: true,
@@ -176,25 +186,42 @@ export const forgotPassword = async (req: Request, res: Response): Promise<void>
 
 export const resetPassword = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { token } = req.params;
-        const { newPassword } = req.body;
-        const user = await User.findOne({ resetPasswordToken: token, resetPasswordTokenExpiresAt: { $gt: Date.now() } });
+        console.log(req.id);
+        const userId = req.id;
+        const user = await User.findById(userId);
+
         if (!user) {
             res.status(400).json({
                 success: false,
-                message: "Invalid Reset Token."
+                message: "User doesn't exist.",
             });
             return;
         }
-        //update password
+        const { oldPassword, newPassword } = req.body;
+
+        const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+
+        if (!isPasswordMatch) {
+            res.status(400).json({
+                success: false,
+                message: "Incorrect Password.",
+            });
+            return;
+        }
+
         const hashedPassword = await bcrypt.hash(newPassword, 10);
+
         user.password = hashedPassword;
-        user.resetPasswordToken = undefined;
-        user.resetPasswordTokenExpiresAt = undefined;
         await user.save();
 
         // send success reset email
-        await sendResetSuccessEmail(user.email);
+        const message = `Password Reset Successful`;
+        // console.log(message);
+        await sendResetSuccessEmail({
+            email: user.email,
+            subject: `Password Reset Successful`,
+            message,
+        })
 
         res.status(200).json({
             success: true,
@@ -229,6 +256,8 @@ export const checkAuth = async (req: Request, res: Response): Promise<void> => {
 
 export const updateProfile = async (req: Request, res: Response): Promise<void> => {
     try {
+        console.log(req.id);
+
         const userId = req.id;
         const { fullname, email, address, city, country, profilePicture } = req.body;
 
