@@ -5,8 +5,7 @@ import crypto from "crypto";
 import cloudinary from "../utils/cloudinary";
 import { generateVerificationCode } from "../utils/generateVerificationCode";
 import { generateToken } from "../utils/generateToken";
-import { sendPasswordResetEmail } from "../mailtrap/email";
-import { sendEmail, sendResetSuccessEmail, sendWelcomeEmaill } from "../utils/sendEmail";
+import { sendEmail, sendResetSuccessEmail, sendWelcomeEmaill, sendPasswordResetEmail } from "../utils/sendEmail";
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -179,7 +178,7 @@ export const forgotPassword = async (req: Request, res: Response): Promise<void>
         // nodemailer implementation
         const message = `ABES-EventHub : Forgot Password`;
         // console.log(message);
-        await sendWelcomeEmaill({
+        await sendPasswordResetEmail({
             email: user.email,
             subject: `ABES-EventHub : Forgot Password`,
             message,
@@ -227,11 +226,11 @@ export const resetPassword = async (req: Request, res: Response): Promise<void> 
         await user.save();
 
         // send success reset email
-        const message = `Password Reset Successful`;
+        const message = `Password Reset Successfull`;
         // console.log(message);
         await sendResetSuccessEmail({
             email: user.email,
-            subject: `Password Reset Successful`,
+            subject: `Password Reset Successfull`,
             message,
         })
 
