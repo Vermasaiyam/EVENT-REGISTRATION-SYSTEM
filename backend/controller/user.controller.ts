@@ -172,7 +172,19 @@ export const forgotPassword = async (req: Request, res: Response): Promise<void>
         await user.save();
 
         // send email
-        await sendPasswordResetEmail(user.email, `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`);
+        // await sendPasswordResetEmail(user.email, `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`);
+
+        const forgotPasswordToken = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
+
+        // nodemailer implementation
+        const message = `ABES-EventHub : Forgot Password`;
+        // console.log(message);
+        await sendWelcomeEmaill({
+            email: user.email,
+            subject: `ABES-EventHub : Forgot Password`,
+            message,
+            name: forgotPasswordToken,
+        })
 
         res.status(200).json({
             success: true,

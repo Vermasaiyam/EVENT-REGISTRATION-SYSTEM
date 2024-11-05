@@ -1,25 +1,28 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useUserStore } from "@/store/useUserStore";
 import { Loader2, Mail } from "lucide-react"
 import { useState } from "react";
-import { Link } from "react-router-dom";
-// import { useUserStore } from "@/store/useUserStore";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const ForgotPassword = () => {
+    const navigate = useNavigate();
+    
     const [email, setEmail] = useState<string>("");
-    const loading = false;
+    
+    // const loading = false;
 
-    // const { forgotPassword, loading } = useUserStore();
+    const { forgotPassword, loading } = useUserStore();
 
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // try {
-        //     await forgotPassword(email);
-        //     // navigate("/");
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        try {
+            await forgotPassword(email);
+            navigate("/login");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
