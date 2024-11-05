@@ -22,6 +22,8 @@ import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
 import { Loader2, Plus } from "lucide-react";
 import { FormEvent, useState } from "react";
 import EditEvent from "./EditEvent";
+import { useEventStore } from "@/store/useEventStore";
+import { useClubStore } from "@/store/useClubStore";
 
 
 const AddEvents = () => {
@@ -42,7 +44,10 @@ const AddEvents = () => {
     const [open, setOpen] = useState<boolean>(false);
     const [editOpen, setEditOpen] = useState<boolean>(false);
     const [selectedEvent, setSelectedEvent] = useState<any>();
-    const loading: boolean = false;
+    // const loading: boolean = false;
+
+    const { loading, createEvent } = useEventStore();
+    const { club } = useClubStore();
 
 
     const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,11 +62,16 @@ const AddEvents = () => {
         console.log(input);
 
         const result = eventSchema.safeParse(input);
+        console.log(result);
+
         if (!result.success) {
             const fieldErrors = result.error.formErrors.fieldErrors;
             setError(fieldErrors as Partial<EventFormSchema>);
             return;
         }
+
+        console.log("HII");
+
 
         // api
         try {
@@ -81,8 +91,11 @@ const AddEvents = () => {
                 formData.append("image", input.image);
             }
 
-            // API function
+            console.log("hello");
 
+
+            // API function
+            await createEvent(formData);
 
         } catch (error) {
             console.error("Error submitting form:", error);
@@ -92,34 +105,41 @@ const AddEvents = () => {
         setOpen(false);
     }
 
-    const eventItems: EventFormSchema[] = [
-        {
-            name: "HacoVerse",
-            description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
-            mode: "Offline",
-            registrationFee: 69,
-            registrationEndDate: "2024-11-15",
-            eventStartDate: "2024-11-16",
-            eventEndDate: "2024-11-17",
-            startTime: "10:00",
-            endTime: "17:00",
-            image: undefined,
-            formLink: "",
-        },
-        {
-            name: "KT Session",
-            description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
-            mode: "Offline",
-            registrationFee: 69,
-            registrationEndDate: "2024-11-20",
-            eventStartDate: "2024-11-21",
-            eventEndDate: "2024-11-22",
-            startTime: "14:00",
-            endTime: "18:00",
-            image: undefined,
-            formLink: "",
-        },
-    ];
+    const formatTime = (time: any) => {
+        const [hours, minutes] = time.split(':');
+        const hoursIn12 = hours % 12 || 12;
+        const ampm = hours < 12 ? 'AM' : 'PM';
+        return `${hoursIn12}:${minutes} ${ampm}`;
+    };
+
+    // const eventItems: EventFormSchema[] = [
+    //     {
+    //         name: "HacoVerse",
+    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
+    //         mode: "Offline",
+    //         registrationFee: 69,
+    //         registrationEndDate: "2024-11-15",
+    //         eventStartDate: "2024-11-16",
+    //         eventEndDate: "2024-11-17",
+    //         startTime: "10:00",
+    //         endTime: "17:00",
+    //         image: undefined,
+    //         formLink: "",
+    //     },
+    //     {
+    //         name: "KT Session",
+    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
+    //         mode: "Offline",
+    //         registrationFee: 69,
+    //         registrationEndDate: "2024-11-20",
+    //         eventStartDate: "2024-11-21",
+    //         eventEndDate: "2024-11-22",
+    //         startTime: "14:00",
+    //         endTime: "18:00",
+    //         image: undefined,
+    //         formLink: "",
+    //     },
+    // ];
 
 
 
@@ -131,7 +151,7 @@ const AddEvents = () => {
                 </h1>
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogTrigger>
-                        <Button className="bg-green hover:bg-hoverGreen dark:text-white">
+                        <Button disabled={club ? false : true} className="bg-green hover:bg-hoverGreen dark:text-white">
                             <Plus className="mr-2" />
                             Add Event
                         </Button>
@@ -159,11 +179,26 @@ const AddEvents = () => {
                                     </span>
                                 )}
                             </div>
+                            <div>
+                                <Label>Description</Label>
+                                <Input
+                                    type="text"
+                                    name="description"
+                                    value={input.description}
+                                    onChange={changeEventHandler}
+                                    placeholder="Enter Description of Event"
+                                />
+                                {error && (
+                                    <span className="text-xs font-medium text-red-600">
+                                        {error.name}
+                                    </span>
+                                )}
+                            </div>
 
                             <div>
                                 <Label>Event Mode</Label>
                                 <Select
-                                    // onValueChange={(newMode) => setInput({ ...input, mode: newMode })}
+                                    onValueChange={(newMode: EventFormSchema["mode"]) => setInput({ ...input, mode: newMode })}
                                     defaultValue={input.mode}
                                 >
                                     <SelectTrigger>
@@ -335,11 +370,11 @@ const AddEvents = () => {
                 </Dialog>
 
             </div>
-            {eventItems.map((event: any, idx: number) => (
+            {club?.events.map((event: any, idx: number) => (
                 <div key={idx} className="mt-6 space-y-4 hover:shadow-lg">
                     <div className="flex flex-col md:flex-row md:items-center md:space-x-4 md:p-4 p-2 shadow-md rounded-lg border">
                         <img
-                            src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
+                            src={event.image}
                             alt={event.name}
                             className="md:h-24 md:w-24 h-28 w-full object-cover rounded-lg"
                         />
@@ -356,15 +391,15 @@ const AddEvents = () => {
                             <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
                                 <div className="text-sm text-gray-700 dark:text-gray-400">
                                     <span className="font-semibold">Registration End Date: </span>
-                                    {event.registrationEndDate}
+                                    {new Date(event.registrationEndDate).toLocaleDateString('en-GB')}
                                 </div>
                                 <div className="text-sm text-gray-700 dark:text-gray-400">
                                     <span className="font-semibold">Event Start Date: </span>
-                                    {event.eventStartDate}
+                                    {new Date(event.eventStartDate).toLocaleDateString('en-GB')}
                                 </div>
                                 <div className="text-sm text-gray-700 dark:text-gray-400">
                                     <span className="font-semibold">Event End Date: </span>
-                                    {event.eventEndDate}
+                                    {new Date(event.eventEndDate).toLocaleDateString('en-GB')}
                                 </div>
                                 <div className="text-sm text-gray-700 dark:text-gray-400">
                                     <span className="font-semibold">Mode: </span>
@@ -372,15 +407,14 @@ const AddEvents = () => {
                                 </div>
                             </div>
 
-                            {/* New fields: Start Time and End Time */}
                             <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
                                 <div className="text-sm text-gray-700 dark:text-gray-400">
                                     <span className="font-semibold">Start Time: </span>
-                                    {event.startTime}
+                                    {formatTime(event.startTime)}
                                 </div>
                                 <div className="text-sm text-gray-700 dark:text-gray-400">
                                     <span className="font-semibold">End Time: </span>
-                                    {event.endTime}
+                                    {formatTime(event.endTime)}
                                 </div>
                             </div>
                         </div>
@@ -399,7 +433,7 @@ const AddEvents = () => {
 
             ))}
             {
-                (eventItems.length === 0) && (
+                (club?.events.length === 0) && (
                     <div className="text-sm text-gray-600 text-center my-10">
                         No Events to display.
                     </div>

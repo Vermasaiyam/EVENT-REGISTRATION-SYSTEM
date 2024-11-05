@@ -9,9 +9,9 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
         const { clubName, eventTypes, coreTeam } = req.body;
         const file = req.file;
 
-        console.log("Request body:", req.body); // Debugging: log request body
-        console.log("Event Types:", eventTypes); // Debugging: log eventTypes
-        console.log("Core Team:", coreTeam); // Debugging: log coreTeam
+        // console.log("Request body:", req.body);
+        // console.log("Event Types:", eventTypes);
+        // console.log("Core Team:", coreTeam);
 
         const club = await Club.findOne({ user: req.id });
 

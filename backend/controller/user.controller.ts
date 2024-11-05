@@ -197,7 +197,7 @@ export const forgotPassword = async (req: Request, res: Response): Promise<void>
 
 export const resetPassword = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log(req.id);
+        // console.log(req.id);
         const userId = req.id;
         const user = await User.findById(userId);
 

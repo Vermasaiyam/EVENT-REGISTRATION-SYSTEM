@@ -20,6 +20,8 @@ export const useEventStore = create<EventState>()(persist((set) => ({
     createEvent: async (formData: FormData) => {
         try {
             set({ loading: true });
+            console.log("debugging");
+            
             const response = await axios.post(`${API_END_POINT}/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
