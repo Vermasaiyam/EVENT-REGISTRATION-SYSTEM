@@ -9,8 +9,12 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
         const { clubName, eventTypes, coreTeam } = req.body;
         const file = req.file;
 
+        console.log("Request body:", req.body); // Debugging: log request body
+        console.log("Event Types:", eventTypes); // Debugging: log eventTypes
+        console.log("Core Team:", coreTeam); // Debugging: log coreTeam
 
         const club = await Club.findOne({ user: req.id });
+
         if (club) {
             res.status(400).json({
                 success: false,
@@ -25,6 +29,23 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             })
             return;
         }
+
+        // Parse eventTypes and coreTeam with error handling
+        let parsedEventTypes;
+        let parsedCoreTeam;
+
+        try {
+            parsedEventTypes = eventTypes ? JSON.parse(eventTypes) : [];
+            parsedCoreTeam = coreTeam ? JSON.parse(coreTeam) : [];
+        } catch (parseError) {
+            console.error("JSON parsing error:", parseError);
+            res.status(400).json({
+                success: false,
+                message: "Invalid JSON format for eventTypes or coreTeam."
+            });
+            return;
+        }
+
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
         await Club.create({
             user: req.id,
@@ -35,7 +56,7 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
         });
         res.status(201).json({
             success: true,
-            message: "Club Added Successfully"
+            message: "Club Added Successfully."
         });
     } catch (error) {
         console.log(error);
@@ -45,7 +66,8 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
 
 export const getClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const club = await Club.findOne({ user: req.id }).populate('events');
+        const club = await Club.findOne({ user: req.id })
+        // .populate('events');
         if (!club) {
             res.status(404).json({
                 success: false,

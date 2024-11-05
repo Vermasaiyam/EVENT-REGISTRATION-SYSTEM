@@ -2,21 +2,31 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { clubFormSchema, ClubFormSchema } from "@/schema/clubSchema";
+import { useClubStore } from "@/store/useClubStore";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+// "Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"
+// "Piyush Pandey", "Amritansh Tripathi", "Shally Agarwal"
 const Club = () => {
     const [input, setInput] = useState<ClubFormSchema>({
-        clubName: "DataVerse",
-        eventTypes: ["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"],
-        coreTeam: ["Piyush Pandey", "Amritansh Tripathi", "Shally Agarwal"],
+        clubName: "",
+        eventTypes: [],
+        coreTeam: [],
         imageFile: undefined,
     });
 
     const [errors, setErrors] = useState<Partial<ClubFormSchema>>({});
 
-    const loading: boolean = false;
-    const club: boolean = true;
+    const {
+        loading,
+        club,
+        updateClub,
+        createClub,
+        getClub,
+    } = useClubStore();
+
+    // const loading: boolean = false;
+    // const club: boolean = true;
 
     const changeEventHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type } = e.target;
@@ -36,7 +46,7 @@ const Club = () => {
         try {
             const formData = new FormData();
             formData.append("clubName", input.clubName);
-            formData.append("fieldOfEvents", JSON.stringify(input.eventTypes));
+            formData.append("eventTypes", JSON.stringify(input.eventTypes));
             formData.append("coreTeam", JSON.stringify(input.coreTeam));
 
             if (input.imageFile) {
@@ -45,28 +55,39 @@ const Club = () => {
 
             // api implementation
 
+            if (club) {
+                // update
+                await updateClub(formData);
+            } else {
+                // create
+                await createClub(formData);
+            }
+
         } catch (error) {
             console.log(error);
         }
     }
 
-    // useEffect(() => {
-    //     const fetchClub = async () => {
-    //         if (club) {
-    //             setInput({
-    //                 clubName: club.clubName || "",
-    //                 fieldOfEvents: club.fieldOfEvents
-    //                     ? club.fieldOfEvents.map((event: string) => event)
-    //                     : [],
-    //                 coreTeam: club.coreTeam
-    //                     ? club.coreTeam.map((member: string) => member)
-    //                     : [],
-    //                 imageFile: undefined,
-    //             });
-    //         };
-    //     }
-    //     fetchClub();
-    // }, []);
+    useEffect(() => {
+        const fetchClub = async () => {
+            await getClub();
+            if (club) {
+                setInput({
+                    clubName: club.clubName || "",
+                    eventTypes: club.eventTypes
+                        ? club.eventTypes.map((event: string) => event)
+                        : [],
+                    coreTeam: club.coreTeam
+                        ? club.coreTeam.map((member: string) => member)
+                        : [],
+                    imageFile: undefined,
+                });
+            };
+        }
+        fetchClub();
+        console.log(club);
+        
+    }, []);
 
 
 
