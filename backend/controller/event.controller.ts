@@ -4,15 +4,16 @@ import { Event } from "../models/event.model";
 import { Club } from "../models/club.model";
 import mongoose, { ObjectId } from "mongoose";
 
-export const addEvent = async (req: Request, res: Response) => {
+export const addEvent = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, description, mode, registrationFee, registrationEndDate, eventStartDate, eventEndDate, startTime, endTime, formLink } = req.body;
         const file = req.file;
         if (!file) {
-            return res.status(400).json({
+            res.status(400).json({
                 success: false,
                 message: "Event Image is required."
             })
+            return;
         };
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
         const event: any = await Event.create({
@@ -34,28 +35,29 @@ export const addEvent = async (req: Request, res: Response) => {
             await club.save();
         }
 
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
             message: "Event Added Successfully.",
             event
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Internal Server Error." });
+        res.status(500).json({ message: "Internal Server Error." });
     }
 }
 
-export const editEvent = async (req: Request, res: Response) => {
+export const editEvent = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
         const { name, description, mode, registrationFee, registrationEndDate, eventStartDate, eventEndDate, startTime, endTime, formLink } = req.body;
         const file = req.file;
         const event = await Event.findById(id);
         if (!event) {
-            return res.status(404).json({
+            res.status(404).json({
                 success: false,
                 message: "Event not found!!!"
-            })
+            });
+            return;
         }
         if (name) event.name = name;
         if (description) event.description = description;
@@ -74,13 +76,13 @@ export const editEvent = async (req: Request, res: Response) => {
         }
         await event.save();
 
-        return res.status(200).json({
+        res.status(200).json({
             success: true,
             message: "Event updated",
             event,
         })
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Internal Server Error." });
+        res.status(500).json({ message: "Internal Server Error." });
     }
 }

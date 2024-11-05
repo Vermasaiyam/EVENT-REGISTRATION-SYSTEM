@@ -6,6 +6,7 @@ import cors from "cors";
 import connectDB from "./db/connectDB";
 import userRoute from "./routes/user.route";
 import clubRoute from "./routes/club.route";
+import eventRoute from "./routes/event.route";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(cors(corsOptions));
 
 app.use("/api/user", userRoute);
 app.use("/api/club", clubRoute);
+app.use("/api/event", eventRoute);
 
 
 
