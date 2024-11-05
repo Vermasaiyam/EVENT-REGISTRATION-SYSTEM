@@ -6,6 +6,7 @@ import cloudinary from "../utils/cloudinary";
 import { generateVerificationCode } from "../utils/generateVerificationCode";
 import { generateToken } from "../utils/generateToken";
 import { sendPasswordResetEmail, sendResetSuccessEmail, sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/email";
+import sendEmail from "../utils/sendEmail";
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -32,7 +33,15 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
         })
         generateToken(res, user);
 
-        await sendVerificationEmail(email, verificationToken);
+        // await sendVerificationEmail(email, verificationToken);
+        const message = `your verification token is :-\n${verificationToken} `;
+        // console.log(message);
+        await sendEmail({
+            email: user.email,
+            subject: `Ecommerce Password Recovery`,
+            message,
+            verificationToken,
+        })
 
         const userWithoutPassword = await User.findOne({ email }).select("-password");
         res.status(201).json({
