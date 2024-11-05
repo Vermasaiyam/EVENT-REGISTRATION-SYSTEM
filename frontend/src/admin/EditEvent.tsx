@@ -305,12 +305,14 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
 
                     <DialogFooter className="mt-5">
                         {loading ? (
-                            <Button disabled className="bg-green hover:bg-hoverGreen">
+                            <Button disabled className="w-full bg-green hover:bg-hoverGreen dark:text-white">
                                 <Loader2 className="mr-2 w-4 h-4 animate-spin" />
                                 Please wait
                             </Button>
                         ) : (
-                            <Button className="bg-green hover:bg-hoverGreen">Submit</Button>
+                            <Button className="w-full bg-green hover:bg-hoverGreen dark:text-white">
+                                Submit
+                            </Button>
                         )}
                     </DialogFooter>
                 </form>
