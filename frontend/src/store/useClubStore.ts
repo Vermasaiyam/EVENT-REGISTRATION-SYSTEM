@@ -154,27 +154,20 @@ export const useClubStore = create<ClubState>()(persist((set, get) => ({
         try {
             set({ loading: true });
 
-            const response = await axios.get(`${API_END_POINT}/fetchAllClubs`, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            const response = await axios.get(`${API_END_POINT}/clubs`);
             console.log("Response", response);
-            
-            
+
             if (response.data.success) {
-                set({ loading: false, allClubs: response.data.club });
+                set({ loading: false, allClubs: response.data.club }); // Changed from 'club' to 'clubs'
             }
         } catch (error: any) {
-            if (error.response.status === 404) {
-                set({ club: null });
+            console.log("Error", error);
+            if (error.response && error.response.status === 404) {
+                set({ allClubs: null }); // Changed from 'club' to 'allClubs'
             }
-            console.log("Error",error);
-            
             set({ loading: false });
         }
     }
-
 }), {
     name: 'club-name',
     storage: createJSONStorage(() => localStorage)

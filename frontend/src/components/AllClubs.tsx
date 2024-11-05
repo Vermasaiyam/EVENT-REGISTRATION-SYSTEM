@@ -5,77 +5,78 @@ import { Badge } from "./ui/badge";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Skeleton } from "./ui/skeleton";
+import { useClubStore } from "@/store/useClubStore";
+import { Club } from "@/types/clubType";
 
 const AllClubs = () => {
-    //   const { loading, allClubs, fetchAllClubs } = useClubStore();
+    const { loading, allClubs, fetchAllClubs } = useClubStore();
     // const loading: boolean = false;
 
     useEffect(() => {
-        // fetchAllClubs();
+        fetchAllClubs();
     }, []);
 
     return (
         <div className="grid md:grid-cols-3 md:gap-10 gap-8 md:mx-10 md:my-10 my-6 mx-6">
             {
-                // loading ? (
-                //     <SearchPageSkeleton />
-                // ) : !loading && searchedClub?.data.length === 0 ? (
-                //     <NoResultFound searchText={params.id!} />
-                // ) : (
-                // searchedClub?.data.map((club: Club) => (
-                ["Hackathon", "Quiz", "Nukkad"].map((club: any) => (
-                    <Card
-                        key={club._id}
-                        className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-                    >
-                        <div className="relative">
-                            <AspectRatio ratio={15 / 8}>
-                                <img
-                                    // src={club.imageUrl}
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL_kIswlm4KDcOl6U--eJiLidCUvAzpZC5ZQ&s"
-                                    alt={club.clubName}
-                                    className="w-full h-full object-cover"
-                                />
-                            </AspectRatio>
-                        </div>
-                        <CardContent className="p-4">
-                            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                {/* {club.clubName} */}
-                                DataVerse
-                            </h1>
-                            <div className="flex gap-2 mt-4 flex-wrap">
-                                {/* {club.eventTypes.slice(0, 3).map( */}
-                                {["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].slice(0, 3).map(
-                                    (event: string, idx: number) => (
-                                        <Badge
-                                            key={idx}
-                                            className="font-medium px-2 py-1 rounded-full shadow-sm"
-                                        >
-                                            {event}
-                                        </Badge>
-                                    )
-                                )}
-                                {
-                                    // club.eventTypes.length > 3 && (
-                                    ["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].length > 3 && (
-                                        <span className="text-xs text-gray-600 my-auto  dark:text-yellow-100">
-                                            {/* + {club.eventTypes.length - 3} more */}
-                                            + 3 more
-                                        </span>
-                                    )
-                                }
+                loading ? (
+                    <SearchPageSkeleton />
+                ) : !loading && allClubs?.data.length === 0 ? (
+                    <NoResultFound />
+                ) : (
+                    allClubs?.data.map((club: Club) => (
+                        <Card
+                            key={club._id}
+                            className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+                        >
+                            <div className="relative">
+                                <AspectRatio ratio={15 / 8}>
+                                    <img
+                                        src={club.imageUrl}
+                                        // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL_kIswlm4KDcOl6U--eJiLidCUvAzpZC5ZQ&s"
+                                        alt={club.clubName}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </AspectRatio>
                             </div>
-                        </CardContent>
-                        <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
-                            <Link to={`/club/${club._id}`}>
-                                <Button className="bg-green hover:bg-hoverGreen dark:text-white font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
-                                    Explore
-                                </Button>
-                            </Link>
-                        </CardFooter>
-                    </Card>
-                ))
-                // )
+                            <CardContent className="p-4">
+                                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                                    {club.clubName}
+                                    {/* DataVerse */}
+                                </h1>
+                                <div className="flex gap-2 mt-4 flex-wrap">
+                                    {/* {["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].slice(0, 3).map( */}
+                                    {club.eventTypes.slice(0, 3).map(
+                                        (event: string, idx: number) => (
+                                            <Badge
+                                                key={idx}
+                                                className="font-medium px-2 py-1 rounded-full shadow-sm"
+                                            >
+                                                {event}
+                                            </Badge>
+                                        )
+                                    )}
+                                    {
+                                        // ["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].length > 3 && (
+                                        club.eventTypes.length > 3 && (
+                                            <span className="text-xs text-gray-600 my-auto  dark:text-yellow-100">
+                                                + {club.eventTypes.length - 3} more
+                                                {/* + 3 more */}
+                                            </span>
+                                        )
+                                    }
+                                </div>
+                            </CardContent>
+                            <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
+                                <Link to={`/club/${club._id}`}>
+                                    <Button className="bg-green hover:bg-hoverGreen dark:text-white font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
+                                        Explore
+                                    </Button>
+                                </Link>
+                            </CardFooter>
+                        </Card>
+                    ))
+                )
             }
 
         </div>

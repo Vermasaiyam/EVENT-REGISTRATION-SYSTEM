@@ -25,7 +25,7 @@ const clubSchema = new mongoose.Schema<IClubDocument>({
     },
     eventTypes: [{ type: String, required: true }],
     coreTeam: [{ type: String, required: true }],
-    events: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
+    events: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
     imageUrl: {
         type: String,
         required: true
