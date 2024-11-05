@@ -66,8 +66,7 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
 
 export const getClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const club = await Club.findOne({ user: req.id })
-        // .populate('events');
+        const club = await Club.findOne({ user: req.id }).populate('events');
         if (!club) {
             res.status(404).json({
                 success: false,
