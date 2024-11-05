@@ -56,8 +56,8 @@ const appRouter = createBrowserRouter([
     path: '/',
     element:
       <ProtectedRoutes>
-      <MainLayout />
-    </ProtectedRoutes>,
+        <MainLayout />
+      </ProtectedRoutes>,
     children: [
       {
         path: "/",
@@ -93,15 +93,15 @@ const appRouter = createBrowserRouter([
         path: "/admin/club",
         element:
           <AdminRoute>
-          <Club />
-        </AdminRoute>
+            <Club />
+          </AdminRoute>
       },
       {
         path: "/admin/events",
         element:
           <AdminRoute>
-          <AddEvents />
-        </AdminRoute>,
+            <AddEvents />
+          </AdminRoute>,
       },
 
       // Under construction page
@@ -115,26 +115,30 @@ const appRouter = createBrowserRouter([
     path: "/login",
     element:
       <AuthenticatedUser>
-      <Login />
-    </AuthenticatedUser>,
+        <Login />
+      </AuthenticatedUser>,
   },
   {
     path: "/signup",
     element:
       <AuthenticatedUser>
-      <Signup />
-    </AuthenticatedUser>,
+        <Signup />
+      </AuthenticatedUser>,
   },
   {
     path: "/forgot-password",
     element:
       <AuthenticatedUser>
-      <ForgotPassword />
-    </AuthenticatedUser>,
+        <ForgotPassword />
+      </AuthenticatedUser>,
   },
   {
     path: '/reset-password',
-    element: <ResetPassword />
+    element:
+      <ProtectedRoutes>
+        <ResetPassword />
+      </ProtectedRoutes>
+
   },
   {
     path: '/verify-email',
