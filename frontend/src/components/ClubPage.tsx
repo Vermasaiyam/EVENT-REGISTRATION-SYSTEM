@@ -54,7 +54,7 @@ const ClubPage = () => {
                         className="object-cover w-full h-full rounded-lg shadow-lg"
                     />
                 </div>
-                <div className="flex flex-col md:flex-row justify-between">
+                <div className="flex w-full flex-col md:flex-row justify-between">
                     <div className="my-5">
                         <h1 className="font-bold md:text-3xl text-2xl">
                             {singleClub?.clubName || "Loading..."}
