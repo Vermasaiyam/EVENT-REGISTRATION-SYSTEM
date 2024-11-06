@@ -18,6 +18,7 @@ const AllUsers = () => {
   const [updateUserDetails, setUpdateUserDetails] = useState({
     fullname: "",
     email: "",
+    contact: null,
     addmission_no: "",
     branch: "",
     admin: false,
@@ -32,14 +33,14 @@ const AllUsers = () => {
   }, [])
 
   return (
-    <div className='bg-white'>
-
+    <div className='bg-white my-4'>
       <Table>
         <TableHeader>
           <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
             <TableHead className="w-[100px] font-bold text-white">S.No.</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Name</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
+            <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Addmission Number</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Admin</TableHead>
@@ -55,6 +56,7 @@ const AllUsers = () => {
                   <TableCell className="font-medium">{index + 1}</TableCell>
                   <TableCell>{el?.fullname}</TableCell>
                   <TableCell>{el?.email}</TableCell>
+                  <TableCell>{el?.contact}</TableCell>
                   <TableCell>{el?.addmission_no}</TableCell>
                   <TableCell>{el?.branch}</TableCell>
                   <TableCell>{el?.admin ? "Yes" : "No"}</TableCell>
