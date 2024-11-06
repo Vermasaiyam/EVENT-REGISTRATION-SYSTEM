@@ -36,7 +36,7 @@ const AllClubs = () => {
                                         src={club.imageUrl}
                                         // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL_kIswlm4KDcOl6U--eJiLidCUvAzpZC5ZQ&s"
                                         alt={club.clubName}
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-contain"
                                     />
                                 </AspectRatio>
                             </div>

@@ -64,7 +64,7 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                                     // src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
                                     src={event.image}
                                     alt={event.name}
-                                    className="w-full h-40 object-cover"
+                                    className="w-full h-52 object-contain"
                                 />
                             </Link>
                             <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">

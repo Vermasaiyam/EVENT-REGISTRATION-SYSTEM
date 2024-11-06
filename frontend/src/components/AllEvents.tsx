@@ -66,7 +66,7 @@ const AllEvents = () => {
                                             <img
                                                 src={event.image}
                                                 alt={event.name}
-                                                className="w-full h-40 object-cover"
+                                                className="w-full h-52 object-contain"
                                             />
                                         </Link>
                                         <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
@@ -136,7 +136,7 @@ const AllEvents = () => {
                                             <img
                                                 src={event.image}
                                                 alt={event.name}
-                                                className="w-full h-40 object-cover"
+                                                className="w-full h-52 object-contain"
                                             />
                                         </Link>
                                         <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
