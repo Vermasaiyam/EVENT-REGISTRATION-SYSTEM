@@ -8,7 +8,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 const API_END_POINT = "http://localhost:8000/api/club"
 axios.defaults.withCredentials = true;
 
-export const useClubStore = create<ClubState>()(persist((set, get) => ({
+export const useClubStore = create<ClubState>()(persist((set) => ({
     loading: false,
     club: null,
     searchedClub: null,
