@@ -20,7 +20,7 @@ const EventPage = () => {
         // Update active state based on comparison
         setActive(registrationEndDate >= today);
     }, [event.registrationEndDate]);
-    
+
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(':');
@@ -74,9 +74,24 @@ const EventPage = () => {
                                 </div>
                             </div>
                             <div className="mt-5">
-                                <Button disabled={active ? false : true} className="w-full bg-green text-white font-semibold py-2 rounded-lg shadow-md hover:bg-hoverGreen">
-                                    Register Now
-                                </Button>
+                                {active ? (
+                                    <a href={event.formLink} target="_blank">
+                                        <Button
+                                            variant={"outline"}
+                                            className="w-full bg-green text-white font-semibold py-2 rounded-lg shadow-md hover:bg-hoverGreen hover:text-white"
+                                        >
+                                            Register Now
+                                        </Button>
+                                    </a>
+                                ) : (
+                                    <Button
+                                        disabled={true}
+                                        variant={"outline"}
+                                        className="w-full bg-green text-white font-semibold py-2 rounded-lg shadow-md hover:bg-hoverGreen hover:text-white"
+                                    >
+                                        Register Now
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </div>

@@ -62,7 +62,7 @@ const AllEvents = () => {
                             activeEvents?.map((event: Event) => (
                                 <div key={event._id}>
                                     <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
-                                        <Link to={event.name} state={{ event}} className="">
+                                        <Link to={event.name} state={{ event }} className="">
                                             <img
                                                 src={event.image}
                                                 alt={event.name}
@@ -132,11 +132,11 @@ const AllEvents = () => {
                             pastEvents?.map((event: Event) => (
                                 <div key={event._id}>
                                     <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
-                                        <Link to={event.name} state={{ event}} className="">
+                                        <Link to={event.name} state={{ event }} className="">
                                             <img
                                                 src={event.image}
                                                 alt={event.name}
-                                                className="w-full h-52 object-contain"
+                                                className="w-full h-48 object-contain"
                                             />
                                         </Link>
                                         <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
@@ -171,15 +171,13 @@ const AllEvents = () => {
                                                 </div>
                                             </div>
                                             <div className="flex justify-center mt-4">
-                                                <a href={event.formLink} target="_blank">
-                                                    <Button
-                                                        disabled
-                                                        variant={"outline"}
-                                                        className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
-                                                    >
-                                                        Register Now
-                                                    </Button>
-                                                </a>
+                                                <Button
+                                                    disabled={true}
+                                                    variant={"outline"}
+                                                    className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
+                                                >
+                                                    Register Now
+                                                </Button>
                                             </div>
                                         </CardContent>
                                     </Card>
