@@ -80,10 +80,18 @@ const appRouter = createBrowserRouter([
         path: "/club/:id/:id",
         element: <EventPage />
       },
-        {
-          path: "/events",
-          element: <AllEvents />
-        },
+      {
+        path: "/:id",
+        element: <EventPage />
+      },
+      {
+        path: "/events/:id",
+        element: <EventPage />
+      },
+      {
+        path: "/events",
+        element: <AllEvents />
+      },
       {
         path: "/clubs",
         element: <AllClubs />

@@ -57,7 +57,7 @@ const AllEvents = () => {
                                             <span className="text-green dark:text-yellow-100">₹{event.registrationFee}</span>
                                         </div>
                                         <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
-                                            <span className="font-semibold">Registration End Date:</span>
+                                            <span className="font-semibold">Registration Ends:</span>
                                             <span>{new Date(event.registrationEndDate).toLocaleDateString('en-GB')}</span>
                                         </div>
                                         <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
