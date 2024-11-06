@@ -382,7 +382,7 @@ const AddEvents = () => {
                             <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
                                 {event.name}
                             </h1>
-                            <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">{event.description}</p>
+                            <p title={event.description} className="text-sm text-gray-600 mt-1 dark:text-gray-400 line-clamp-1">{event.description}</p>
 
                             <h2 className="text-md font-semibold mt-2 flex items-center">
                                 Registration Fee: <span className="text-green dark:text-yellow-100 flex items-center mx-2">₹{event.registrationFee}</span>

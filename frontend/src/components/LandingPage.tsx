@@ -16,7 +16,7 @@ import PastEvent from "./PastEvents";
 const LandingPage = () => {
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState<string>("");
-    
+
     const [activeEvents, setActiveEvents] = useState<EventItem[]>([]);
     const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
 
@@ -25,26 +25,31 @@ const LandingPage = () => {
     useEffect(() => {
         async function fetchData() {
             await fetchAllEvents();
-
-            if (allEvents) {
-                const today = new Date();
-
-                const active = allEvents.filter(event => {
-                    const registrationEndDate = new Date(event.registrationEndDate);
-                    return registrationEndDate > today;
-                });
-                setActiveEvents(active);
-
-                const past = allEvents.filter(event => {
-                    const registrationEndDate = new Date(event.registrationEndDate);
-                    return registrationEndDate < today;
-                });
-                setPastEvents(past);
-            }
         }
         fetchData();
 
-        console.log("all events", allEvents);
+        // console.log("all events", allEvents);
+    }, []);
+
+    useEffect(() => {
+        if (allEvents) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const active = allEvents.filter(event => {
+                const registrationEndDate = new Date(event.registrationEndDate);
+                registrationEndDate.setHours(0, 0, 0, 0);
+                return registrationEndDate >= today;
+            });
+            setActiveEvents(active);
+
+            const past = allEvents.filter(event => {
+                const registrationEndDate = new Date(event.registrationEndDate);
+                registrationEndDate.setHours(0, 0, 0, 0);
+                return registrationEndDate < today;
+            });
+            setPastEvents(past);
+        }
     }, []);
 
     const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -112,20 +117,20 @@ const LandingPage = () => {
             </div>
 
             {/* All Events */}
-            <div className="max-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
+            <div className="max-w-6xl min-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
                 {/* <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">Active Events</h1> */}
                 {/* <AllEvents /> */}
-                <ActiveEvent events={activeEvents}/>
+                <ActiveEvent events={activeEvents} />
             </div>
 
-            <div className="max-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
+            <div className="max-w-6xl min-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
                 {
                     pastEvents.length > 0 && (
-                        <PastEvent events={pastEvents}/>
+                        <PastEvent events={pastEvents} />
                     )
                 }
             </div>
-            
+
             <HelpingSection />
         </div>
     )

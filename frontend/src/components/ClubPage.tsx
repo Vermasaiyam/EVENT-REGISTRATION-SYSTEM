@@ -17,31 +17,35 @@ const ClubPage = () => {
     const [activeEvents, setActiveEvents] = useState<EventItem[]>([]);
     const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
 
-
     useEffect(() => {
         async function fetchData() {
             await getSingleClub(params.id!);
-
-            if (singleClub?.events) {
-                const today = new Date();
-
-                const active = singleClub.events.filter(event => {
-                    const registrationEndDate = new Date(event.registrationEndDate);
-                    return registrationEndDate > today;
-                });
-                setActiveEvents(active);
-
-                const past = singleClub.events.filter(event => {
-                    const registrationEndDate = new Date(event.registrationEndDate);
-                    return registrationEndDate < today;
-                });
-                setPastEvents(past);
-            }
         }
 
         fetchData();
-    }, [params.id, singleClub]);
+    }, [params.id]);
 
+    useEffect(() => {
+        if (singleClub?.events) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const active = singleClub.events.filter(event => {
+                const registrationEndDate = new Date(event.registrationEndDate);
+                registrationEndDate.setHours(0, 0, 0, 0);
+                return registrationEndDate >= today;
+            });
+
+            const past = singleClub.events.filter(event => {
+                const registrationEndDate = new Date(event.registrationEndDate);
+                registrationEndDate.setHours(0, 0, 0, 0);
+                return registrationEndDate < today;
+            });
+
+            setActiveEvents(active);
+            setPastEvents(past);
+        }
+    }, [singleClub]);
 
     return (
         <div className="max-w-6xl mx-auto my-10 min-h-[60vh]">
