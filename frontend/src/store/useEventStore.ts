@@ -5,23 +5,27 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { useClubStore } from "./useClubStore";
 
 const API_END_POINT = "http://localhost:8000/api/event";
+const END_POINT = "http://localhost:8000/api"
 axios.defaults.withCredentials = true;
 
 type EventState = {
-    loading: boolean,
-    event: null,
+    loading: boolean;
+    event: null;
+    allEvents: Event[] | null;
     createEvent: (formData: FormData) => Promise<void>;
     editEvent: (eventId: string, formData: FormData) => Promise<void>;
+    fetchAllEvents: () => Promise<void>;
 }
 
 export const useEventStore = create<EventState>()(persist((set) => ({
     loading: false,
     event: null,
+    allEvents: null,
     createEvent: async (formData: FormData) => {
         try {
             set({ loading: true });
             console.log("debugging");
-            
+
             const response = await axios.post(`${API_END_POINT}/`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -57,6 +61,26 @@ export const useEventStore = create<EventState>()(persist((set) => ({
             set({ loading: false });
         }
     },
+    fetchAllEvents: async () => {
+        try {
+            set({ loading: true });
+            console.log("start");
+
+            const response = await axios.get(`${END_POINT}/events`);
+            // console.log("Response", response);
+            console.log("Response data", response.data);
+
+            if (response.data.success) {
+                set({ loading: false, allEvents: response.data.club });
+            }
+        } catch (error: any) {
+            console.log("Error", error);
+            if (error.response && error.response.status === 404) {
+                set({ allEvents: null });
+            }
+            set({ loading: false });
+        }
+    }
 }), {
     name: "event-name",
     storage: createJSONStorage(() => localStorage)

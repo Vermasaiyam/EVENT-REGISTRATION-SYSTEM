@@ -9,6 +9,7 @@ import clubRoute from "./routes/club.route";
 import eventRoute from "./routes/event.route";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { fetchAllClubs } from "./controller/club.controller";
+import { fetchAllEvents } from "./controller/event.controller";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use("/api/event", eventRoute);
 
 
 app.get("/api/clubs",isAuthenticated,fetchAllClubs);
+app.get("/api/events",isAuthenticated,fetchAllEvents);
 
 
 app.listen(PORT, () => {
