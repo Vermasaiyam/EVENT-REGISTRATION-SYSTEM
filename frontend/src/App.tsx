@@ -18,6 +18,7 @@ import { useThemeStore } from "./store/useThemeStore"
 import { useEffect } from "react"
 import AllClubs from "./components/AllClubs"
 import { useUserStore } from "./store/useUserStore"
+import AllEvents from "./components/AllEvents"
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
@@ -79,10 +80,10 @@ const appRouter = createBrowserRouter([
         path: "/club/:id/:id",
         element: <EventPage />
       },
-      //   {
-      //     path: "/order/status",
-      //     element: <Success />
-      //   },
+        {
+          path: "/events",
+          element: <AllEvents />
+        },
       {
         path: "/clubs",
         element: <AllClubs />

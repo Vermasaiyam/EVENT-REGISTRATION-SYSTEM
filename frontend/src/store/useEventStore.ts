@@ -3,19 +3,12 @@ import { toast } from "sonner";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { useClubStore } from "./useClubStore";
+import { EventState } from "@/types/eventType";
 
 const API_END_POINT = "http://localhost:8000/api/event";
 const END_POINT = "http://localhost:8000/api"
 axios.defaults.withCredentials = true;
 
-type EventState = {
-    loading: boolean;
-    event: null;
-    allEvents: Event[] | null;
-    createEvent: (formData: FormData) => Promise<void>;
-    editEvent: (eventId: string, formData: FormData) => Promise<void>;
-    fetchAllEvents: () => Promise<void>;
-}
 
 export const useEventStore = create<EventState>()(persist((set) => ({
     loading: false,
@@ -71,7 +64,7 @@ export const useEventStore = create<EventState>()(persist((set) => ({
             console.log("Response data", response.data);
 
             if (response.data.success) {
-                set({ loading: false, allEvents: response.data.club });
+                set({ loading: false, allEvents: response.data.event });
             }
         } catch (error: any) {
             console.log("Error", error);
