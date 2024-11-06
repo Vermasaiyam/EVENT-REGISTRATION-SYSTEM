@@ -267,7 +267,7 @@ export const checkAuth = async (req: Request, res: Response): Promise<void> => {
 
 export const updateProfile = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log(req.id);
+        // console.log(req.id);
 
         const userId = req.id;
         const { fullname, email, address, city, country, profilePicture } = req.body;
@@ -283,6 +283,22 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
             success: true,
             user,
             message: "Profile Updated Successfully"
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+export const allUsers = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // console.log(req.id);
+
+        const allUsers = await User.find();
+
+        res.status(200).json({
+            success: true,
+            allUsers,
+            message: "All Users Fetched Successfully."
         });
     } catch (error) {
         console.error(error);
