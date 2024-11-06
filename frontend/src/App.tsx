@@ -19,6 +19,7 @@ import { useEffect } from "react"
 import AllClubs from "./components/AllClubs"
 import { useUserStore } from "./store/useUserStore"
 import AllEvents from "./components/AllEvents"
+import AllUsers from "./head/AllUsers"
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
@@ -46,6 +47,17 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/login" replace />
   }
   if (!user?.admin) {
+    return <Navigate to="/" replace />
+  }
+
+  return children;
+}
+const HeadRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, isAuthenticated } = useUserStore();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+  if (!user?.head) {
     return <Navigate to="/" replace />
   }
 
@@ -111,6 +123,15 @@ const appRouter = createBrowserRouter([
           <AdminRoute>
             <AddEvents />
           </AdminRoute>,
+      },
+
+      // main head page
+      {
+        path: "/head/users",
+        element:
+          <HeadRoute>
+            <AllUsers />
+          </HeadRoute>,
       },
 
       // Under construction page

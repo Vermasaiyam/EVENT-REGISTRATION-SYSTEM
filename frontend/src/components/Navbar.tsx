@@ -8,7 +8,7 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import { Button } from "./ui/button";
-import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Route, Sun, User, User2, Users } from "lucide-react";
+import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Route, Sun, User, User2, Users, Users2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
@@ -34,7 +34,7 @@ import { useThemeStore } from "@/store/useThemeStore";
 import { useUserStore } from "@/store/useUserStore";
 
 const Navbar = () => {
-      const { user, logout } = useUserStore();
+    const { user, logout } = useUserStore();
     // const admin: boolean = true;
 
     const { setTheme } = useThemeStore();
@@ -68,6 +68,14 @@ const Navbar = () => {
                                     <Link to="/admin/participants">
                                         <MenubarItem className="cursor-pointer">Participants</MenubarItem>
                                     </Link>
+                                    {
+                                        user?.head && (
+                                            <Link to="/head/users">
+                                                <Separator className="my-2" />
+                                                <MenubarItem className="cursor-pointer">All Users</MenubarItem>
+                                            </Link>
+                                        )
+                                    }
                                 </MenubarContent>
                             </MenubarMenu>
                         </Menubar>
@@ -111,7 +119,7 @@ const Navbar = () => {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     {/* <button onClick={logout} className='flex w-fit items-center gap-2 cursor-pointer'> */}
-                                    <button onClick={logout}  className='flex w-fit items-center gap-2 cursor-pointer'>
+                                    <button onClick={logout} className='flex w-fit items-center gap-2 cursor-pointer'>
                                         <LogOut />
                                         <Button variant="ghost" >Logout</Button>
                                     </button>
@@ -137,7 +145,7 @@ export default Navbar
 const MobileNavbar = () => {
     const { setTheme } = useThemeStore();
 
-      const { user, loading, logout } = useUserStore();
+    const { user, loading, logout } = useUserStore();
 
     // const admin: boolean = true;
     // const loading: boolean = false;
@@ -202,7 +210,7 @@ const MobileNavbar = () => {
                     <div className="my-2">
                         <Separator />
                     </div>
-                    
+
                     {user?.admin && (
                         <>
                             <Link
@@ -226,6 +234,20 @@ const MobileNavbar = () => {
                                 <Users />
                                 <span>Participants</span>
                             </Link>
+                            {
+                                user?.head && (
+                                    <div className="">
+                                        <Separator className="my-2" />
+                                        <Link
+                                            to="/head/users"
+                                            className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                                        >
+                                            <Users2 />
+                                            <span>All Users</span>
+                                        </Link>
+                                    </div>
+                                )
+                            }
                         </>
                     )}
                 </SheetDescription>

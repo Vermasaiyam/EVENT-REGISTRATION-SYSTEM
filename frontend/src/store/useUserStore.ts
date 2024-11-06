@@ -16,6 +16,7 @@ type User = {
     branch: string;
     profilePicture: string;
     admin: boolean;
+    head: boolean;
     isVerified: boolean;
 }
 
