@@ -6,6 +6,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 const API_END_POINT = "http://localhost:8000/api/club"
+const END_POINT = "http://localhost:8000/api"
 axios.defaults.withCredentials = true;
 
 export const useClubStore = create<ClubState>()(persist((set) => ({
@@ -155,7 +156,7 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
             set({ loading: true });
             // console.log("start");
             
-            const response = await axios.get(`http://localhost:8000/api/clubs`);
+            const response = await axios.get(`${END_POINT}/clubs`);
             // console.log("Response", response);
             // console.log("Response data", response.data);
 
