@@ -7,11 +7,45 @@ import { Button } from "./ui/button";
 import Typed from 'typed.js';
 import HelpingSection from "./HelpingSection";
 import AllClubs from "./AllClubs";
-import AllEvents from "./AllEvents";
+// import AllEvents from "./AllEvents";
+import { EventItem } from "@/types/clubType";
+import { useEventStore } from "@/store/useEventStore";
+import ActiveEvent from "./ActiveEvent";
+import PastEvent from "./PastEvents";
 
 const LandingPage = () => {
-    const [searchText, setSearchText] = useState<string>("");
     const navigate = useNavigate();
+    const [searchText, setSearchText] = useState<string>("");
+    
+    const [activeEvents, setActiveEvents] = useState<EventItem[]>([]);
+    const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
+
+    const { allEvents, fetchAllEvents } = useEventStore();
+
+    useEffect(() => {
+        async function fetchData() {
+            await fetchAllEvents();
+
+            if (allEvents) {
+                const today = new Date();
+
+                const active = allEvents.filter(event => {
+                    const registrationEndDate = new Date(event.registrationEndDate);
+                    return registrationEndDate > today;
+                });
+                setActiveEvents(active);
+
+                const past = allEvents.filter(event => {
+                    const registrationEndDate = new Date(event.registrationEndDate);
+                    return registrationEndDate < today;
+                });
+                setPastEvents(past);
+            }
+        }
+        fetchData();
+
+        console.log("all events", allEvents);
+    }, []);
 
     const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
@@ -78,9 +112,18 @@ const LandingPage = () => {
             </div>
 
             {/* All Events */}
-            <div className="md:px-10 px-6 pt-4">
-                <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">All Events</h1>
-                <AllEvents />
+            <div className="max-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
+                {/* <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">Active Events</h1> */}
+                {/* <AllEvents /> */}
+                <ActiveEvent events={activeEvents}/>
+            </div>
+
+            <div className="max-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
+                {
+                    pastEvents.length > 0 && (
+                        <PastEvent events={pastEvents}/>
+                    )
+                }
             </div>
             
             <HelpingSection />

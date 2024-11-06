@@ -52,7 +52,7 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
 
     return (
         <div className="my-4 w-full">
-            <h1 className="text-xl md:text-xl font-semibold mb-6">
+            <h1 className="text-2xl md:text-2xl font-semibold mb-6 mx-2">
                 Active Events
             </h1>
             <div className="grid md:grid-cols-3 gap-4">

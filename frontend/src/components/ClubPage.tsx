@@ -56,7 +56,7 @@ const ClubPage = () => {
                 </div>
                 <div className="flex w-full flex-col md:flex-row justify-between">
                     <div className="my-5">
-                        <h1 className="font-bold md:text-3xl text-2xl">
+                        <h1 className="font-bold md:text-3xl text-2xl my-2">
                             {singleClub?.clubName || "Loading..."}
                             {/* DataVerse */}
                         </h1>
