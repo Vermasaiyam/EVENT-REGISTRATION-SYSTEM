@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import Typed from 'typed.js';
 import HelpingSection from "./HelpingSection";
 import AllClubs from "./AllClubs";
+import AllEvents from "./AllEvents";
 
 const LandingPage = () => {
     const [searchText, setSearchText] = useState<string>("");
@@ -71,9 +72,15 @@ const LandingPage = () => {
                 </div>
             </div>
             {/* All Clubs */}
-            <div className="md:px-10 px-6 py-8">
+            <div className="md:px-10 px-6 pt-8">
                 <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">Our Clubs & Societies</h1>
                 <AllClubs />
+            </div>
+
+            {/* All Events */}
+            <div className="md:px-10 px-6 pt-4">
+                <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">All Events</h1>
+                <AllEvents />
             </div>
             
             <HelpingSection />

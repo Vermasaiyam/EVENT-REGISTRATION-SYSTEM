@@ -130,10 +130,10 @@ const NoResultFound = () => {
     return (
         <div className="text-center flex items-center justify-center">
             <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                No results found
+                No results found.
             </h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                We couldn't find any clubs. <br />
+                We couldn't find any events. <br />
             </p>
             <Link to="/">
                 <Button className="mt-4 bg-green hover:bg-hoverGreen dark:text-white">
