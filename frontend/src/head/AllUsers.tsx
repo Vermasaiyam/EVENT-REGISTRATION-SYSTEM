@@ -18,6 +18,8 @@ const AllUsers = () => {
   const [updateUserDetails, setUpdateUserDetails] = useState({
     fullname: "",
     email: "",
+    addmission_no: "",
+    branch: "",
     admin: false,
     _id: ""
   })
@@ -38,6 +40,8 @@ const AllUsers = () => {
             <TableHead className="w-[100px] font-bold text-white">S.No.</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Name</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
+            <TableHead className="dark:text-black font-bold text-white">Addmission Number</TableHead>
+            <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Admin</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Edit</TableHead>
@@ -51,6 +55,8 @@ const AllUsers = () => {
                   <TableCell className="font-medium">{index + 1}</TableCell>
                   <TableCell>{el?.fullname}</TableCell>
                   <TableCell>{el?.email}</TableCell>
+                  <TableCell>{el?.addmission_no}</TableCell>
+                  <TableCell>{el?.branch}</TableCell>
                   <TableCell>{el?.admin ? "Yes" : "No"}</TableCell>
                   <TableCell>{moment(el?.createdAt).format('LL')}</TableCell>
                   <TableCell>

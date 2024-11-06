@@ -270,12 +270,12 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
         // console.log(req.id);
 
         const userId = req.id;
-        const { fullname, email, address, city, country, profilePicture } = req.body;
+        const { fullname, email, addmission_no, branch, current_year, profilePicture } = req.body;
 
         //cloudinary
         let cloudResponse: any;
         cloudResponse = await cloudinary.uploader.upload(profilePicture);
-        const updatedData = { fullname, email, address, city, country, profilePicture };
+        const updatedData = { fullname, email, addmission_no, branch, current_year, profilePicture };
 
         const user = await User.findByIdAndUpdate(userId, updatedData, { new: true }).select("-password");
 
@@ -316,7 +316,7 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
             ...( { admin : isAdmin}),
         };
 
-        console.log(payload);
+        // console.log(payload);
         
 
         const updateUser = await User.findByIdAndUpdate(userId,payload, { new: true }).select("-password");
