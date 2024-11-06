@@ -130,7 +130,7 @@ const SearchPageSkeleton = () => {
 
 const NoResultFound = () => {
     return (
-        <div className="text-center flex items-center justify-center">
+        <div className="w-[100vw] h-80 flex flex-col items-center justify-center">
             <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 No results found.
             </h1>

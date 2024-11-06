@@ -122,18 +122,18 @@ const SearchPageSkeleton = () => {
 
 const NoResultFound = () => {
     return (
-        <div className="text-center flex items-center justify-center">
+        <div className="w-[100vw] h-36 flex flex-col items-center justify-center">
             <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                No results found
+                No clubs found
             </h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
                 We couldn't find any clubs. <br />
             </p>
-            <Link to="/">
+            {/* <Link to="/">
                 <Button className="mt-4 bg-green hover:bg-hoverGreen dark:text-white">
                     Go Back to Home
                 </Button>
-            </Link>
+            </Link> */}
         </div>
     );
 };
