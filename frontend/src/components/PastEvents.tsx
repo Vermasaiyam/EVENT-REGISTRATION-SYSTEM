@@ -64,7 +64,7 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
                                 <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                     {event.name}
                                 </h2>
-                                <p className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-2">
+                                <p title={event.description} className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-1">
                                     {event.description}
                                 </p>
                                 <div className="flex flex-col mt-3">
