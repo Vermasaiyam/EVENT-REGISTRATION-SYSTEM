@@ -158,12 +158,12 @@ export const useClubStore = create<ClubState>()(persist((set, get) => ({
             console.log("Response", response);
 
             if (response.data.success) {
-                set({ loading: false, allClubs: response.data.club }); // Changed from 'club' to 'clubs'
+                set({ loading: false, allClubs: response.data.club });
             }
         } catch (error: any) {
             console.log("Error", error);
             if (error.response && error.response.status === 404) {
-                set({ allClubs: null }); // Changed from 'club' to 'allClubs'
+                set({ allClubs: null });
             }
             set({ loading: false });
         }
