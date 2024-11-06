@@ -70,7 +70,7 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                             <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
                                 {event.mode}
                             </div>
-                            <div className="absolute top-2 left-2 bg-lightGreen rounded-full p-1 cursor-pointer text-xs px-2 text-extrabold text-gray-800">
+                            <div className="absolute top-2 left-2 bg-green rounded-full p-1 cursor-pointer text-xs px-2 text-extrabold text-white">
                                 OPEN
                             </div>
                             <CardContent className="p-4">

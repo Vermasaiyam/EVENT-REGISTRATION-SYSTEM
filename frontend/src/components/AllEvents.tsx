@@ -72,6 +72,9 @@ const AllEvents = () => {
                                         <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
                                             {event.mode}
                                         </div>
+                                        <div className="absolute top-2 left-2 bg-green rounded-full p-1 cursor-pointer text-xs px-2 text-extrabold text-white">
+                                            OPEN
+                                        </div>
                                         <CardContent className="p-4">
                                             <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                                 {event.name}
@@ -138,6 +141,9 @@ const AllEvents = () => {
                                         </Link>
                                         <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
                                             {event.mode}
+                                        </div>
+                                        <div className="absolute top-2 left-2 bg-red-500 rounded-full p-1 cursor-pointer text-xs px-2 text-extrabold text-white">
+                                            CLOSED
                                         </div>
                                         <CardContent className="p-4">
                                             <h2 className="text-xl font-bold text-gray-800 dark:text-white">
