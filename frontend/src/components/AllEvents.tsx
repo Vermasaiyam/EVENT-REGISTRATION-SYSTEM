@@ -13,8 +13,15 @@ const AllEvents = () => {
 
     useEffect(() => {
         fetchAllEvents();
-        console.log("all events",allEvents);
+        console.log("all events", allEvents);
     }, []);
+
+    const formatTime = (time: any) => {
+        const [hours, minutes] = time.split(':');
+        const hoursIn12 = hours % 12 || 12;
+        const ampm = hours < 12 ? 'AM' : 'PM';
+        return `${hoursIn12}:${minutes} ${ampm}`;
+    };
 
     return (
         <div className="grid md:grid-cols-4 md:gap-10 gap-8 md:mx-10 md:my-10 my-6 mx-6">
@@ -49,13 +56,17 @@ const AllEvents = () => {
                                             <span className="font-semibold">Fee:</span>
                                             <span className="text-green dark:text-yellow-100">₹{event.registrationFee}</span>
                                         </div>
-                                        <div className="flex justify-between text-gray-700 dark:text-gray-400 mt-1">
-                                            <span className="font-semibold">Dates:</span>
-                                            <span>{`${event.eventStartDate} - ${event.eventEndDate}`}</span>
+                                        <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
+                                            <span className="font-semibold">Registration End Date:</span>
+                                            <span>{new Date(event.registrationEndDate).toLocaleDateString('en-GB')}</span>
                                         </div>
-                                        <div className="flex justify-between text-gray-700 dark:text-gray-400 mt-1">
+                                        <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
+                                            <span className="font-semibold">Dates:</span>
+                                            <span>{`${new Date(event.eventStartDate).toLocaleDateString('en-GB')} - ${new Date(event.eventEndDate).toLocaleDateString('en-GB')}`}</span>
+                                        </div>
+                                        <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
                                             <span className="font-semibold">Timings:</span>
-                                            <span>{`${event.startTime} - ${event.endTime}`}</span>
+                                            <span>{`${formatTime(event.startTime)} - ${formatTime(event.endTime)}`}</span>
                                         </div>
                                     </div>
                                     <div className="flex justify-center mt-4">

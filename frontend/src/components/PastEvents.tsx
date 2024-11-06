@@ -4,6 +4,13 @@ import { EventFormSchema } from "@/schema/eventSchema";
 
 const PastEvent = () => {
 
+    const formatTime = (time: any) => {
+        const [hours, minutes] = time.split(':');
+        const hoursIn12 = hours % 12 || 12;
+        const ampm = hours < 12 ? 'AM' : 'PM';
+        return `${hoursIn12}:${minutes} ${ampm}`;
+    };
+
     const eventItems: EventFormSchema[] = [
         {
             name: "HacoVerse",
@@ -56,15 +63,15 @@ const PastEvent = () => {
                                     {event.description}
                                 </p>
                                 <div className="flex flex-col mt-3">
-                                    <div className="flex justify-between text-gray-700 dark:text-gray-400 mt-1">
-                                        <span className="font-semibold">Dates:</span>
-                                        <span>{`${event.eventStartDate} - ${event.eventEndDate}`}</span>
+                                        <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
+                                            <span className="font-semibold">Dates:</span>
+                                            <span>{`${new Date(event.eventStartDate).toLocaleDateString('en-GB')} - ${new Date(event.eventEndDate).toLocaleDateString('en-GB')}`}</span>
+                                        </div>
+                                        <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
+                                            <span className="font-semibold">Timings:</span>
+                                            <span>{`${formatTime(event.startTime)} - ${formatTime(event.endTime)}`}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex justify-between text-gray-700 dark:text-gray-400 mt-1">
-                                        <span className="font-semibold">Timings:</span>
-                                        <span>{`${event.startTime} - ${event.endTime}`}</span>
-                                    </div>
-                                </div>
                             </CardContent>
                         </Card>
                     </div>
