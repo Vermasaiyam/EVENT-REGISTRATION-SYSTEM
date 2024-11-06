@@ -7,29 +7,34 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { useUserStore } from '@/store/useUserStore';
 
 interface ChangeUserRoleProps {
-    name: string;
+    fullname: string;
     email: string;
     admin: boolean;
     onClose: () => void;
-    // userId: string;
-    callFunc: () => void;
+    userId: string;
 }
 
 const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
-    name,
+    fullname,
     email,
     admin,
     onClose,
-    callFunc,
+    userId
 }) => {
 
     const [userRole, setUserRole] = useState(admin ? "yes" : "no");
+    let isAdmin: boolean;
 
     const handleOnChange = (newRole: string) => {
         setUserRole(newRole);
+        isAdmin = userRole === "yes";
     };
+
+    const { updateUsers } = useUserStore();
+
 
     // const updateUserRole = async () => {
     //     const fetchResponse = await fetch(SummaryApi.updateUser.url, {
@@ -64,7 +69,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
                 </button>
 
                 <h1 className='pb-4 text-lg font-medium '>Change User Role</h1>
-                <p>Name: {name}</p>
+                <p>Name: {fullname}</p>
                 <p>Email: {email}</p>
 
                 <div className='flex items-center justify-between my-4'>
@@ -82,7 +87,10 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
 
                 <button
                     className='w-fit mx-auto block py-1 px-3 rounded-full bg-red-600 text-white hover:bg-red-700'
-                    // onClick={updateUserRole}
+                    onClick={() => {
+                        updateUsers({ userId, email, fullname, userRole });
+                        onClose();
+                    }}
                 >
                     Change Role
                 </button>

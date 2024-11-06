@@ -305,3 +305,26 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+export const updateUsers = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // console.log(req.id);
+        const { userId , email, fullname, userRole} = req.body;
+
+        const payload = {
+            ...( email && { email : email}),
+            ...( fullname && { fullname : fullname}),
+            ...( userRole && { admin : userRole === "yes"}),
+        };
+
+        const updateUser = await User.findByIdAndUpdate(userId,payload, { new: true }).select("-password");
+
+        res.status(200).json({
+            success: true,
+            updateUser,
+            message: "User Updated Successfully."
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}

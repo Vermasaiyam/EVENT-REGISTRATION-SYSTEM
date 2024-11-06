@@ -76,11 +76,10 @@ const AllUsers = () => {
         (
           <ChangeUserRole
             onClose={() => setOpenUpdateRole(false)}
-            name={updateUserDetails.fullname}
+            fullname={updateUserDetails.fullname}
             email={updateUserDetails.email}
             admin={updateUserDetails.admin}
-            // userId={updateUserDetails._id}
-            callFunc={fetchAllUsers}
+            userId={updateUserDetails._id}
           />
         )
       }

@@ -36,9 +36,10 @@ type UserState = {
     resetPassword: (input: any) => Promise<void>;
     updateProfile: (input: any) => Promise<void>;
     fetchAllUsers: () => Promise<void>;
+    updateUsers: (input: any) => Promise<void>;
 }
 
-export const useUserStore = create<UserState>()(persist((set) => ({
+export const useUserStore = create<UserState>()(persist((set, get) => ({
     user: null,
     allUsers: null,
     isAuthenticated: false,
@@ -182,6 +183,24 @@ export const useUserStore = create<UserState>()(persist((set) => ({
             if (response.data.success) {
                 toast.success(response.data.message);
                 set({ loading: false, allUsers: response.data.allUsers });
+            }
+        } catch (error: any) {
+            toast.error(error.response.data.message);
+            set({ loading: false });
+        }
+    },
+    updateUsers: async (input: any) => {
+        try {
+            set({ loading: true });
+            const response = await axios.put(`${API_END_POINT}/update-users`, input, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.data.success) {
+                toast.success(response.data.message);
+                set({ loading: false});
+                await get().fetchAllUsers();
             }
         } catch (error: any) {
             toast.error(error.response.data.message);
