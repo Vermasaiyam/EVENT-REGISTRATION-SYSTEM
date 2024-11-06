@@ -53,7 +53,7 @@ const Footer = () => {
                         <h1 className="font-bold text-darkGreen dark:text-white md:text-lg text-xs">Get In Touch</h1>
                         <div className="flex flex-col gap-1 md:text-base text-xs dark:text-yellow-100">
                             <div className="">vermasaiyam9@gmail.com</div>
-                            <div className="">Saiyam Verma</div>
+                            <div className="">ABES - EventHub</div>
                         </div>
                     </div>
                 </div>
