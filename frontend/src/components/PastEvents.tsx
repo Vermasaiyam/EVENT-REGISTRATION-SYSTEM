@@ -40,14 +40,16 @@ const PastEvent = () => {
             </h1>
             <div className="grid md:grid-cols-3 space-y-4 md:space-y-0">
                 {eventItems.map((event, idx) => (
-                    <Link to={event.name} state={{ event, isActive: false }} key={idx}>
+                    <div key={idx}>
                         <Card className="max-w-xs shadow-lg rounded-lg overflow-hidden relative mx-2">
-                            <img src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75" alt={event.name} className="w-full h-40 object-cover" />
+                            <Link to={event.name} state={{ event, isActive: false }} className="">
+                                <img src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75" alt={event.name} className="w-full h-40 object-cover" />
+                            </Link>
                             <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
                                 {event.mode}
                             </div>
                             <CardContent className="p-4">
-                            <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                                <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                     {event.name}
                                 </h2>
                                 <p className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-2">
@@ -65,7 +67,7 @@ const PastEvent = () => {
                                 </div>
                             </CardContent>
                         </Card>
-                    </Link>
+                    </div>
                 ))}
             </div>
         </div>
