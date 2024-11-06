@@ -78,7 +78,7 @@ const Profile = () => {
                 <div className="flex items-center gap-2">
                     <Avatar className="relative md:w-28 md:h-28 w-20 h-20">
                         <AvatarImage src={selectedProfilePicture} />
-                        <AvatarFallback><InitialsAvatar name={user?.fullname || "CN"} className="h-full w-full flex items-center justify-center bg-slate-200 p-2 rounded-full" /></AvatarFallback>
+                        <AvatarFallback><InitialsAvatar name={user?.fullname || "??"} className="h-full w-full flex items-center justify-center bg-slate-200 p-2 rounded-full" /></AvatarFallback>
                         <input
                             ref={imageRef}
                             className="hidden"

@@ -97,7 +97,7 @@ const Navbar = () => {
                             <DropdownMenuTrigger asChild>
                                 <Avatar className="cursor-pointer">
                                     <AvatarImage src={user?.profilePicture} alt={user?.fullname} />
-                                    <AvatarFallback><InitialsAvatar name={user?.fullname || "CN"} className="h-full w-full flex items-center justify-center bg-slate-200 p-2 rounded-full" /></AvatarFallback>
+                                    <AvatarFallback><InitialsAvatar name={user?.fullname || "??"} className="h-full w-full flex items-center justify-center bg-slate-200 p-2 rounded-full" /></AvatarFallback>
                                 </Avatar>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
@@ -233,7 +233,7 @@ const MobileNavbar = () => {
                     <Link to={'/profile'} className="flex flex-row items-center gap-2">
                         <Avatar>
                             <AvatarImage src={user?.profilePicture} alt={user?.fullname} />
-                            <AvatarFallback><InitialsAvatar name={user?.fullname || "CN"} className="h-full w-full flex items-center justify-center bg-slate-200 p-2 rounded-full" /></AvatarFallback>
+                            <AvatarFallback><InitialsAvatar name={user?.fullname || "??"} className="h-full w-full flex items-center justify-center bg-slate-200 p-2 rounded-full" /></AvatarFallback>
                         </Avatar>
                         <h1 className="font-bold">{user?.fullname}</h1>
                         {/* <h1 className="font-bold">ABES</h1> */}
