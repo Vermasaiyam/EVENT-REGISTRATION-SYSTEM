@@ -36,7 +36,7 @@ const AllEvents = () => {
                             <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
                                 <Link to={event.name} state={{ event, isActive: true }} className="">
                                     <img
-                                        src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
+                                        src={event.image}
                                         alt={event.name}
                                         className="w-full h-40 object-cover"
                                     />
