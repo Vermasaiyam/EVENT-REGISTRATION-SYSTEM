@@ -10,13 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import ChangeUserRole from "./ChangeUserRole";
 
 
 const AllUsers = () => {
   const [openUpdateRole, setOpenUpdateRole] = useState(false)
   const [updateUserDetails, setUpdateUserDetails] = useState({
-    email: "",
     fullname: "",
+    email: "",
     admin: false,
     _id: ""
   })
@@ -56,7 +57,7 @@ const AllUsers = () => {
                   <TableCell>
                     <button className='bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green dark:hover:bg-[#2E3A52] hover:text-white'
                       onClick={() => {
-                        // setUpdateUserDetails(el)
+                        setUpdateUserDetails(el)
                         setOpenUpdateRole(true)
                       }}
                     >
@@ -70,19 +71,19 @@ const AllUsers = () => {
         </TableBody>
       </Table>
 
-      {/* {
+      {
         openUpdateRole &&
         (
           <ChangeUserRole
             onClose={() => setOpenUpdateRole(false)}
-            name={updateUserDetails.name}
+            name={updateUserDetails.fullname}
             email={updateUserDetails.email}
-            role={updateUserDetails.role}
-            userId={updateUserDetails._id}
+            admin={updateUserDetails.admin}
+            // userId={updateUserDetails._id}
             callFunc={fetchAllUsers}
           />
         )
-      } */}
+      }
     </div>
   )
 }

@@ -293,7 +293,7 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log(req.id);
 
-        const allUsers = await User.find();
+        const allUsers = await User.find().select("-password");
 
         res.status(200).json({
             success: true,

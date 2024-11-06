@@ -23,7 +23,7 @@ type User = {
 
 type UserState = {
     user: User | null;
-    allUsers: User[] | null;
+    allUsers: any[] | null;
     isAuthenticated: boolean;
     isCheckingAuth: boolean;
     loading: boolean;
