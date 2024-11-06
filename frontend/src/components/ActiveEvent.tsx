@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-import { EventFormSchema } from "@/schema/eventSchema";
+// import { EventFormSchema } from "@/schema/eventSchema";
+import { EventItem } from "@/types/clubType";
 
-const ActiveEvent = () => {
+interface ActiveEventProps {
+    events: EventItem[];
+}
+
+const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
+
+    console.log("events", events);
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(':');
@@ -12,47 +19,50 @@ const ActiveEvent = () => {
         return `${hoursIn12}:${minutes} ${ampm}`;
     };
 
-    const eventItems: EventFormSchema[] = [
-        {
-            name: "HacoVerse",
-            description: "lorem gyrfudiosk vyfuhidjs ygfeijd sLorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
-            mode: "Offline",
-            registrationFee: 69,
-            registrationEndDate: "2024-11-15",
-            eventStartDate: "2024-11-16",
-            eventEndDate: "2024-11-17",
-            startTime: "10:00",
-            endTime: "17:00",
-            image: undefined,
-            formLink: "",
-        },
-        {
-            name: "KT Session",
-            description: "lorem gyrfudiosk vyfuhidjs ygfeijds Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
-            mode: "Offline",
-            registrationFee: 69,
-            registrationEndDate: "2024-11-20",
-            eventStartDate: "2024-11-21",
-            eventEndDate: "2024-11-22",
-            startTime: "14:00",
-            endTime: "18:00",
-            image: undefined,
-            formLink: "",
-        },
-    ];
+
+
+    // const eventItems: EventFormSchema[] = [
+    //     {
+    //         name: "HacoVerse",
+    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijd sLorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
+    //         mode: "Offline",
+    //         registrationFee: 69,
+    //         registrationEndDate: "2024-11-15",
+    //         eventStartDate: "2024-11-16",
+    //         eventEndDate: "2024-11-17",
+    //         startTime: "10:00",
+    //         endTime: "17:00",
+    //         image: undefined,
+    //         formLink: "",
+    //     },
+    //     {
+    //         name: "KT Session",
+    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijds Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
+    //         mode: "Offline",
+    //         registrationFee: 69,
+    //         registrationEndDate: "2024-11-20",
+    //         eventStartDate: "2024-11-21",
+    //         eventEndDate: "2024-11-22",
+    //         startTime: "14:00",
+    //         endTime: "18:00",
+    //         image: undefined,
+    //         formLink: "",
+    //     },
+    // ];
 
     return (
-        <div className="my-4">
+        <div className="my-4 w-full">
             <h1 className="text-xl md:text-xl font-semibold mb-6">
                 Active Events
             </h1>
             <div className="grid md:grid-cols-3 gap-4">
-                {eventItems.map((event, idx) => (
-                    <div key={idx}>
+                {events?.map((event) => (
+                    <div key={event._id}>
                         <Card className="max-w-xs shadow-lg rounded-lg overflow-hidden relative mx-2">
                             <Link to={event.name} state={{ event, isActive: true }} className="">
                                 <img
-                                    src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
+                                    // src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
+                                    src={event.image}
                                     alt={event.name}
                                     className="w-full h-40 object-cover"
                                 />
@@ -98,7 +108,11 @@ const ActiveEvent = () => {
                     </div>
                 ))}
             </div>
-
+            <div className="flex items-center justify-center w-full mx-auto">
+                {events.length === 0 && (
+                    <p className="text-sm text-gray-800 text-center">No Active Events Found.</p>
+                )}
+            </div>
         </div>
     )
 }

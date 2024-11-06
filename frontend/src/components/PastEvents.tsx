@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent } from "./ui/card";
-import { EventFormSchema } from "@/schema/eventSchema";
+// import { EventFormSchema } from "@/schema/eventSchema";
+import { EventItem } from "@/types/clubType";
 
-const PastEvent = () => {
+interface PastEventProps {
+    events: EventItem[];
+}
+
+const PastEvent: React.FC<PastEventProps> = ({ events }) => {
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(':');
@@ -11,43 +16,43 @@ const PastEvent = () => {
         return `${hoursIn12}:${minutes} ${ampm}`;
     };
 
-    const eventItems: EventFormSchema[] = [
-        {
-            name: "HacoVerse",
-            description: "lorem gyrfudiosk vyfuhidjs ygfeijd sLorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
-            mode: "Offline",
-            registrationFee: 69,
-            registrationEndDate: "2024-11-15",
-            eventStartDate: "2024-11-16",
-            eventEndDate: "2024-11-17",
-            startTime: "10:00",
-            endTime: "17:00",
-            image: undefined,
-            formLink: "",
-        },
-        {
-            name: "Workshop",
-            description: "lorem gyrfudiosk vyfuhidjs ygfeijds Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
-            mode: "Online",
-            registrationFee: 69,
-            registrationEndDate: "2024-11-20",
-            eventStartDate: "2024-11-21",
-            eventEndDate: "2024-11-22",
-            startTime: "14:00",
-            endTime: "18:00",
-            image: undefined,
-            formLink: "",
-        },
-    ];
+    // const eventItems: EventFormSchema[] = [
+    //     {
+    //         name: "HacoVerse",
+    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijd sLorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
+    //         mode: "Offline",
+    //         registrationFee: 69,
+    //         registrationEndDate: "2024-11-15",
+    //         eventStartDate: "2024-11-16",
+    //         eventEndDate: "2024-11-17",
+    //         startTime: "10:00",
+    //         endTime: "17:00",
+    //         image: undefined,
+    //         formLink: "",
+    //     },
+    //     {
+    //         name: "Workshop",
+    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijds Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
+    //         mode: "Online",
+    //         registrationFee: 69,
+    //         registrationEndDate: "2024-11-20",
+    //         eventStartDate: "2024-11-21",
+    //         eventEndDate: "2024-11-22",
+    //         startTime: "14:00",
+    //         endTime: "18:00",
+    //         image: undefined,
+    //         formLink: "",
+    //     },
+    // ];
 
     return (
-        <div className="my-2">
+        <div className="my-2 w-full">
             <h1 className="text-xl md:text-xl font-semibold mb-6">
                 Past Events
             </h1>
             <div className="grid md:grid-cols-3 space-y-4 md:space-y-0">
-                {eventItems.map((event, idx) => (
-                    <div key={idx}>
+                {events.map((event) => (
+                    <div key={event._id}>
                         <Card className="max-w-xs shadow-lg rounded-lg overflow-hidden relative mx-2">
                             <Link to={event.name} state={{ event, isActive: false }} className="">
                                 <img src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75" alt={event.name} className="w-full h-40 object-cover" />
@@ -63,20 +68,27 @@ const PastEvent = () => {
                                     {event.description}
                                 </p>
                                 <div className="flex flex-col mt-3">
-                                        <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
-                                            <span className="font-semibold">Dates:</span>
-                                            <span>{`${new Date(event.eventStartDate).toLocaleDateString('en-GB')} - ${new Date(event.eventEndDate).toLocaleDateString('en-GB')}`}</span>
-                                        </div>
-                                        <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
-                                            <span className="font-semibold">Timings:</span>
-                                            <span>{`${formatTime(event.startTime)} - ${formatTime(event.endTime)}`}</span>
-                                        </div>
+                                    <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
+                                        <span className="font-semibold">Dates:</span>
+                                        <span>{`${new Date(event.eventStartDate).toLocaleDateString('en-GB')} - ${new Date(event.eventEndDate).toLocaleDateString('en-GB')}`}</span>
                                     </div>
+                                    <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
+                                        <span className="font-semibold">Timings:</span>
+                                        <span>{`${formatTime(event.startTime)} - ${formatTime(event.endTime)}`}</span>
+                                    </div>
+                                </div>
                             </CardContent>
                         </Card>
                     </div>
                 ))}
             </div>
+            <div className="flex items-center justify-center w-full mx-auto">
+                {events.length === 0 && (
+                    <p className="text-sm text-gray-800 text-center">No Past Events Found.</p>
+                )}
+            </div>
+
+
         </div>
     )
 }

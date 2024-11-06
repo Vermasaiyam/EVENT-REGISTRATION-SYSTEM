@@ -1,9 +1,9 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 
 const EventPage = () => {
 
-    const { id } = useParams();
+    // const { id } = useParams();
     const location = useLocation();
     const { event, isActive } = location.state || {};
 

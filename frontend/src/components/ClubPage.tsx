@@ -1,10 +1,12 @@
 import { Badge } from "./ui/badge"
 // import Event from "./Event"
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ActiveEvent from "./ActiveEvent";
 import PastEvent from "./PastEvents";
 import { useClubStore } from "@/store/useClubStore";
+// import { Event } from "@/types/eventType";
+import { EventItem } from "@/types/clubType";
 
 
 const ClubPage = () => {
@@ -12,11 +14,33 @@ const ClubPage = () => {
     const params = useParams();
     const { singleClub, getSingleClub } = useClubStore();
 
+    const [activeEvents, setActiveEvents] = useState<EventItem[]>([]);
+    const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
+
+
     useEffect(() => {
-        getSingleClub(params.id!);
-        console.log("signle Club", singleClub);
-        
-    }, [params.id]);
+        async function fetchData() {
+            await getSingleClub(params.id!);
+
+            if (singleClub?.events) {
+                const today = new Date();
+
+                const active = singleClub.events.filter(event => {
+                    const registrationEndDate = new Date(event.registrationEndDate);
+                    return registrationEndDate > today;
+                });
+                setActiveEvents(active);
+
+                const past = singleClub.events.filter(event => {
+                    const registrationEndDate = new Date(event.registrationEndDate);
+                    return registrationEndDate < today;
+                });
+                setPastEvents(past);
+            }
+        }
+
+        fetchData();
+    }, [params.id, singleClub]);
 
 
     return (
@@ -32,7 +56,7 @@ const ClubPage = () => {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between">
                     <div className="my-5">
-                        <h1 className="font-bold text-2xl">
+                        <h1 className="font-bold md:text-3xl text-2xl">
                             {singleClub?.clubName || "Loading..."}
                             {/* DataVerse */}
                         </h1>
@@ -43,19 +67,19 @@ const ClubPage = () => {
                         </div>
 
                         <div className="flex gap-2 my-2 flex-wrap">
-                            {/* {
+                            {
                                 singleClub?.events &&
-                                <Event events={singleClub?.activeEvents!} />
-                            } */}
-                            <ActiveEvent />
+                                <ActiveEvent events={activeEvents} />
+                            }
+                            {/* <ActiveEvent /> */}
                         </div>
 
                         <div className="flex gap-2 my-2 flex-wrap">
-                            {/* {
+                            {
                                 singleClub?.events &&
-                                <Event events={singleClub?.pastEvents!} />
-                            } */}
-                            <PastEvent />
+                                <PastEvent events={pastEvents} />
+                            }
+                            {/* <PastEvent /> */}
                         </div>
 
                         <h1 className="font-medium text-xl">
