@@ -153,9 +153,11 @@ export const useClubStore = create<ClubState>()(persist((set, get) => ({
     fetchAllClubs: async () => {
         try {
             set({ loading: true });
-
-            const response = await axios.get(`${API_END_POINT}/clubs`);
-            console.log("Response", response);
+            // console.log("start");
+            
+            const response = await axios.get(`http://localhost:8000/api/clubs`);
+            // console.log("Response", response);
+            // console.log("Response data", response.data);
 
             if (response.data.success) {
                 set({ loading: false, allClubs: response.data.club });

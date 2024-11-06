@@ -14,6 +14,7 @@ const AllClubs = () => {
 
     useEffect(() => {
         fetchAllClubs();
+        // console.log("all clubs",allClubs);
     }, []);
 
     return (
@@ -21,10 +22,10 @@ const AllClubs = () => {
             {
                 loading ? (
                     <SearchPageSkeleton />
-                ) : !loading && allClubs?.data.length === 0 ? (
+                ) : !loading && allClubs?.length === 0 ? (
                     <NoResultFound />
                 ) : (
-                    allClubs?.data.map((club: Club) => (
+                    allClubs?.map((club: Club) => (
                         <Card
                             key={club._id}
                             className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
@@ -45,7 +46,6 @@ const AllClubs = () => {
                                     {/* DataVerse */}
                                 </h1>
                                 <div className="flex gap-2 mt-4 flex-wrap">
-                                    {/* {["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].slice(0, 3).map( */}
                                     {club.eventTypes.slice(0, 3).map(
                                         (event: string, idx: number) => (
                                             <Badge
@@ -57,7 +57,6 @@ const AllClubs = () => {
                                         )
                                     )}
                                     {
-                                        // ["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].length > 3 && (
                                         club.eventTypes.length > 3 && (
                                             <span className="text-xs text-gray-600 my-auto  dark:text-yellow-100">
                                                 + {club.eventTypes.length - 3} more
@@ -123,12 +122,12 @@ const SearchPageSkeleton = () => {
 
 const NoResultFound = () => {
     return (
-        <div className="text-center">
+        <div className="text-center flex items-center justify-center">
             <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 No results found
             </h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                We couldn't find any restaurats. <br />
+                We couldn't find any clubs. <br />
             </p>
             <Link to="/">
                 <Button className="mt-4 bg-green hover:bg-hoverGreen dark:text-white">

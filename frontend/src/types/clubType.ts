@@ -26,12 +26,15 @@ export type Club = {
 export type SearchedClub = {
     data: Club[]
 }
+// export type AllClub = {
+//     data: Club[]
+// }
 
 export type ClubState = {
     loading: boolean;
     club: Club | null;
     searchedClub: SearchedClub | null;
-    allClubs: SearchedClub | null;
+    allClubs: Club[] | null;
     appliedFilter: string[];
     singleClub: Club | null,
     // clubOrder: Orders[],

@@ -223,13 +223,13 @@ export const getSingleClub = async (req: Request, res: Response): Promise<void> 
         res.status(500).json({ message: "Internal Server Error." })
     }
 }
-export const fetchAllClubs = async (_: Request, res: Response): Promise<void> => {
+export const fetchAllClubs = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log("Fetching all clubs");
+        // console.log("Fetching all clubs");
         const club = await Club.find();
-        console.log("Clubs retrieved from database:", club);
+        // console.log("Clubs retrieved from database:", club);
 
-        if (!club || club.length === 0) {
+        if (!club) {
             res.status(404).json({
                 success: false,
                 club: [],
@@ -244,6 +244,6 @@ export const fetchAllClubs = async (_: Request, res: Response): Promise<void> =>
         });
     } catch (error) {
         console.error("Error fetching clubs:", error);
-        res.status(500).json({ message: error instanceof Error ? error.message : "Internal Server Error." });
+        res.status(500).json({ message: error || "Internal Server Error." });
     }
 };
