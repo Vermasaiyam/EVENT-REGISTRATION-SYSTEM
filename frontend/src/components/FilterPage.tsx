@@ -1,3 +1,4 @@
+import { useClubStore } from "@/store/useClubStore";
 import { Button } from "./ui/button"
 import { Checkbox } from "./ui/checkbox";
 import { Label } from "./ui/label";
@@ -21,21 +22,21 @@ const filterOptions: FilterOptionsState[] = [
 ];
 
 const FilterPage = () => {
-    // const { setAppliedFilter, appliedFilter, resetAppliedFilter } = useClubStore();
+    const { setAppliedFilter, appliedFilter, resetAppliedFilter } = useClubStore();
     const appliedFilterHandler = (value: string) => {
-        // setAppliedFilter(value);
+        setAppliedFilter(value);
     };
     return (
         <div className="md:w-72 mx-2">
             <div className="flex items-center justify-between">
                 <h1 className="font-medium text-lg">Filter by Types of Events</h1>
-                <Button variant={"link"}>Reset</Button>
+                <Button variant={"link"} onClick={resetAppliedFilter}>Reset</Button>
             </div>
             {filterOptions.map((option) => (
                 <div key={option.id} className="flex items-center space-x-2 my-5">
                     <Checkbox
                         id={option.id}
-                        // checked={appliedFilter.includes(option.label)}
+                        checked={appliedFilter.includes(option.label)}
                         onClick={() => appliedFilterHandler(option.label)}
                     />
                     <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
