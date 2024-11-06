@@ -308,15 +308,22 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
 export const updateUsers = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log(req.id);
-        const { userId , email, fullname, userRole} = req.body;
+        const { userId , email, fullname, isAdmin} = req.body;
 
         const payload = {
             ...( email && { email : email}),
             ...( fullname && { fullname : fullname}),
-            ...( userRole && { admin : userRole === "yes"}),
+            ...( { admin : isAdmin}),
         };
 
+        console.log(payload);
+        
+
         const updateUser = await User.findByIdAndUpdate(userId,payload, { new: true }).select("-password");
+
+        if (!updateUser) {
+            res.status(404).json({ success: false, message: "User not found" });
+        }
 
         res.status(200).json({
             success: true,

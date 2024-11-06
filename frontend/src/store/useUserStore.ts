@@ -199,7 +199,7 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
             });
             if (response.data.success) {
                 toast.success(response.data.message);
-                set({ loading: false});
+                set({ loading: false });
                 await get().fetchAllUsers();
             }
         } catch (error: any) {
