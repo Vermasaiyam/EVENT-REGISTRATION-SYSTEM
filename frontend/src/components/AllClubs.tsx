@@ -14,7 +14,7 @@ const AllClubs = () => {
 
     useEffect(() => {
         fetchAllClubs();
-        // console.log("all clubs",allClubs);
+        console.log("all clubs",allClubs);
     }, []);
 
     return (

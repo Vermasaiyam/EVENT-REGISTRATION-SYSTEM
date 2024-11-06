@@ -226,7 +226,10 @@ export const getSingleClub = async (req: Request, res: Response): Promise<void> 
 export const fetchAllClubs = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log("Fetching all clubs");
-        const club = await Club.find();
+        const club = await Club.find().populate({
+            path: 'events',
+            options: { createdAt: -1 }
+        });
         // console.log("Clubs retrieved from database:", club);
 
         if (!club) {

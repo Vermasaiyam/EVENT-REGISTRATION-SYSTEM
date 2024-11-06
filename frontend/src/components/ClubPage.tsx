@@ -14,6 +14,8 @@ const ClubPage = () => {
 
     useEffect(() => {
         getSingleClub(params.id!);
+        console.log("signle Club", singleClub);
+        
     }, [params.id]);
 
 
@@ -35,7 +37,6 @@ const ClubPage = () => {
                             {/* DataVerse */}
                         </h1>
                         <div className="flex gap-2 my-2 flex-wrap">
-                            {/* {["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].map((event: string, idx: number) => ( */}
                             {singleClub?.eventTypes.map((event: string, idx: number) => (
                                 <Badge key={idx}>{event}</Badge>
                             ))}
