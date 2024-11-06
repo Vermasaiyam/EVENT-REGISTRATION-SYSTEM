@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import FilterPage from "./FilterPage";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -8,23 +8,33 @@ import { X } from "lucide-react";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Skeleton } from "./ui/skeleton";
+import { useClubStore } from "@/store/useClubStore";
+import { Club } from "@/types/clubType";
 
 const SearchPage = () => {
-    // const params = useParams();
+    const params = useParams();
     const [searchQuery, setSearchQuery] = useState<string>("");
     // const loading: boolean = false;
+
+    const {
+        loading,
+        searchedClub,
+        searchClub,
+        setAppliedFilter,
+        appliedFilter,
+    } = useClubStore();
 
 
     const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            // searchClub(params.id!, searchQuery, appliedFilter);
+            searchClub(params.id!, searchQuery, appliedFilter);
         }
     }
 
-    // useEffect(() => {
-    // console.log(params);
-    // searchClub(params.id!, searchQuery, appliedFilter);
-    // }, [params.id!, appliedFilter]);
+    useEffect(() => {
+        console.log(params);
+        searchClub(params.id!, searchQuery, appliedFilter);
+    }, [params.id!, appliedFilter]);
 
     return (
         <div className="max-w-7xl mx-auto my-10 min-h-[60vh]">
@@ -41,9 +51,9 @@ const SearchPage = () => {
                             onKeyDown={(e) => keyDown(e)}
                         />
                         <Button
-                            // onClick={() =>
-                                // searchClub(params.id!, searchQuery, appliedFilter)
-                            // }
+                            onClick={() =>
+                                searchClub(params.id!, searchQuery, appliedFilter)
+                            }
                             className="bg-green hover:bg-hoverGreen dark:text-white"
                         >
                             Search
@@ -53,12 +63,12 @@ const SearchPage = () => {
                     <div>
                         <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-2 my-3">
                             <h1 className="font-medium text-lg">
-                                {/* ({searchedClub?.data.length}) Search result found */}
-                                (3) Search result found
+                                ({searchedClub?.data.length}) Search result found
+                                {/* (3) Search result found */}
                             </h1>
                             <div className="flex flex-wrap gap-2 mb-4 md:mb-0">
-                                {/* {appliedFilter.map( */}
-                                {["Hackathon", "Quiz", "Nukkad"].map(
+                                {/* {["Hackathon", "Quiz", "Nukkad"].map( */}
+                                {appliedFilter.map(
                                     (selectedFilter: string, idx: number) => (
                                         <div
                                             key={idx}
@@ -71,7 +81,7 @@ const SearchPage = () => {
                                                 {selectedFilter}
                                             </Badge>
                                             <X
-                                                // onClick={() => setAppliedFilter(selectedFilter)}
+                                                onClick={() => setAppliedFilter(selectedFilter)}
                                                 size={16}
                                                 className="absolute text-darkGreen dark:text-yellow-100 right-1 hover:cursor-pointer"
                                             />
@@ -83,67 +93,66 @@ const SearchPage = () => {
                         {/* Club Cards  */}
                         <div className="grid md:grid-cols-3 gap-4">
                             {
-                                // loading ? (
-                                //     <SearchPageSkeleton />
-                                // ) : !loading && searchedClub?.data.length === 0 ? (
-                                //     <NoResultFound searchText={params.id!} />
-                                // ) : (
-                                // searchedClub?.data.map((club: Club) => (
-                                    ["Hackathon", "Quiz", "Nukkad"].map((club: any) => (
-                                    <Card
-                                        key={club._id}
-                                        className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-                                    >
-                                        <div className="relative">
-                                            <AspectRatio ratio={15 / 8}>
-                                                <img
-                                                    // src={club.imageUrl}
-                                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL_kIswlm4KDcOl6U--eJiLidCUvAzpZC5ZQ&s"
-                                                    alt={club.clubName}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </AspectRatio>
-                                        </div>
-                                        <CardContent className="p-4">
-                                            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                                {/* {club.clubName} */}
-                                                DataVerse
-                                            </h1>
-                                            <div className="flex gap-2 mt-4 flex-wrap">
-                                                {/* {club.eventTypes.slice(0, 3).map( */}
-                                                {["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].slice(0, 3).map(
-                                                    (event: string, idx: number) => (
-                                                        <Badge
-                                                            key={idx}
-                                                            className="font-medium px-2 py-1 rounded-full shadow-sm"
-                                                        >
-                                                            {event}
-                                                        </Badge>
-                                                    )
-                                                )}
-                                                {
-                                                    // club.eventTypes.length > 3 && (
-                                                        ["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].length > 3 && (
-                                                        <span className="text-xs text-gray-600 my-auto  dark:text-yellow-100">
-                                                            {/* + {club.eventTypes.length - 3} more */}
-                                                            + 3 more
-                                                        </span>
-                                                    )
-                                                }
+                                loading ? (
+                                    <SearchPageSkeleton />
+                                ) : !loading && searchedClub?.data.length === 0 ? (
+                                    <NoResultFound searchText={params.id!} />
+                                ) : (
+                                    // ["Hackathon", "Quiz", "Nukkad"].map((club: any) => (
+                                    searchedClub?.data.map((club: Club) => (
+                                        <Card
+                                            key={club._id}
+                                            className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+                                        >
+                                            <div className="relative">
+                                                <AspectRatio ratio={15 / 8}>
+                                                    <img
+                                                        src={club.imageUrl}
+                                                        // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL_kIswlm4KDcOl6U--eJiLidCUvAzpZC5ZQ&s"
+                                                        alt={club.clubName}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </AspectRatio>
                                             </div>
-                                        </CardContent>
-                                        <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
-                                            <Link to={`/club/${club._id}`}>
-                                                <Button className="bg-green hover:bg-hoverGreen dark:text-white font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
-                                                    Explore
-                                                </Button>
-                                            </Link>
-                                        </CardFooter>
-                                    </Card>
-                                ))
-                                // )
+                                            <CardContent className="p-4">
+                                                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                                                    {club.clubName}
+                                                    {/* DataVerse */}
+                                                </h1>
+                                                <div className="flex gap-2 mt-4 flex-wrap">
+                                                    {/* {["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].slice(0, 3).map( */}
+                                                    {club.eventTypes.slice(0, 3).map(
+                                                        (event: string, idx: number) => (
+                                                            <Badge
+                                                                key={idx}
+                                                                className="font-medium px-2 py-1 rounded-full shadow-sm"
+                                                            >
+                                                                {event}
+                                                            </Badge>
+                                                        )
+                                                    )}
+                                                    {
+                                                        // ["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].length > 3 && (
+                                                        club.eventTypes.length > 3 && (
+                                                            <span className="text-xs text-gray-600 my-auto  dark:text-yellow-100">
+                                                                + {club.eventTypes.length - 3} more
+                                                                {/* + 3 more */}
+                                                            </span>
+                                                        )
+                                                    }
+                                                </div>
+                                            </CardContent>
+                                            <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
+                                                <Link to={`/club/${club._id}`}>
+                                                    <Button className="bg-green hover:bg-hoverGreen dark:text-white font-semibold py-2 px-4 rounded-full shadow-md transition-colors duration-200">
+                                                        Explore
+                                                    </Button>
+                                                </Link>
+                                            </CardFooter>
+                                        </Card>
+                                    ))
+                                )
                             }
-
                         </div>
                     </div>
                 </div>
