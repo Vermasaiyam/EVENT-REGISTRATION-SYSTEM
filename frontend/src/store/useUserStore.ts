@@ -18,6 +18,7 @@ type User = {
     admin: boolean;
     head: boolean;
     isVerified: boolean;
+    createdAt: Date;
 }
 
 type UserState = {

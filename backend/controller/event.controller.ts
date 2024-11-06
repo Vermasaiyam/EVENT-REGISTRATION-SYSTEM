@@ -89,9 +89,9 @@ export const editEvent = async (req: Request, res: Response): Promise<void> => {
 
 export const fetchAllEvents = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log("Fetching all events");
+        // console.log("Fetching all events");
         const event = await Event.find();
-        console.log("Events retrieved from database:", event);
+        // console.log("Events retrieved from database:", event);
 
         if (!event) {
             res.status(404).json({

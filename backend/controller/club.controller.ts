@@ -169,7 +169,7 @@ export const searchClub = async (req: Request, res: Response): Promise<void> => 
         const selectedEvents = (req.query.selectedEvents as string || "").split(",").filter(event => event);
         const query: any = {};
         // basic search based on searchText (name ,city, country)
-        console.log(selectedEvents);
+        // console.log(selectedEvents);
 
         if (searchText) {
             query.$or = [
@@ -186,7 +186,7 @@ export const searchClub = async (req: Request, res: Response): Promise<void> => 
                 { coreTeam: { $regex: searchQuery, $options: 'i' } },
             ]
         }
-        console.log(query);
+        // console.log(query);
 
         if (selectedEvents.length > 0) {
             query.events = { $in: selectedEvents }
