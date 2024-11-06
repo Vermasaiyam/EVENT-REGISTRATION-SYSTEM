@@ -67,7 +67,6 @@ const SearchPage = () => {
                                 {/* (3) Search result found */}
                             </h1>
                             <div className="flex flex-wrap gap-2 mb-4 md:mb-0">
-                                {/* {["Hackathon", "Quiz", "Nukkad"].map( */}
                                 {appliedFilter.map(
                                     (selectedFilter: string, idx: number) => (
                                         <div
@@ -96,9 +95,8 @@ const SearchPage = () => {
                                 loading ? (
                                     <SearchPageSkeleton />
                                 ) : !loading && searchedClub?.data.length === 0 ? (
-                                    <NoResultFound searchText={params.id!} />
+                                    <NoResultFound searchText={params.id!} searchQuery={searchQuery}/>
                                 ) : (
-                                    // ["Hackathon", "Quiz", "Nukkad"].map((club: any) => (
                                     searchedClub?.data.map((club: Club) => (
                                         <Card
                                             key={club._id}
@@ -108,7 +106,6 @@ const SearchPage = () => {
                                                 <AspectRatio ratio={15 / 8}>
                                                     <img
                                                         src={club.imageUrl}
-                                                        // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL_kIswlm4KDcOl6U--eJiLidCUvAzpZC5ZQ&s"
                                                         alt={club.clubName}
                                                         className="w-full h-full object-cover"
                                                     />
@@ -120,7 +117,6 @@ const SearchPage = () => {
                                                     {/* DataVerse */}
                                                 </h1>
                                                 <div className="flex gap-2 mt-4 flex-wrap">
-                                                    {/* {["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].slice(0, 3).map( */}
                                                     {club.eventTypes.slice(0, 3).map(
                                                         (event: string, idx: number) => (
                                                             <Badge
@@ -132,7 +128,6 @@ const SearchPage = () => {
                                                         )
                                                     )}
                                                     {
-                                                        // ["Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"].length > 3 && (
                                                         club.eventTypes.length > 3 && (
                                                             <span className="text-xs text-gray-600 my-auto  dark:text-yellow-100">
                                                                 + {club.eventTypes.length - 3} more
@@ -200,14 +195,14 @@ const SearchPageSkeleton = () => {
     );
 };
 
-const NoResultFound = ({ searchText }: { searchText: string }) => {
+const NoResultFound = ({ searchText, searchQuery }: { searchText: string, searchQuery: string }) => {
     return (
         <div className="text-center">
             <h1 className="text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 No results found
             </h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                We couldn't find any results for "{searchText}". <br /> Try searching
+                We couldn't find any results for "{searchQuery || searchText}". <br /> Try searching
                 with a different term.
             </p>
             <Link to="/">
