@@ -62,7 +62,7 @@ const AllEvents = () => {
                             activeEvents?.map((event: Event) => (
                                 <div key={event._id}>
                                     <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
-                                        <Link to={event.name} state={{ event, isActive: true }} className="">
+                                        <Link to={event.name} state={{ event}} className="">
                                             <img
                                                 src={event.image}
                                                 alt={event.name}
@@ -132,7 +132,7 @@ const AllEvents = () => {
                             pastEvents?.map((event: Event) => (
                                 <div key={event._id}>
                                     <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
-                                        <Link to={event.name} state={{ event, isActive: true }} className="">
+                                        <Link to={event.name} state={{ event}} className="">
                                             <img
                                                 src={event.image}
                                                 alt={event.name}
@@ -173,6 +173,7 @@ const AllEvents = () => {
                                             <div className="flex justify-center mt-4">
                                                 <a href={event.formLink} target="_blank">
                                                     <Button
+                                                        disabled
                                                         variant={"outline"}
                                                         className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
                                                     >

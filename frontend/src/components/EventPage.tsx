@@ -1,11 +1,26 @@
 import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
 
 const EventPage = () => {
 
     // const { id } = useParams();
     const location = useLocation();
-    const { event, isActive } = location.state || {};
+    const { event } = location.state || {};
+
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const registrationEndDate = new Date(event.registrationEndDate);
+        registrationEndDate.setHours(0, 0, 0, 0);
+
+        // Update active state based on comparison
+        setActive(registrationEndDate >= today);
+    }, [event.registrationEndDate]);
+    
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(':');
@@ -59,7 +74,7 @@ const EventPage = () => {
                                 </div>
                             </div>
                             <div className="mt-5">
-                                <Button disabled={isActive ? false : true} className="w-full bg-green text-white font-semibold py-2 rounded-lg shadow-md hover:bg-hoverGreen">
+                                <Button disabled={active ? false : true} className="w-full bg-green text-white font-semibold py-2 rounded-lg shadow-md hover:bg-hoverGreen">
                                     Register Now
                                 </Button>
                             </div>
