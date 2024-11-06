@@ -24,7 +24,7 @@ const AllEvents = () => {
     };
 
     return (
-        <div className="grid md:grid-cols-4 md:gap-10 gap-8 md:mx-10 md:my-10 my-6 mx-6">
+        <div className="grid md:grid-cols-4 md:gap-8 gap-8 md:mx-12 md:my-10 my-6 mx-6">
             {
                 loading ? (
                     <SearchPageSkeleton />
@@ -33,7 +33,7 @@ const AllEvents = () => {
                 ) : (
                     allEvents?.map((event: Event) => (
                         <div key={event._id}>
-                            <Card className="max-w-xs shadow-lg rounded-lg overflow-hidden relative mx-2">
+                            <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
                                 <Link to={event.name} state={{ event, isActive: true }} className="">
                                     <img
                                         src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
@@ -48,7 +48,7 @@ const AllEvents = () => {
                                     <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                         {event.name}
                                     </h2>
-                                    <p className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-2">
+                                    <p title={event.description} className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-1">
                                         {event.description}
                                     </p>
                                     <div className="flex flex-col mt-3">
@@ -70,12 +70,14 @@ const AllEvents = () => {
                                         </div>
                                     </div>
                                     <div className="flex justify-center mt-4">
-                                        <Button
-                                            variant={"outline"}
-                                            className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
-                                        >
-                                            Register Now
-                                        </Button>
+                                        <a href={event.formLink} target="_blank">
+                                            <Button
+                                                variant={"outline"}
+                                                className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
+                                            >
+                                                Register Now
+                                            </Button>
+                                        </a>
                                     </div>
                                 </CardContent>
                             </Card>

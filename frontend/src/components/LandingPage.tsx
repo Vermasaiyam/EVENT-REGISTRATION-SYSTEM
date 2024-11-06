@@ -49,6 +49,7 @@ const LandingPage = () => {
                 return registrationEndDate < today;
             });
             setPastEvents(past);
+            console.log("active & past",activeEvents, pastEvents);
         }
     }, []);
 
@@ -111,19 +112,19 @@ const LandingPage = () => {
                 </div>
             </div>
             {/* All Clubs */}
-            <div className="md:px-10 px-6 pt-8">
+            <div className="lg:px-10 px-2 pt-8">
                 <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">Our Clubs & Societies</h1>
                 <AllClubs />
             </div>
 
             {/* All Events */}
-            <div className="max-w-6xl min-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
+            <div className="w-[100vw] lg:px-20 md:px-6 pt-4">
                 {/* <h1 className="md:text-3xl text-2xl font-semibold md:px-12 px-6">Active Events</h1> */}
                 {/* <AllEvents /> */}
                 <ActiveEvent events={activeEvents} />
             </div>
 
-            <div className="max-w-6xl min-w-6xl lg:ml-10 md:ml-6 md:px-10 px-6 pt-4">
+            <div className="w-[100vw] lg:px-20 md:px-6 pt-4">
                 {
                     pastEvents.length > 0 && (
                         <PastEvent events={pastEvents} />

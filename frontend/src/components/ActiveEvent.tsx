@@ -10,7 +10,7 @@ interface ActiveEventProps {
 
 const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
 
-    console.log("events", events);
+    // console.log("events", events);
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(':');
@@ -55,10 +55,10 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
             <h1 className="text-2xl md:text-2xl font-semibold mb-6 mx-2">
                 Active Events
             </h1>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
                 {events?.map((event) => (
                     <div key={event._id}>
-                        <Card className="max-w-xs shadow-lg rounded-lg overflow-hidden relative mx-2">
+                        <Card className="max-w-md shadow-lg rounded-lg overflow-hidden relative mx-2">
                             <Link to={event.name} state={{ event, isActive: true }} className="">
                                 <img
                                     // src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
@@ -69,6 +69,9 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                             </Link>
                             <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
                                 {event.mode}
+                            </div>
+                            <div className="absolute top-2 left-2 bg-lightGreen rounded-full p-1 cursor-pointer text-xs px-2 text-extrabold text-gray-800">
+                                OPEN
                             </div>
                             <CardContent className="p-4">
                                 <h2 className="text-xl font-bold text-gray-800 dark:text-white">
@@ -96,12 +99,14 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                                     </div>
                                 </div>
                                 <div className="flex justify-center mt-4">
-                                    <Button
-                                        variant={"outline"}
-                                        className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
-                                    >
-                                        Register Now
-                                    </Button>
+                                    <a href={event.formLink} target="_blank">
+                                        <Button
+                                            variant={"outline"}
+                                            className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
+                                        >
+                                            Register Now
+                                        </Button>
+                                    </a>
                                 </div>
                             </CardContent>
                         </Card>
