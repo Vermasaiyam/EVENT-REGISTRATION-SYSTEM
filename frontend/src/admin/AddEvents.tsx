@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 import { FormEvent, useState } from "react";
 import EditEvent from "./EditEvent";
 import { useEventStore } from "@/store/useEventStore";
@@ -380,12 +380,15 @@ const AddEvents = () => {
             </div>
             {club?.events.map((event: any, idx: number) => (
                 <div key={idx} className="mt-6 space-y-4 hover:shadow-lg">
-                    <div className="flex flex-col md:flex-row md:items-center md:space-x-4 md:p-4 p-2 shadow-md rounded-lg border">
+                    <div className="flex flex-col md:flex-row md:items-center md:space-x-4 md:p-4 p-2 shadow-md rounded-lg border relative">
                         <img
                             src={event.image}
                             alt={event.name}
                             className="md:h-24 md:w-24 h-28 w-full object-cover rounded-lg"
                         />
+                        <div className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
+                            <Trash2 className="w-4 h-4"/>
+                        </div>
                         <div className="flex-1">
                             <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
                                 {event.name}
