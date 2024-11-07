@@ -46,7 +46,7 @@ const AddEvents = () => {
     const [selectedEvent, setSelectedEvent] = useState<any>();
     // const loading: boolean = false;
 
-    const { loading, createEvent } = useEventStore();
+    const { loading, createEvent, deleteEvent } = useEventStore();
     const { club } = useClubStore();
 
 
@@ -386,7 +386,7 @@ const AddEvents = () => {
                             alt={event.name}
                             className="md:h-24 md:w-24 h-28 w-full object-cover rounded-lg"
                         />
-                        <div className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
+                        <div onClick={()=> deleteEvent(event._id)} className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
                             <Trash2 className="w-4 h-4"/>
                         </div>
                         <div className="flex-1">

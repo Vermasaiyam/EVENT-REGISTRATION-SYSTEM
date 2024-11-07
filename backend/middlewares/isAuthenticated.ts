@@ -20,7 +20,7 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
             return;
         }
 
-        const decode = jwt.verify(token, process.env.SECRET_KEY!) as jwt.JwtPayload;
+        const decode = jwt.verify(token, process.env.SECRET_KEY! as string) as jwt.JwtPayload;
 
         if (!decode) {
             res.status(401).json({
@@ -33,9 +33,13 @@ export const isAuthenticated = async (req: Request, res: Response, next: NextFun
         req.id = decode.userId;
         next();
     } catch (error) {
-        console.error(error);
-        res.status(500).json({
-            message: "Internal Server Error",
-        });
+        if (error instanceof jwt.JsonWebTokenError) {
+            res.status(401).json({ success: false, message: "Invalid token signature" });
+        } else if (error instanceof jwt.TokenExpiredError) {
+            res.status(401).json({ success: false, message: "Token has expired" });
+        } else {
+            console.error("Unexpected error in isAuthenticated middleware:", error);
+            res.status(500).json({ success: false, message: "Internal Server Error" });
+        }
     }
 };

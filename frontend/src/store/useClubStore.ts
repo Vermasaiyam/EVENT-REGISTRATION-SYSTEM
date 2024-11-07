@@ -102,6 +102,20 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
             return state;
         })
     },
+    removeEventFromClub: (eventId: string) => {
+        set((state: any) => {
+            if (state.club) {
+                const updatedEventList = state.club.events.filter((event: any) => event._id !== eventId);
+                return {
+                    club: {
+                        ...state.club,
+                        events: updatedEventList
+                    }
+                };
+            }
+            return state;
+        });
+    },
     setAppliedFilter: (value: string) => {
         set((state) => {
             const isAlreadyApplied = state.appliedFilter.includes(value);
@@ -155,7 +169,7 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
         try {
             set({ loading: true });
             // console.log("start");
-            
+
             const response = await axios.get(`${END_POINT}/clubs`);
             // console.log("Response", response);
             // console.log("Response data", response.data);

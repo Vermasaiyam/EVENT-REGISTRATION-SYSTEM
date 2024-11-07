@@ -54,6 +54,28 @@ export const useEventStore = create<EventState>()(persist((set) => ({
             set({ loading: false });
         }
     },
+    deleteEvent: async (id: string) => {
+        try {
+            set({ loading: true });
+            const response = await axios.delete(`${API_END_POINT}/delete/${id}`);
+
+            if (response.data.success) {
+                toast.success(response.data.message);
+
+                set((state) => ({
+                    loading: false,
+                    allEvents: state.allEvents ? state.allEvents.filter(event => event._id !== id) : null,
+                }));
+
+                // Remove event from club if needed
+                useClubStore.getState().removeEventFromClub(id);
+            }
+        } catch (error: any) {
+            toast.error(error.response.data.message);
+            set({ loading: false });
+        }
+    },
+
     fetchAllEvents: async () => {
         try {
             set({ loading: true });

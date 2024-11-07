@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.route("/").post(isAuthenticated, upload.single("image"), addEvent);
 router.route("/:id").put(isAuthenticated, upload.single("image"), editEvent);
-router.route("delete/:id").delete(isAuthenticated, deleteEvent);
+router.route("/delete/:id").delete(isAuthenticated, deleteEvent);
 
 export default router;

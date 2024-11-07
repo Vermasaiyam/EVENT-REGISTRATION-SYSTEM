@@ -44,6 +44,7 @@ export type ClubState = {
     searchClub: (searchText: string, searchQuery: string, selectedEvents: any) => Promise<void>;
     addEventToClub: (event: EventItem) => void;
     updateEventToClub: (event: EventItem) => void;
+    removeEventFromClub: (eventId: string) => void;
     setAppliedFilter: (value: string) => void;
     resetAppliedFilter: () => void;
     getSingleClub: (clubId: string) => Promise<void>;

@@ -19,5 +19,6 @@ export type EventState = {
     allEvents: Event[] | null;
     createEvent: (formData: FormData) => Promise<void>;
     editEvent: (eventId: string, formData: FormData) => Promise<void>;
+    deleteEvent: (id: string) => Promise<void>;
     fetchAllEvents: () => Promise<void>;
 }
