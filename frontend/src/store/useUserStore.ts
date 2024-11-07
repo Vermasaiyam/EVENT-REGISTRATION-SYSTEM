@@ -71,6 +71,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
     login: async (input: LoginInputState) => {
@@ -88,6 +90,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
     verifyEmail: async (verificationCode: string) => {
@@ -104,6 +108,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
             }
         } catch (error: any) {
             toast.success(error.response.data.message);
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     },
@@ -129,6 +135,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
     forgotPassword: async (email: string) => {
@@ -141,6 +149,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
             }
         } catch (error: any) {
             toast.error(error.response.data.message);
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     },
@@ -158,6 +168,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
             }
         } catch (error: any) {
             toast.error(error.response.data.message);
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     },
@@ -187,6 +199,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
     updateUsers: async (input: any) => {
@@ -204,6 +218,8 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
             }
         } catch (error: any) {
             toast.error(error.response.data.message);
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     }
