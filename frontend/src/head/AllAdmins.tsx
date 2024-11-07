@@ -64,7 +64,7 @@ const AllAdmins = () => {
     };
 
     return (
-        <div className="bg-white">
+        <div className="bg-white mt-4">
 
             <Table className="lg:text-base md:text-sm text-xs">
                 <TableHeader>
@@ -76,7 +76,7 @@ const AllAdmins = () => {
                         <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Admission Number</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
-                        {/* <TableHead className="dark:text-black font-bold text-white">Admin</TableHead> */}
+                        <TableHead className="dark:text-black font-bold text-white">Year</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Edit</TableHead>
                     </TableRow>
@@ -94,6 +94,7 @@ const AllAdmins = () => {
                                 <TableCell>{el?.contact}</TableCell>
                                 <TableCell>{el?.addmission_no}</TableCell>
                                 <TableCell>{el?.branch}</TableCell>
+                                <TableCell>{el?.current_year ? el.current_year : '-'}</TableCell>
                                 <TableCell>{moment(el?.createdAt).format("LL")}</TableCell>
                                 <TableCell>
                                     <button
