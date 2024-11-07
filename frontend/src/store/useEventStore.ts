@@ -33,6 +33,8 @@ export const useEventStore = create<EventState>()(persist((set) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
     editEvent: async (eventId: string, formData: FormData) => {
@@ -51,6 +53,8 @@ export const useEventStore = create<EventState>()(persist((set) => ({
             useClubStore.getState().updateEventToClub(response.data.event);
         } catch (error: any) {
             toast.error(error.response.data.message);
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     },
@@ -73,6 +77,8 @@ export const useEventStore = create<EventState>()(persist((set) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
 
@@ -93,6 +99,8 @@ export const useEventStore = create<EventState>()(persist((set) => ({
             if (error.response && error.response.status === 404) {
                 set({ allEvents: null });
             }
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     }
