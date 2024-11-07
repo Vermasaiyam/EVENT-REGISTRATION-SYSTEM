@@ -87,6 +87,42 @@ export const editEvent = async (req: Request, res: Response): Promise<void> => {
     }
 }
 
+export const deleteEvent = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const userId = req.id;
+
+
+        const event = await Event.findById(id);
+        if (!event) {
+            res.status(404).json({
+                success: false,
+                message: "Event not found!!!"
+            });
+            return;
+        }
+
+        // Remove the event from the associated club's events
+        const club = await Club.findById(userId);
+        if (club) {
+            club.events = (club.events as mongoose.Schema.Types.ObjectId[])
+                .filter((eventId) => eventId.toString() !== id) as mongoose.Schema.Types.ObjectId[];
+            await club.save();
+        }
+
+        // Delete the event
+        await Event.findByIdAndDelete(id);
+
+        res.status(200).json({
+            success: true,
+            message: "Event deleted successfully."
+        });
+    } catch (error) {
+        console.error("Error deleting event:", error);
+        res.status(500).json({ message: "Internal Server Error." });
+    }
+};
+
 export const fetchAllEvents = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log("Fetching all events");
