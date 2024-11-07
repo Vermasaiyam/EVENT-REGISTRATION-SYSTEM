@@ -15,3 +15,10 @@ export const userLoginSchema = z.object({
 });
 
 export type LoginInputState = z.infer<typeof userLoginSchema>;
+
+export const userResetPasswordSchema = z.object({
+    oldPassword: z.string().min(8, "Password must be of at least 8 characters."),
+    newPassword: z.string().min(8, "Password must be of at least 8 characters."),
+});
+
+export type ResetPasswordInputState = z.infer<typeof userResetPasswordSchema>;
