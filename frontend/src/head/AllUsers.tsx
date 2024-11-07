@@ -73,9 +73,9 @@ const AllUsers = () => {
                   <TableCell>{el?.fullname}</TableCell>
                   <TableCell>{el?.email}</TableCell>
                   <TableCell>{el?.contact}</TableCell>
-                  <TableCell>{el?.addmission_no}</TableCell>
+                  <TableCell>{el?.addmission_no === "Addmission Number" ? "-" : el.addmission_no}</TableCell>
+                  <TableCell>{el?.branch === "Branch" ? "-" : el.branch}</TableCell>
                   <TableCell>{el?.current_year ? el.current_year : '-'}</TableCell>
-                  <TableCell>{el?.branch}</TableCell>
                   <TableCell>{el?.admin ? "Yes" : "No"}</TableCell>
                   <TableCell>{moment(el?.createdAt).format('LL')}</TableCell>
                   <TableCell>

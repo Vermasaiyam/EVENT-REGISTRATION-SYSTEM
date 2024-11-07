@@ -74,7 +74,7 @@ const AllAdmins = () => {
                         <TableHead className="dark:text-black font-bold text-white">Club Head</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
-                        <TableHead className="dark:text-black font-bold text-white">Admission Number</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Addmission Number</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Year</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
@@ -92,8 +92,8 @@ const AllAdmins = () => {
                                 <TableCell>{el?.fullname}</TableCell>
                                 <TableCell>{el?.email}</TableCell>
                                 <TableCell>{el?.contact}</TableCell>
-                                <TableCell>{el?.addmission_no}</TableCell>
-                                <TableCell>{el?.branch}</TableCell>
+                                <TableCell>{el?.addmission_no === "Addmission Number" ? "-" : el.addmission_no}</TableCell>
+                                <TableCell>{el?.branch === "Branch" ? "-" : el.branch}</TableCell>
                                 <TableCell>{el?.current_year ? el.current_year : '-'}</TableCell>
                                 <TableCell>{moment(el?.createdAt).format("LL")}</TableCell>
                                 <TableCell>
