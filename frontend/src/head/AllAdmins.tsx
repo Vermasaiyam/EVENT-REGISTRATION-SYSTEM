@@ -61,7 +61,7 @@ const AllAdmins = () => {
                         <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
                             <TableHead className="w-[100px] font-bold text-white">S.No.</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Club Name</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Head of Club</TableHead>
+                            <TableHead className="dark:text-black font-bold text-white">Club Head</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Admission Number</TableHead>
