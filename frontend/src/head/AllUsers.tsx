@@ -46,7 +46,7 @@ const AllUsers = () => {
   };
 
   return (
-    <div className='bg-white mt-4'>
+    <div className='bg-white md:mt-4 mt-2'>
       <Table>
         <TableHeader>
           <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">

@@ -64,7 +64,7 @@ const AllAdmins = () => {
     };
 
     return (
-        <div className="bg-white mt-4">
+        <div className="bg-white md:mt-4 mt-2">
 
             <Table className="lg:text-base md:text-sm text-xs">
                 <TableHeader>
