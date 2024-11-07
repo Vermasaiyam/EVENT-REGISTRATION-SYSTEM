@@ -18,7 +18,7 @@ const AllClubs = () => {
     }, []);
 
     return (
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 md:gap-10 gap-8 md:mx-12 md:my-10 my-6 mx-6">
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 lg:gap-10 gap-5 lg:mx-12 md:mx-6 md:my-10 my-6 mx-4">
             {
                 loading ? (
                     <SearchPageSkeleton />

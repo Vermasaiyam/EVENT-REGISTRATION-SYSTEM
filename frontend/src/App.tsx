@@ -20,6 +20,7 @@ import AllClubs from "./components/AllClubs"
 import { useUserStore } from "./store/useUserStore"
 import AllEvents from "./components/AllEvents"
 import AllUsers from "./head/AllUsers"
+import AllAdmins from "./head/AllAdmins"
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
@@ -131,6 +132,13 @@ const appRouter = createBrowserRouter([
         element:
           <HeadRoute>
             <AllUsers />
+          </HeadRoute>,
+      },
+      {
+        path: "/head/admins",
+        element:
+          <HeadRoute>
+            <AllAdmins />
           </HeadRoute>,
       },
 

@@ -13,7 +13,7 @@ import {
 import ChangeUserRole from "./ChangeUserRole";
 
 
-const AllUsers = () => {
+const AllAdmins = () => {
     const [openUpdateRole, setOpenUpdateRole] = useState(false)
     const [updateUserDetails, setUpdateUserDetails] = useState({
         fullname: "",
@@ -94,4 +94,4 @@ const AllUsers = () => {
     )
 }
 
-export default AllUsers
+export default AllAdmins
