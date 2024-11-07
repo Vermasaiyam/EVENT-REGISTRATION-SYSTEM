@@ -22,6 +22,18 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             })
             return;
         }
+
+        const user = await Club.findOne({ clubName: clubName });
+        if (user) {
+            res.status(400).json({
+                success: false,
+                message: "Club with this name already exists."
+            })
+            return;
+        }
+
+
+
         if (!file) {
             res.status(400).json({
                 success: false,
@@ -97,6 +109,16 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
             })
             return;
         };
+
+        const existingClub = await Club.findOne({ clubName, _id: { $ne: club._id } });
+        if (existingClub) {
+            res.status(400).json({
+                success: false,
+                message: "Club with this name already exists. Please choose a different name.",
+            });
+            return;
+        }
+
         club.clubName = clubName;
         club.eventTypes = JSON.parse(eventTypes);
         club.coreTeam = JSON.parse(coreTeam);
