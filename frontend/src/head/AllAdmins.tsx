@@ -1,4 +1,5 @@
 import { useUserStore } from "@/store/useUserStore";
+import { useClubStore } from "@/store/useClubStore"; // Import useClubStore
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { MdModeEdit } from "react-icons/md";
@@ -24,16 +25,19 @@ const AllAdmins = () => {
         _id: ""
     });
     const [adminUsers, setAdminUsers] = useState<any[]>([]);
-    const { allUsers, fetchAllUsers } = useUserStore();
     const [loading, setLoading] = useState(true);
 
+    const { allUsers, fetchAllUsers } = useUserStore();
+    const { allClubs, fetchAllClubs } = useClubStore();
+
     useEffect(() => {
-        const loadUsers = async () => {
+        const loadData = async () => {
             await fetchAllUsers();
+            await fetchAllClubs();
             setLoading(false);
         };
-        loadUsers();
-    }, [fetchAllUsers]);
+        loadData();
+    }, [fetchAllUsers, fetchAllClubs]);
 
     useEffect(() => {
         if (allUsers) {
@@ -41,21 +45,28 @@ const AllAdmins = () => {
         }
     }, [allUsers]);
 
+    // get club name
+    const getClubName = (userId: string) => {
+        const club = allClubs?.find(club => club.user === userId);
+        return club ? club.clubName : "No Club Assigned";
+    };
+
     return (
-        <div className="bg-white my-4">
+        <div className="bg-white">
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <Table>
+                <Table className="lg:text-base md:text-sm text-xs">
                     <TableHeader>
                         <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
                             <TableHead className="w-[100px] font-bold text-white">S.No.</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Name</TableHead>
+                            <TableHead className="dark:text-black font-bold text-white">Club Name</TableHead>
+                            <TableHead className="dark:text-black font-bold text-white">Head of Club</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Admission Number</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Admin</TableHead>
+                            {/* <TableHead className="dark:text-black font-bold text-white">Admin</TableHead> */}
                             <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
                             <TableHead className="dark:text-black font-bold text-white">Edit</TableHead>
                         </TableRow>
@@ -64,12 +75,13 @@ const AllAdmins = () => {
                         {adminUsers?.map((el, index: number) => (
                             <TableRow key={index} className="dark:bg-black dark:hover:bg-black bg-white hover:bg-white">
                                 <TableCell className="font-medium">{index + 1}</TableCell>
+                                <TableCell className="font-semibold">{getClubName(el?._id)}</TableCell>
                                 <TableCell>{el?.fullname}</TableCell>
                                 <TableCell>{el?.email}</TableCell>
                                 <TableCell>{el?.contact}</TableCell>
                                 <TableCell>{el?.addmission_no}</TableCell>
                                 <TableCell>{el?.branch}</TableCell>
-                                <TableCell>{el?.admin ? "Yes" : "No"}</TableCell>
+                                {/* <TableCell>{el?.admin ? "Yes" : "No"}</TableCell> */}
                                 <TableCell>{moment(el?.createdAt).format("LL")}</TableCell>
                                 <TableCell>
                                     <button
