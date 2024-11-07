@@ -25,19 +25,31 @@ const AllUsers = () => {
     _id: ""
   })
 
-  const { allUsers, fetchAllUsers } = useUserStore();
+  const { loading, allUsers, fetchAllUsers } = useUserStore();
 
   useEffect(() => {
     fetchAllUsers();
     console.log(allUsers);
-  }, [])
+  }, []);
+
+  const renderSkeletonRows = () => {
+    return Array.from({ length: 5 }).map((_, index) => (
+      <TableRow key={index} className="animate-pulse dark:bg-black bg-white">
+        {Array.from({ length: 9 }).map((_, cellIndex) => (
+          <TableCell key={cellIndex}>
+            <div className="h-4 bg-gray-300 rounded dark:bg-gray-700 w-full"></div>
+          </TableCell>
+        ))}
+      </TableRow>
+    ));
+  };
 
   return (
     <div className='bg-white'>
       <Table>
         <TableHeader>
           <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
-            <TableHead className="w-[100px] font-bold text-white">S.No.</TableHead>
+            <TableHead className="font-bold dark:text-black text-white">S.No.</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Name</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
             <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
@@ -49,7 +61,9 @@ const AllUsers = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {
+          {loading ? (
+            renderSkeletonRows()
+          ) : (
             allUsers?.map((el, index) => {
               return (
                 <TableRow key={index} className="dark:bg-black dark:hover:bg-black bg-white hover:bg-white">
@@ -74,7 +88,7 @@ const AllUsers = () => {
                 </TableRow>
               )
             })
-          }
+          )}
         </TableBody>
       </Table>
 

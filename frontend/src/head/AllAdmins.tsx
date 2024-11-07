@@ -51,28 +51,41 @@ const AllAdmins = () => {
         return club ? club.clubName : "No Club Assigned";
     };
 
+    const renderSkeletonRows = () => {
+        return Array.from({ length: 5 }).map((_, index) => (
+            <TableRow key={index} className="animate-pulse dark:bg-black bg-white">
+                {Array.from({ length: 9 }).map((_, cellIndex) => (
+                    <TableCell key={cellIndex}>
+                        <div className="h-4 bg-gray-300 rounded dark:bg-gray-700 w-full"></div>
+                    </TableCell>
+                ))}
+            </TableRow>
+        ));
+    };
+
     return (
         <div className="bg-white">
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
-                <Table className="lg:text-base md:text-sm text-xs">
-                    <TableHeader>
-                        <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
-                            <TableHead className="w-[100px] font-bold text-white">S.No.</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Club Name</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Club Head</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Admission Number</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
-                            {/* <TableHead className="dark:text-black font-bold text-white">Admin</TableHead> */}
-                            <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
-                            <TableHead className="dark:text-black font-bold text-white">Edit</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {adminUsers?.map((el, index: number) => (
+
+            <Table className="lg:text-base md:text-sm text-xs">
+                <TableHeader>
+                    <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
+                        <TableHead className="font-bold dark:text-black text-white">S.No.</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Club Name</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Club Head</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Admission Number</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
+                        {/* <TableHead className="dark:text-black font-bold text-white">Admin</TableHead> */}
+                        <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Edit</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {loading ? (
+                        renderSkeletonRows()
+                    ) : (
+                        adminUsers?.map((el, index) => (
                             <TableRow key={index} className="dark:bg-black dark:hover:bg-black bg-white hover:bg-white">
                                 <TableCell className="font-medium">{index + 1}</TableCell>
                                 <TableCell className="font-semibold">{getClubName(el?._id)}</TableCell>
@@ -81,7 +94,6 @@ const AllAdmins = () => {
                                 <TableCell>{el?.contact}</TableCell>
                                 <TableCell>{el?.addmission_no}</TableCell>
                                 <TableCell>{el?.branch}</TableCell>
-                                {/* <TableCell>{el?.admin ? "Yes" : "No"}</TableCell> */}
                                 <TableCell>{moment(el?.createdAt).format("LL")}</TableCell>
                                 <TableCell>
                                     <button
@@ -95,10 +107,11 @@ const AllAdmins = () => {
                                     </button>
                                 </TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            )}
+                        ))
+                    )}
+                </TableBody>
+            </Table>
+
             {openUpdateRole && (
                 <ChangeUserRole
                     onClose={() => setOpenUpdateRole(false)}
