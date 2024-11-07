@@ -32,6 +32,8 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
     getClub: async () => {
@@ -45,6 +47,8 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
             if (error.response.status === 404) {
                 set({ club: null });
             }
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     },
@@ -63,6 +67,8 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
         } catch (error: any) {
             toast.error(error.response.data.message);
             set({ loading: false });
+        } finally {
+            set({ loading: false });
         }
     },
     searchClub: async (searchText: string, searchQuery: string, selectedEvents: any) => {
@@ -78,6 +84,8 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
                 set({ loading: false, searchedClub: response.data });
             }
         } catch (error) {
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     },
@@ -182,6 +190,8 @@ export const useClubStore = create<ClubState>()(persist((set) => ({
             if (error.response && error.response.status === 404) {
                 set({ allClubs: null });
             }
+            set({ loading: false });
+        } finally {
             set({ loading: false });
         }
     }
