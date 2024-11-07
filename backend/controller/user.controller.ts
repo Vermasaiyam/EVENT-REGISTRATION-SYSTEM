@@ -267,16 +267,17 @@ export const checkAuth = async (req: Request, res: Response): Promise<void> => {
 
 export const updateProfile = async (req: Request, res: Response): Promise<void> => {
     try {
-        // console.log(req.id);
-
         const userId = req.id;
         const { fullname, email, addmission_no, branch, current_year, profilePicture } = req.body;
 
-        //cloudinary
-        let cloudResponse: any;
-        cloudResponse = await cloudinary.uploader.upload(profilePicture);
-        const updatedData = { fullname, email, addmission_no, branch, current_year, profilePicture };
+        const updatedData: any = { fullname, email, addmission_no, branch, current_year };
 
+        if (profilePicture) {
+            const cloudResponse = await cloudinary.uploader.upload(profilePicture);
+            updatedData.profilePicture = cloudResponse.secure_url;
+        }
+
+        // Update the user profile
         const user = await User.findByIdAndUpdate(userId, updatedData, { new: true }).select("-password");
 
         res.status(200).json({
@@ -288,7 +289,8 @@ export const updateProfile = async (req: Request, res: Response): Promise<void> 
         console.error(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};
+
 export const allUsers = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log(req.id);
@@ -308,18 +310,18 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
 export const updateUsers = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log(req.id);
-        const { userId , email, fullname, isAdmin} = req.body;
+        const { userId, email, fullname, isAdmin } = req.body;
 
         const payload = {
-            ...( email && { email : email}),
-            ...( fullname && { fullname : fullname}),
-            ...( { admin : isAdmin}),
+            ...(email && { email: email }),
+            ...(fullname && { fullname: fullname }),
+            ...({ admin: isAdmin }),
         };
 
         // console.log(payload);
-        
 
-        const updateUser = await User.findByIdAndUpdate(userId,payload, { new: true }).select("-password");
+
+        const updateUser = await User.findByIdAndUpdate(userId, payload, { new: true }).select("-password");
 
         if (!updateUser) {
             res.status(404).json({ success: false, message: "User not found" });
