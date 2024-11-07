@@ -8,7 +8,7 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import { Button } from "./ui/button";
-import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Route, Sun, User, User2, UserCheck2, Users, Users2 } from "lucide-react";
+import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Sun, User, User2, UserCheck2, Users2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
@@ -50,9 +50,9 @@ const Navbar = () => {
 
                 <div className="hidden lg:flex space-x-6 items-center">
                     <Link to="/" className="hover:text-hoverGreen font-medium">Home</Link>
-                    <Link to="/events" className="hover:text-hoverGreen  font-medium">Events</Link>
                     <Link to="/clubs" className="hover:text-hoverGreen  font-medium">Clubs</Link>
-                    <Link to="/participation/status" className="hover:text-hoverGreen  font-medium">My Journey</Link>
+                    <Link to="/events" className="hover:text-hoverGreen  font-medium">Events</Link>
+                    {/* <Link to="/participation/status" className="hover:text-hoverGreen  font-medium">My Journey</Link> */}
 
                     {user?.admin && (
                         <Menubar>
@@ -65,9 +65,9 @@ const Navbar = () => {
                                     <Link to="/admin/events">
                                         <MenubarItem className="cursor-pointer">My Events</MenubarItem>
                                     </Link>
-                                    <Link to="/admin/participants">
+                                    {/* <Link to="/admin/participants">
                                         <MenubarItem className="cursor-pointer">Participants</MenubarItem>
-                                    </Link>
+                                    </Link> */}
                                     {
                                         user?.head && (
                                             <div className="">
@@ -197,21 +197,21 @@ const MobileNavbar = () => {
                         <User />
                         <span>Profile</span>
                     </Link>
-                    <Link to="/events" className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium">
-                        <Calendar />
-                        <span>Events</span>
-                    </Link>
                     <Link to="/clubs" className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium">
                         <Newspaper />
                         <span>Clubs</span>
                     </Link>
-                    <Link
+                    <Link to="/events" className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium">
+                        <Calendar />
+                        <span>Events</span>
+                    </Link>
+                    {/* <Link
                         to="/participation/status"
                         className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
                     >
                         <Route />
                         <span>My Journey</span>
-                    </Link>
+                    </Link> */}
                     <div className="my-2">
                         <Separator />
                     </div>
@@ -232,13 +232,13 @@ const MobileNavbar = () => {
                                 <Calendar1 />
                                 <span>My Events</span>
                             </Link>
-                            <Link
+                            {/* <Link
                                 to="/admin/participants"
                                 className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
                             >
                                 <Users />
                                 <span>Participants</span>
-                            </Link>
+                            </Link> */}
                             {
                                 user?.head && (
                                     <div className="">
