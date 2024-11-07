@@ -33,7 +33,7 @@ const AllUsers = () => {
   }, [])
 
   return (
-    <div className='bg-white my-4'>
+    <div className='bg-white'>
       <Table>
         <TableHeader>
           <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
