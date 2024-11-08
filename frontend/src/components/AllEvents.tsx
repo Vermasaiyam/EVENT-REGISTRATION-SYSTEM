@@ -157,10 +157,10 @@ const AllEvents = () => {
                                                     <span className="font-semibold">Fee:</span>
                                                     <span className="text-green dark:text-yellow-100">₹{event.registrationFee}</span>
                                                 </div>
-                                                <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
+                                                {/* <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
                                                     <span className="font-semibold">Registration Ends:</span>
                                                     <span>{new Date(event.registrationEndDate).toLocaleDateString('en-GB')}</span>
-                                                </div>
+                                                </div> */}
                                                 <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
                                                     <span className="font-semibold">Dates:</span>
                                                     <span>{`${new Date(event.eventStartDate).toLocaleDateString('en-GB')} - ${new Date(event.eventEndDate).toLocaleDateString('en-GB')}`}</span>
@@ -170,15 +170,16 @@ const AllEvents = () => {
                                                     <span>{`${formatTime(event.startTime)} - ${formatTime(event.endTime)}`}</span>
                                                 </div>
                                             </div>
-                                            <div className="flex justify-center mt-4">
-                                                <Button
-                                                    disabled={true}
-                                                    variant={"outline"}
-                                                    className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
-                                                >
-                                                    Register Now
-                                                </Button>
-                                            </div>
+                                            {/* <div className="flex justify-center mt-4">
+                                                <a href={event.formLink} target="_blank">
+                                                    <Button
+                                                        variant={"outline"}
+                                                        className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
+                                                    >
+                                                        Register Now
+                                                    </Button>
+                                                </a>
+                                            </div> */}
                                         </CardContent>
                                     </Card>
                                 </div>
