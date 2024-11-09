@@ -4,6 +4,15 @@ module.exports = {
 	content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
 	theme: {
 		extend: {
+			keyframes: {
+				twinkle: {
+					'0%, 100%': { opacity: 1 },
+					'50%': { opacity: 0.5 },
+				},
+			},
+			animation: {
+				twinkle: 'twinkle 1s infinite',
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',

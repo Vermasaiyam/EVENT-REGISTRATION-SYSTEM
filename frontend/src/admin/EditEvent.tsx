@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import {
     Dispatch,
     SetStateAction,
@@ -40,6 +40,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
         startTime: "",
         endTime: "",
         image: undefined,
+        images: [],
         formLink: "",
     });
 
@@ -82,6 +83,12 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                 formData.append("image", input.image);
             }
 
+            if (input.images) {
+                input.images.forEach((image, index) => {
+                    formData.append(`images[${index}]`, image);
+                });
+            }
+
             // api function
             await editEvent(selectedEvent._id, formData);
 
@@ -91,6 +98,32 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
 
         setEditOpen(false);
     }
+
+    // Handle the image change event
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const newImages = Array.from(e.target.files);
+            // Ensure that no more than 3 images are uploaded
+            const currentImages = input.images ?? [];
+            if (currentImages.length + newImages.length <= 3) {
+                setInput((prev) => ({
+                    ...prev,
+                    images: [...currentImages, ...newImages],
+                }));
+            } else {
+                alert("You can only upload up to 3 images.");
+            }
+        }
+    };
+
+
+    // Handle image deletion
+    const handleDeleteImage = (index: number) => {
+        setInput((prev) => ({
+            ...prev,
+            images: (prev.images ?? []).filter((_, i) => i !== index),
+        }));
+    };
 
     useEffect(() => {
         setInput({
@@ -301,6 +334,35 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                                 {error.formLink}
                             </span>
                         )}
+                    </div>
+
+                    <div>
+                        <Label>Upload Event Images</Label>
+                        {(input.images?.length ?? 0) > 0 && (
+                            <div className="flex gap-2 mb-3">
+                                {input.images?.map((image, index) => (
+                                    <div key={index} className="relative">
+                                        <img src={URL.createObjectURL(image)} alt={`Event Image ${index + 1}`} className="w-24 h-24 object-cover" />
+                                        <button
+                                            type="button"
+                                            className="absolute top-1 right-1 text-red-600"
+                                            onClick={() => handleDeleteImage(index)}
+                                        >
+                                            <X className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        <Input
+                            type="file"
+                            name="images"
+                            onChange={handleImageChange}
+                            multiple
+                            accept="image/*"
+                        />
+                        <span className="text-xs text-gray-500">*Upload images after the event is completed to display on the event page. (Max 3 images)</span>
                     </div>
 
                     <DialogFooter className="mt-5">

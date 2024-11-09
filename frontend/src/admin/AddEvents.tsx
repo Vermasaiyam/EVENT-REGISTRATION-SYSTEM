@@ -118,11 +118,11 @@ const AddEvents = () => {
         if (e.target.files) {
             const newImages = Array.from(e.target.files);
             // Ensure that no more than 3 images are uploaded
-            const currentImages = input.images ?? [];  // If images is undefined, default to an empty array
+            const currentImages = input.images ?? []; 
             if (currentImages.length + newImages.length <= 3) {
                 setInput((prev) => ({
                     ...prev,
-                    images: [...currentImages, ...newImages],  // Append new images
+                    images: [...currentImages, ...newImages],
                 }));
             } else {
                 alert("You can only upload up to 3 images.");
@@ -135,7 +135,7 @@ const AddEvents = () => {
     const handleDeleteImage = (index: number) => {
         setInput((prev) => ({
             ...prev,
-            images: (prev.images ?? []).filter((_, i) => i !== index), // Use an empty array if images is undefined
+            images: (prev.images ?? []).filter((_, i) => i !== index),
         }));
     };
 

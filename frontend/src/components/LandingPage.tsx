@@ -104,12 +104,13 @@ const LandingPage = () => {
                         <Button onClick={() => navigate(`/search/${searchText}`)} className="px-2 md:py-1 py-1 md:text-base text-sm text-white shadow-lg bg-green hover:bg-hoverGreen rounded-sm">Search</Button>
                     </div>
                 </div>
-                <div className="flex-1 flex items-center justify-center">
+                <div className="flex-1 flex flex-col items-center justify-center">
                     {/* <img
                         src="bg.png"
                         alt="Background Image"
                         className="object-fit lg:max-h-[550px] lg:min-h-[450px] md:max-h-[450px] md:min-h-[350px] max-h-[350px] min-h-[280px]"
                     /> */}
+                    <p className="text-red-500 font-semibold mb-1 text-2xl animate-twinkle">NEW EVENTS!!!</p>
                     <EventCarousel events={activeEvents} />
                 </div>
             </div>
