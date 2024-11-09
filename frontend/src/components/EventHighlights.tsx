@@ -38,7 +38,7 @@ const EventHighlights: React.FC<EventProps> = ({ events }) => {
     const currentImageData = imageEventMap[currentIndex];
 
     return (
-        <div className="event-highlights max-w-7xl mx-auto py-8">
+        <div className="event-highlights max-w-7xl mx-auto my-10 py-8">
             <h2 className="text-2xl font-semibold mb-6">Event Highlights</h2>
 
             {/* Carousel Container */}
@@ -55,7 +55,7 @@ const EventHighlights: React.FC<EventProps> = ({ events }) => {
                         </div>
 
                         {/* Event and Club Name Overlay */}
-                        <div className="absolute bottom-4 left-4 text-white">
+                        <div className="absolute bottom-4 left-4 text-black dark:text-yellow-300">
                             <div className="text-xl font-bold">{currentImageData.name}</div>
                             <div className="text-md">{currentImageData.clubName}</div>
                         </div>
