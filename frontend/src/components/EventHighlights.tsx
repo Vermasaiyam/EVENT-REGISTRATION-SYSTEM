@@ -38,59 +38,62 @@ const EventHighlights: React.FC<EventProps> = ({ events }) => {
     const currentImageData = imageEventMap[currentIndex];
 
     return (
-        <div className="event-highlights max-w-7xl mx-auto my-10 py-8">
-            <h2 className="text-2xl font-semibold mb-6">Event Highlights</h2>
+        <div className="mx-2">
 
-            {/* Carousel Container */}
-            <div className="carousel-container relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
-                {imageEventMap?.length > 0 ? (
-                    <>
-                        {/* Image */}
-                        <div className="carousel-image-container w-full h-full">
-                            <img
-                                src={currentImageData.image}
-                                alt={`Event Image ${currentIndex + 1}`}
-                                className="carousel-image w-full h-full object-contain transition-opacity duration-500 ease-in-out"
-                            />
-                        </div>
+            <div className="event-highlights max-w-7xl mx-auto my-10 py-8">
+                <h2 className="text-2xl font-semibold mb-6">Event Highlights</h2>
 
-                        {/* Event and Club Name Overlay */}
-                        <div className="absolute bottom-4 left-4 text-black dark:text-yellow-300">
-                            <div className="text-xl font-bold">{currentImageData.name}</div>
-                            <div className="text-md">{currentImageData.clubName}</div>
-                        </div>
+                {/* Carousel Container */}
+                <div className="carousel-container relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
+                    {imageEventMap?.length > 0 ? (
+                        <>
+                            {/* Image */}
+                            <div className="carousel-image-container w-full h-full">
+                                <img
+                                    src={currentImageData.image}
+                                    alt={`Event Image ${currentIndex + 1}`}
+                                    className="carousel-image w-full h-full object-contain transition-opacity duration-500 ease-in-out"
+                                />
+                            </div>
 
-                        {/* Navigation Buttons */}
-                        <div className="carousel-nav absolute top-1/2 left-0 right-0 flex justify-between items-center px-4">
-                            <button
-                                onClick={prevImage}
-                                className="carousel-nav-button bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-colors"
-                            >
-                                <FaAngleLeft />
-                            </button>
-                            <button
-                                onClick={nextImage}
-                                className="carousel-nav-button bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-colors"
-                            >
-                                <FaAngleRight />
-                            </button>
-                        </div>
+                            {/* Event and Club Name Overlay */}
+                            <div className="absolute bottom-4 left-4 text-black dark:text-yellow-300">
+                                <div className="text-xl font-bold">{currentImageData.name}</div>
+                                <div className="text-md">{currentImageData.clubName}</div>
+                            </div>
 
-                        {/* Dots Navigation */}
-                        <div className="dots-container absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                            {imageEventMap.map((_, index) => (
-                                <span
-                                    key={index}
-                                    className={`dot h-2 w-2 rounded-full bg-white bg-opacity-50 cursor-pointer transition-opacity duration-300 ${index === currentIndex ? "bg-opacity-100" : ""
-                                        }`}
-                                    onClick={() => setCurrentIndex(index)}
-                                ></span>
-                            ))}
-                        </div>
-                    </>
-                ) : (
-                    <p className="text-center text-gray-500">No images available for this event.</p>
-                )}
+                            {/* Navigation Buttons */}
+                            <div className="carousel-nav absolute top-1/2 left-0 right-0 flex justify-between items-center px-4">
+                                <button
+                                    onClick={prevImage}
+                                    className="carousel-nav-button bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-colors"
+                                >
+                                    <FaAngleLeft />
+                                </button>
+                                <button
+                                    onClick={nextImage}
+                                    className="carousel-nav-button bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition-colors"
+                                >
+                                    <FaAngleRight />
+                                </button>
+                            </div>
+
+                            {/* Dots Navigation */}
+                            <div className="dots-container absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                                {imageEventMap.map((_, index) => (
+                                    <span
+                                        key={index}
+                                        className={`dot h-2 w-2 rounded-full bg-white bg-opacity-50 cursor-pointer transition-opacity duration-300 ${index === currentIndex ? "bg-opacity-100" : ""
+                                            }`}
+                                        onClick={() => setCurrentIndex(index)}
+                                    ></span>
+                                ))}
+                            </div>
+                        </>
+                    ) : (
+                        <p className="text-center text-gray-500">No images available for this event.</p>
+                    )}
+                </div>
             </div>
         </div>
     );
