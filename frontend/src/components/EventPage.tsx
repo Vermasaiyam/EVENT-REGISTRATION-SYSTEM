@@ -37,10 +37,8 @@ const EventPage = () => {
 
     const getImageUrl = (image: string | File) => {
         if (typeof image === "string") {
-            // If the image is already a URL (string), return it directly
             return image;
         } else if (image instanceof File) {
-            // If the image is a File object, create a URL for it
             return URL.createObjectURL(image);
         }
         return "";
@@ -140,12 +138,24 @@ const EventPage = () => {
                             >
                                 <FaAngleRight />
                             </button>
+
+                            {/* Dots Navigation */}
+                            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                                {event.images.map((_:any, index: any) => (
+                                    <span
+                                        key={index}
+                                        className={`dot h-2 w-2 rounded-full bg-white bg-opacity-50 cursor-pointer transition-opacity duration-300 ${index === currentIndex ? "bg-opacity-100" : ""
+                                            }`}
+                                        onClick={() => setCurrentIndex(index)}
+                                    ></span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default EventPage;

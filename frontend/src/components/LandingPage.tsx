@@ -13,6 +13,7 @@ import { useEventStore } from "@/store/useEventStore";
 import ActiveEvent from "./ActiveEvent";
 import PastEvent from "./PastEvents";
 import EventCarousel from "./EventCarousel";
+import EventHighlights from "./EventHighlights";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -146,6 +147,7 @@ const LandingPage = () => {
                 }
             </div>
 
+            <EventHighlights events={pastEvents} />
             <HelpingSection />
         </div>
     )
