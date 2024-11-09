@@ -12,6 +12,7 @@ export type EventItem = {
     endTime: string;
     image: string;
     formLink: string;
+    clubName?: string;
 }
 export type Club = {
     _id: string;

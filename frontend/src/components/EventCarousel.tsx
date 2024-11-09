@@ -59,7 +59,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
                   />
                   <div className="absolute bottom-4 left-4 text-black dark:text-white">
                     <div className="text-xl font-bold">{event.name}</div>
-                    {/* <div className="text-md">{event.clubName}</div> */}
+                    <div className="text-md">{event.clubName}</div>
                   </div>
                 </div>
               </CarouselItem>
