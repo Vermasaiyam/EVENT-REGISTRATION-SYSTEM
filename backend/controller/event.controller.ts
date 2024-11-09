@@ -8,15 +8,29 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
     try {
         const { name, description, mode, registrationFee, registrationEndDate, eventStartDate, eventEndDate, startTime, endTime, formLink } = req.body;
         const file = req.file;
+
         if (!file) {
             res.status(400).json({
                 success: false,
                 message: "Event Image is required."
-            })
+            });
             return;
         };
+
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
-        const event: any = await Event.create({
+
+        // Find the club associated with the user
+        const club = await Club.findOne({ user: req.id });
+        if (!club) {
+            res.status(404).json({
+                success: false,
+                message: "Club not found for this user."
+            });
+            return;
+        }
+
+        // Create the event with the clubId
+        const event = await Event.create({
             name,
             description,
             mode,
@@ -28,12 +42,12 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
             endTime,
             formLink,
             image: imageUrl,
+            clubId: club._id // Associate the event with the clubId
         });
-        const club = await Club.findOne({ user: req.id });
-        if (club) {
-            (club.events as mongoose.Schema.Types.ObjectId[]).push(event._id);
-            await club.save();
-        }
+
+        // Add the event to the club's events list
+        club.events.push(event._id as any);
+        await club.save();
 
         res.status(201).json({
             success: true,
@@ -41,10 +55,10 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
             event
         });
     } catch (error) {
-        console.log(error);
+        console.error("Error adding event:", error);
         res.status(500).json({ message: "Internal Server Error." });
     }
-}
+};
 
 export const editEvent = async (req: Request, res: Response): Promise<void> => {
     try {
