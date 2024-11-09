@@ -30,7 +30,7 @@ const AllClubs = () => {
                             key={club._id}
                             className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
                         >
-                            <div className="relative">
+                            <Link to={`/club/${club._id}`} className="relative">
                                 <AspectRatio ratio={15 / 8}>
                                     <img
                                         src={club.imageUrl}
@@ -39,7 +39,7 @@ const AllClubs = () => {
                                         className="w-full h-full object-contain"
                                     />
                                 </AspectRatio>
-                            </div>
+                            </Link>
                             <CardContent className="p-4">
                                 <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                                     {club.clubName}
