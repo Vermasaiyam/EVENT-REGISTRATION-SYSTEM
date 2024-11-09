@@ -9,12 +9,12 @@ interface ActiveEventProps {
 }
 
 const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
-    const eventsPerPage = 6; // Number of events to show per page
-    const [currentPage, setCurrentPage] = useState(1); // Current page
-    const totalPages = Math.ceil(events.length / eventsPerPage); // Total number of pages
+    const eventsPerPage = 6;
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPages = Math.ceil(events.length / eventsPerPage);
 
-    const startIndex = (currentPage - 1) * eventsPerPage; // Start index for the current page
-    const currentEvents = events.slice(startIndex, startIndex + eventsPerPage); // Get the events for the current page
+    const startIndex = (currentPage - 1) * eventsPerPage;
+    const currentEvents = events.slice(startIndex, startIndex + eventsPerPage);
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(":");
@@ -23,7 +23,6 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
         return `${hoursIn12}:${minutes} ${ampm}`;
     };
 
-    // Handlers for Previous and Next buttons
     const handleNext = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
@@ -32,7 +31,6 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
 
-    // Handlers for First and Last buttons
     const handleFirst = () => setCurrentPage(1);
     const handleLast = () => setCurrentPage(totalPages);
 
@@ -151,7 +149,6 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                 </div>
             </div>
 
-            {/* Show a message if there are no events */}
             <div className="flex items-center justify-center w-full mx-auto">
                 {events.length === 0 && (
                     <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Active Events Found.</p>

@@ -2,12 +2,19 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "./ui/card";
 // import { EventFormSchema } from "@/schema/eventSchema";
 import { EventItem } from "@/types/clubType";
+import { useState } from "react";
 
 interface PastEventProps {
     events: EventItem[];
 }
 
 const PastEvent: React.FC<PastEventProps> = ({ events }) => {
+    const eventsPerPage = 6;
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPages = Math.ceil(events.length / eventsPerPage);
+
+    const startIndex = (currentPage - 1) * eventsPerPage;
+    const currentEvents = events.slice(startIndex, startIndex + eventsPerPage);
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(':');
@@ -15,6 +22,17 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
         const ampm = hours < 12 ? 'AM' : 'PM';
         return `${hoursIn12}:${minutes} ${ampm}`;
     };
+    
+    const handleNext = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
+    const handlePrev = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    const handleFirst = () => setCurrentPage(1);
+    const handleLast = () => setCurrentPage(totalPages);
 
     // const eventItems: EventFormSchema[] = [
     //     {
@@ -51,7 +69,7 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
                 Past Events
             </h1>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
-                {events.map((event) => (
+                {currentEvents.map((event) => (
                     <div key={event._id}>
                         <Card className="max-w-md shadow-lg rounded-lg overflow-hidden relative mx-2">
                             <Link to={event.name} state={{ event }} className="">
@@ -88,6 +106,58 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
                     </div>
                 ))}
             </div>
+
+            <div className="flex items-center justify-center mt-4">
+                <div className="flex items-center space-x-2">
+                    {/* First Button */}
+                    <button
+                        onClick={handleFirst}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        First
+                    </button>
+
+                    {/* Previous Button */}
+                    <button
+                        onClick={handlePrev}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        Previous
+                    </button>
+
+                    {/* Page Numbers */}
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            onClick={() => setCurrentPage(index + 1)}
+                            className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+
+                    {/* Next Button */}
+                    <button
+                        onClick={handleNext}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        Next
+                    </button>
+
+                    {/* Last Button */}
+                    <button
+                        onClick={handleLast}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        Last
+                    </button>
+                </div>
+            </div>
+
             <div className="flex items-center justify-center w-full mx-auto">
                 {events.length === 0 && (
                     <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Past Events Found.</p>

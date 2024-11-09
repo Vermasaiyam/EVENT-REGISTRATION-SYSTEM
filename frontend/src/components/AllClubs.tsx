@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -10,22 +10,38 @@ import { Club } from "@/types/clubType";
 
 const AllClubs = () => {
     const { loading, allClubs, fetchAllClubs } = useClubStore();
-    // const loading: boolean = false;
+    
+    const [currentPage, setCurrentPage] = useState(1); 
+    const clubsPerPage = 6;
+    const totalPages = Math.ceil((allClubs?.length || 0) / clubsPerPage);
 
     useEffect(() => {
         fetchAllClubs();
-        // console.log("all clubs",allClubs);
     }, []);
 
+    const startIndex = (currentPage - 1) * clubsPerPage;
+    const currentClubs = allClubs?.slice(startIndex, startIndex + clubsPerPage);
+
+    const handleNext = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
+    const handlePrev = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    const handleFirst = () => setCurrentPage(1);
+    const handleLast = () => setCurrentPage(totalPages);
+
     return (
-        <div className="grid lg:grid-cols-4 md:grid-cols-3 lg:gap-10 gap-5 lg:mx-12 md:mx-6 md:my-10 my-6 mx-4">
-            {
-                loading ? (
+        <div className="my-6 mx-4 lg:mx-12 md:mx-6 md:my-10">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-5">
+                {loading ? (
                     <SearchPageSkeleton />
                 ) : !loading && allClubs?.length === 0 ? (
                     <NoResultFound />
                 ) : (
-                    allClubs?.map((club: Club) => (
+                    currentClubs?.map((club: Club) => (
                         <Card
                             key={club._id}
                             className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300"
@@ -34,7 +50,6 @@ const AllClubs = () => {
                                 <AspectRatio ratio={15 / 8}>
                                     <img
                                         src={club.imageUrl}
-                                        // src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRL_kIswlm4KDcOl6U--eJiLidCUvAzpZC5ZQ&s"
                                         alt={club.clubName}
                                         className="w-full h-full object-contain"
                                     />
@@ -43,27 +58,18 @@ const AllClubs = () => {
                             <CardContent className="p-4">
                                 <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                                     {club.clubName}
-                                    {/* DataVerse */}
                                 </h1>
                                 <div className="flex gap-2 mt-4 flex-wrap">
-                                    {club.eventTypes.slice(0, 3).map(
-                                        (event: string, idx: number) => (
-                                            <Badge
-                                                key={idx}
-                                                className="font-medium px-2 py-1 rounded-full shadow-sm"
-                                            >
-                                                {event}
-                                            </Badge>
-                                        )
+                                    {club.eventTypes.slice(0, 3).map((event: string, idx: number) => (
+                                        <Badge key={idx} className="font-medium px-2 py-1 rounded-full shadow-sm">
+                                            {event}
+                                        </Badge>
+                                    ))}
+                                    {club.eventTypes.length > 3 && (
+                                        <span className="text-xs text-gray-600 my-auto dark:text-yellow-100">
+                                            + {club.eventTypes.length - 3} more
+                                        </span>
                                     )}
-                                    {
-                                        club.eventTypes.length > 3 && (
-                                            <span className="text-xs text-gray-600 my-auto  dark:text-yellow-100">
-                                                + {club.eventTypes.length - 3} more
-                                                {/* + 3 more */}
-                                            </span>
-                                        )
-                                    }
                                 </div>
                             </CardContent>
                             <CardFooter className="p-4 border-t dark:border-t-gray-700 border-t-gray-100 text-white flex justify-end">
@@ -75,12 +81,64 @@ const AllClubs = () => {
                             </CardFooter>
                         </Card>
                     ))
-                )
-            }
+                )}
+            </div>
 
+            <div className="flex items-center justify-center mt-6">
+                <div className="flex items-center space-x-2">
+                    {/* First Button */}
+                    <button
+                        onClick={handleFirst}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        First
+                    </button>
+
+                    {/* Previous Button */}
+                    <button
+                        onClick={handlePrev}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        Previous
+                    </button>
+
+                    {/* Page Numbers */}
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index + 1}
+                            onClick={() => setCurrentPage(index + 1)}
+                            className={`px-4 py-2 text-sm rounded-md ${
+                                currentPage === index + 1 ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+                            }`}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+
+                    {/* Next Button */}
+                    <button
+                        onClick={handleNext}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        Next
+                    </button>
+
+                    {/* Last Button */}
+                    <button
+                        onClick={handleLast}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                    >
+                        Last
+                    </button>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default AllClubs;
 
@@ -88,10 +146,7 @@ const SearchPageSkeleton = () => {
     return (
         <>
             {[...Array(3)].map((_, index) => (
-                <Card
-                    key={index}
-                    className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden"
-                >
+                <Card key={index} className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden">
                     <div className="relative">
                         <AspectRatio ratio={16 / 6}>
                             <Skeleton className="w-full h-full" />
@@ -127,13 +182,8 @@ const NoResultFound = () => {
                 No clubs found
             </h1>
             <p className="mt-2 text-gray-500 dark:text-gray-400">
-                We couldn't find any clubs. <br />
+                We couldn't find any clubs.
             </p>
-            {/* <Link to="/">
-                <Button className="mt-4 bg-green hover:bg-hoverGreen dark:text-white">
-                    Go Back to Home
-                </Button>
-            </Link> */}
         </div>
     );
 };
