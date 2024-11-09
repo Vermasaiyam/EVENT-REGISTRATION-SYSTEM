@@ -57,7 +57,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
                     alt={`Active Event ${index + 1}`}
                     className="object-contain h-full w-full"
                   />
-                  <div className="absolute bottom-4 left-4 text-black dark:text-white">
+                  <div className="absolute bottom-4 left-4 text-black dark:text-yellow-300">
                     <div className="text-xl font-bold">{event.name}</div>
                     <div className="text-md">{event.clubName}</div>
                   </div>
