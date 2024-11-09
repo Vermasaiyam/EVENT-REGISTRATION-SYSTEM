@@ -63,6 +63,16 @@ export const editEvent = async (req: Request, res: Response): Promise<void> => {
         const { id } = req.params;
         const { name, description, mode, registrationFee, registrationEndDate, eventStartDate, eventEndDate, startTime, endTime, formLink } = req.body;
         const file = req.file;
+
+        // Check if `req.files` contains multiple images as an array or as an object with `images` field
+        let files: Express.Multer.File[] = [];
+        if (Array.isArray(req.files)) {
+            files = req.files;
+        } else if (req.files && 'images' in req.files) {
+            files = req.files['images'] as Express.Multer.File[];
+        }
+
+        // Find the event by ID
         const event = await Event.findById(id);
         if (!event) {
             res.status(404).json({
@@ -71,6 +81,8 @@ export const editEvent = async (req: Request, res: Response): Promise<void> => {
             });
             return;
         }
+
+        // Update fields if they exist in the request body
         if (name) event.name = name;
         if (description) event.description = description;
         if (mode) event.mode = mode;
@@ -82,22 +94,33 @@ export const editEvent = async (req: Request, res: Response): Promise<void> => {
         if (endTime) event.endTime = endTime;
         if (formLink) event.formLink = formLink;
 
+        // Single image upload
         if (file) {
             const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
             event.image = imageUrl;
         }
+
+        // Multiple images upload
+        if (files.length > 0) {
+            const imageUrls = await Promise.all(files.map(async (imageFile) => {
+                return await uploadImageOnCloudinary(imageFile);
+            }));
+            event.images = imageUrls;  // Save array of URLs in the 'images' field
+        }
+
+        // Save updated event
         await event.save();
 
         res.status(200).json({
             success: true,
             message: "Event updated",
             event,
-        })
+        });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal Server Error." });
     }
-}
+};
 
 export const deleteEvent = async (req: Request, res: Response): Promise<void> => {
     try {

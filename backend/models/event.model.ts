@@ -12,6 +12,7 @@ export interface IEvent {
     endTime: string;
     image?: string;
     formLink: string;
+    images?: string[];
     clubId: mongoose.Schema.Types.ObjectId;
     clubName: string;
 }
@@ -68,6 +69,7 @@ const eventSchema = new mongoose.Schema<IEventDocument>({
         type: String,
         required: true,
     },
+    images: [{ type: String }],
     clubId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Club",
