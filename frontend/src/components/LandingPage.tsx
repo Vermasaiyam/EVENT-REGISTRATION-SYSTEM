@@ -12,6 +12,7 @@ import { EventItem } from "@/types/clubType";
 import { useEventStore } from "@/store/useEventStore";
 import ActiveEvent from "./ActiveEvent";
 import PastEvent from "./PastEvents";
+import EventCarousel from "./EventCarousel";
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -104,11 +105,12 @@ const LandingPage = () => {
                     </div>
                 </div>
                 <div className="flex-1 flex items-center justify-center">
-                    <img
+                    {/* <img
                         src="bg.png"
                         alt="Background Image"
                         className="object-fit lg:max-h-[550px] lg:min-h-[450px] md:max-h-[450px] md:min-h-[350px] max-h-[350px] min-h-[280px]"
-                    />
+                    /> */}
+                    <EventCarousel events={activeEvents} />
                 </div>
             </div>
             {/* All Clubs */}
