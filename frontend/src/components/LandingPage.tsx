@@ -81,7 +81,7 @@ const LandingPage = () => {
 
     return (
         <div className="">
-            <div className="flex flex-col md:flex-row max-w-8xl lg:mx-20 md:mx-12 mx-4 py-4 px-6 bg-lightGreen dark:bg-[#2E3A52] md:p-10 rounded-lg items-center justify-around m-4 gap-20 box-border">
+            <div className="flex flex-col md:flex-row max-w-8xl lg:mx-20 md:mx-12 mx-4 py-4 px-6 bg-lightGreen dark:bg-[#2E3A52] md:p-10 rounded-lg items-center justify-around m-4 gap-10 box-border">
                 <div className="flex flex-1 flex-col lg:gap-10 md:gap-7 gap-5 md:w-[40%]">
                     <div className="flex flex-col md:gap-5 gap-2">
                         <h1 className="md:font-bold font-bold lg:leading-none md:leading-tight lg:font-extrabold md:text-5xl text-4xl">
