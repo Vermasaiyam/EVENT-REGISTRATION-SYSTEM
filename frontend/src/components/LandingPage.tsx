@@ -87,7 +87,14 @@ const LandingPage = () => {
         <div className="">
             {/* Scrolling Text */}
             {eventMessages && (
-                <div className="bg-yellow-700 dark:bg-yellow-500 text-white dark:text-black p-2 text-center w-full overflow-hidden">
+                <div
+                    className="bg-yellow-700 dark:bg-yellow-500 text-white dark:text-black p-2 text-center w-full overflow-hidden"
+                    onCopy={(e) => e.preventDefault()}
+                    onPaste={(e) => e.preventDefault()}
+                    onCut={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                    draggable={false}
+                >
                     <div className="relative inline-block whitespace-nowrap group">
                         <div className="inline-block animate-marquee text-lg font-semibold group-hover:animate-marquee-paused">
                             {eventMessages}
@@ -99,7 +106,14 @@ const LandingPage = () => {
             <div className="flex flex-col md:flex-row max-w-8xl lg:mx-20 md:mx-12 mx-4 py-4 px-6 bg-lightGreen dark:bg-[#2E3A52] md:p-10 rounded-lg items-center justify-around m-4 gap-10 box-border">
                 <div className="flex flex-1 flex-col lg:gap-10 md:gap-7 gap-5 md:w-[40%]">
                     <div className="flex flex-col md:gap-5 gap-2">
-                        <h1 className="md:font-bold font-bold lg:leading-none md:leading-tight lg:font-extrabold md:text-5xl text-4xl">
+                        <h1
+                            className="md:font-bold font-bold lg:leading-none md:leading-tight lg:font-extrabold md:text-5xl text-4xl"
+                            onCopy={(e) => e.preventDefault()}
+                            onPaste={(e) => e.preventDefault()}
+                            onCut={(e) => e.preventDefault()}
+                            onDragStart={(e) => e.preventDefault()}
+                            draggable={false}
+                        >
                             Quickly Connecting You to <span ref={typedElement}></span>
                         </h1>
                         <p className="text-gray-500 dark:text-white">
