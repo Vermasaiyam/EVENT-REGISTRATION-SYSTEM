@@ -40,7 +40,7 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
                 {currentEvents?.map((event) => (
                     <div key={event._id}>
-                        <Card className="max-w-md shadow-lg rounded-lg overflow-hidden relative mx-2">
+                        <Card className="max-w-md shadow-xl hover:shadow-2xl rounded-lg overflow-hidden relative mx-2">
                             <Link to={event.name} state={{ event }} className="">
                                 <img
                                     src={event.image}

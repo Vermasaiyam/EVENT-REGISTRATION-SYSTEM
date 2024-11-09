@@ -101,7 +101,7 @@ const AllEvents = () => {
                         ) : (
                             currentActiveEvents?.map((event: Event) => (
                                 <div key={event._id}>
-                                    <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
+                                    <Card className="max-w-sm shadow-xl hover:shadow-2xl rounded-lg overflow-hidden relative mx-2">
                                         <Link to={event.name} state={{ event }} className="">
                                             <img
                                                 src={event.image}
@@ -225,7 +225,7 @@ const AllEvents = () => {
                         ) : (
                             currentPastEvents?.map((event: Event) => (
                                 <div key={event._id}>
-                                    <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
+                                    <Card className="max-w-sm shadow-xl hover:shadow-2xl rounded-lg overflow-hidden relative mx-2">
                                         <Link to={event.name} state={{ event }} className="">
                                             <img
                                                 src={event.image}
