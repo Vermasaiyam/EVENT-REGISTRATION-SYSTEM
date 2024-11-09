@@ -105,13 +105,20 @@ const LandingPage = () => {
                     </div>
                 </div>
                 <div className="flex-1 flex flex-col items-center justify-center">
-                    {/* <img
-                        src="bg.png"
-                        alt="Background Image"
-                        className="object-fit lg:max-h-[550px] lg:min-h-[450px] md:max-h-[450px] md:min-h-[350px] max-h-[350px] min-h-[280px]"
-                    /> */}
-                    <p className="text-red-500 font-semibold mb-1 text-2xl animate-twinkle">NEW EVENTS!!!</p>
-                    <EventCarousel events={activeEvents} />
+                    {
+                        activeEvents.length === 0 ? (
+                            <img
+                                src="bg.png"
+                                alt="Background Image"
+                                className="object-fit lg:max-h-[550px] lg:min-h-[450px] md:max-h-[450px] md:min-h-[350px] max-h-[350px] min-h-[280px]"
+                            />
+                        ) : (
+                            <div className="flex flex-col items-center justify-center">
+                                <p className="text-red-500 font-semibold mb-1 text-2xl animate-twinkle">NEW EVENTS!!!</p>
+                                <EventCarousel events={activeEvents} />
+                            </div>
+                        )
+                    }
                 </div>
             </div>
             {/* All Clubs */}
