@@ -118,7 +118,7 @@ const AddEvents = () => {
         if (e.target.files) {
             const newImages = Array.from(e.target.files);
             // Ensure that no more than 3 images are uploaded
-            const currentImages = input.images ?? []; 
+            const currentImages = input.images ?? [];
             if (currentImages.length + newImages.length <= 3) {
                 setInput((prev) => ({
                     ...prev,
@@ -349,8 +349,24 @@ const AddEvents = () => {
                                             )}
                                         </div>
 
-
-
+                                        <div>
+                                            <Label>Upload Event Image</Label>
+                                            <Input
+                                                type="file"
+                                                name="image"
+                                                onChange={(e) =>
+                                                    setInput({
+                                                        ...input,
+                                                        image: e.target.files?.[0] || undefined,
+                                                    })
+                                                }
+                                            />
+                                            {error && (
+                                                <span className="text-xs font-medium text-red-600">
+                                                    {error.image?.name}
+                                                </span>
+                                            )}
+                                        </div>
 
                                         <div>
                                             <Label>Registration From Link</Label>
@@ -369,7 +385,7 @@ const AddEvents = () => {
                                         </div>
 
                                         <div>
-                                            <Label>Upload Event Images</Label>
+                                            <Label>Upload Event Images <span className="text-xs text-gray-600">(Upload after event is over)</span></Label>
                                             {(input.images?.length ?? 0) > 0 && (
                                                 <div className="flex gap-2 mb-3">
                                                     {input.images?.map((image, index) => (
@@ -380,7 +396,7 @@ const AddEvents = () => {
                                                                 className="absolute top-1 right-1 text-red-600"
                                                                 onClick={() => handleDeleteImage(index)}
                                                             >
-                                                                <X className="w-5 h-5"/>
+                                                                <X className="w-5 h-5" />
                                                             </button>
                                                         </div>
                                                     ))}

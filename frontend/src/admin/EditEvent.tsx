@@ -337,7 +337,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                     </div>
 
                     <div>
-                        <Label>Upload Event Images</Label>
+                        <Label>Upload Event Images <span className="text-xs text-gray-600">(Upload after event is over)</span></Label>
                         {(input.images?.length ?? 0) > 0 && (
                             <div className="flex gap-2 mb-3">
                                 {input.images?.map((image, index) => (
