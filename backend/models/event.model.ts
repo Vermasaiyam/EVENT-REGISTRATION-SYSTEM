@@ -73,7 +73,7 @@ const eventSchema = new mongoose.Schema<IEventDocument>({
     clubId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Club",
-        required: true,
+        // required: true,
     },
     clubName: {
         type: String,

@@ -60,8 +60,11 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
 
 export const editEvent = async (req: Request, res: Response): Promise<void> => {
     try {
+        // console.log(req.body);
+        // console.log(req.files);
+
         const { id } = req.params;
-        const { name, description, mode, registrationFee, registrationEndDate, eventStartDate, eventEndDate, startTime, endTime, formLink } = req.body;
+        const { clubId, name, description, mode, registrationFee, registrationEndDate, eventStartDate, eventEndDate, startTime, endTime, formLink } = req.body;
         const file = req.file;
 
         // Check if `req.files` contains multiple images as an array or as an object with `images` field
@@ -83,6 +86,7 @@ export const editEvent = async (req: Request, res: Response): Promise<void> => {
         }
 
         // Update fields if they exist in the request body
+        if (clubId) event.clubId = clubId;
         if (name) event.name = name;
         if (description) event.description = description;
         if (mode) event.mode = mode;
@@ -113,7 +117,7 @@ export const editEvent = async (req: Request, res: Response): Promise<void> => {
 
         res.status(200).json({
             success: true,
-            message: "Event updated",
+            message: "Event Updated Successfully.",
             event,
         });
     } catch (error) {

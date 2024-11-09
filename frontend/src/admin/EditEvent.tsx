@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
+import { EditEventFormSchema, editEventSchema } from "@/schema/eventSchema";
 import { Loader2, X } from "lucide-react";
 import {
     Dispatch,
@@ -29,7 +29,7 @@ import { useEventStore } from "@/store/useEventStore";
 
 const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: any, editOpen: boolean, setEditOpen: Dispatch<SetStateAction<boolean>> }) => {
 
-    const [input, setInput] = useState<EventFormSchema>({
+    const [input, setInput] = useState<EditEventFormSchema>({
         name: "",
         description: "",
         mode: "Offline", // default
@@ -54,40 +54,49 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
         setInput({ ...input, [name]: type === "number" ? Number(value) : value });
     };
 
-    const [error, setError] = useState<Partial<EventFormSchema>>({});
+    const [error, setError] = useState<Partial<EditEventFormSchema>>({});
 
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const result = eventSchema.safeParse(input);
+        const result = editEventSchema.safeParse(input);
         if (!result.success) {
             const fieldErrors = result.error.formErrors.fieldErrors;
-            setError(fieldErrors as Partial<EventFormSchema>);
+            setError(fieldErrors as Partial<EditEventFormSchema>);
             return;
         }
 
         // api
         try {
             const formData = new FormData();
+            // formData.append("clubId", selectedClubId);
             formData.append("name", input.name);
             formData.append("description", input.description);
             formData.append("mode", input.mode);
             formData.append("registrationFee", input.registrationFee.toString());
-            formData.append("registrationEndDate", input.registrationEndDate);
-            formData.append("eventStartDate", input.eventStartDate);
-            formData.append("eventEndDate", input.eventEndDate);
             formData.append("startTime", input.startTime);
             formData.append("endTime", input.endTime);
             formData.append("formLink", input.formLink);
+            if (input.registrationEndDate) {
+                formData.append("registrationEndDate", input.registrationEndDate);
+            }
+            if (input.eventStartDate) {
+                formData.append("eventStartDate", input.eventStartDate);
+            }
+            if (input.eventEndDate) {
+                formData.append("eventEndDate", input.eventEndDate);
+            }
 
             if (input.image) {
                 formData.append("image", input.image);
             }
 
-            if (input.images) {
-                input.images.forEach((image, index) => {
-                    formData.append(`images[${index}]`, image);
+            if (input.images && input.images.length > 0) {
+                input.images.forEach((image) => {
+                    formData.append("images", image);
                 });
             }
+
+            console.log(input);
 
             // api function
             await editEvent(selectedEvent._id, formData);
@@ -138,6 +147,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
             endTime: selectedEvent?.endTime || "",
             image: undefined,
             formLink: selectedEvent?.formLink || "",
+            images: selectedEvent?.images || [],
         });
     }, [selectedEvent]);
 
