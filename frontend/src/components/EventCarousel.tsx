@@ -5,8 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { FaAngleRight } from "react-icons/fa6";
-import { FaAngleLeft } from "react-icons/fa6";
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6";
 
 interface EventCarouselProps {
   events: EventItem[];
@@ -15,7 +14,6 @@ interface EventCarouselProps {
 const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
 
   const reverseEvents = [...events].reverse();
-
   const activeEventImages = reverseEvents.map((event) => event.image).filter(Boolean);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,6 +24,10 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
 
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + activeEventImages.length) % activeEventImages.length);
+  };
+
+  const handleDotClick = (index: number) => {
+    setCurrentIndex(index);
   };
 
   useEffect(() => {
@@ -69,6 +71,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
           })}
         </CarouselContent>
 
+        {/* Previous Button */}
         <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
           <button
             onClick={handlePrevious}
@@ -77,6 +80,8 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
             <FaAngleLeft />
           </button>
         </div>
+        
+        {/* Next Button */}
         <div className="absolute top-1/2 right-0 transform -translate-y-1/2">
           <button
             onClick={handleNext}
@@ -84,6 +89,19 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
           >
             <FaAngleRight />
           </button>
+        </div>
+
+        {/* Dot Navigation */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+          {activeEventImages.map((_, index) => (
+            <span
+              key={index}
+              className={`h-2 w-2 rounded-full cursor-pointer transition-opacity duration-300 ${
+                index === currentIndex ? "bg-white bg-opacity-100" : "bg-white bg-opacity-50"
+              }`}
+              onClick={() => handleDotClick(index)}
+            ></span>
+          ))}
         </div>
       </Carousel>
     </div>
