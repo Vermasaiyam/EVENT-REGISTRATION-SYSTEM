@@ -13,6 +13,7 @@ export interface IEvent {
     image?: string;
     formLink: string;
     clubId: mongoose.Schema.Types.ObjectId;
+    clubName: string;
 }
 
 export interface IEventDocument extends IEvent, Document {
@@ -72,6 +73,10 @@ const eventSchema = new mongoose.Schema<IEventDocument>({
         ref: "Club",
         required: true,
     },
+    clubName: {
+        type: String,
+        required: true,
+    }
 }, { timestamps: true });
 
 export const Event = mongoose.model("Event", eventSchema);
