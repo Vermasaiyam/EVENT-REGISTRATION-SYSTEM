@@ -43,7 +43,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
   }
 
   return (
-    <div className="relative h-[24rem] overflow-hidden">
+    <div className="relative h-[22rem] overflow-hidden">
       <Carousel orientation="horizontal" className="h-full">
         <CarouselContent
           className="transition-transform duration-500 ease-in-out"
@@ -54,7 +54,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
           {activeEventImages.map((image, index) => {
             const event = reverseEvents[index];
             return (
-              <CarouselItem key={index} className="h-[24rem] w-full">
+              <CarouselItem key={index} className="h-[22rem] w-full">
                 <div className="relative flex items-center justify-center h-full">
                   <img
                     src={image}

@@ -9,9 +9,15 @@ module.exports = {
 					'0%, 100%': { opacity: 1 },
 					'50%': { opacity: 0.5 },
 				},
+				marquee: {
+					"0%": { transform: "translateX(100%)" },
+					"100%": { transform: "translateX(-100%)" },
+				},
 			},
 			animation: {
 				twinkle: 'twinkle 1s infinite',
+				marquee: 'marquee 20s linear infinite',
+				'marquee-paused': 'marquee 20s linear infinite paused',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
