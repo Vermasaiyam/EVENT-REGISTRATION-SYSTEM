@@ -1,30 +1,22 @@
 import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
-import { useClubStore } from "@/store/useClubStore";
 
 const EventPage = () => {
     const location = useLocation();
     const { event } = location.state || {};
 
-    const { allClubs, fetchAllClubs } = useClubStore();
     const [active, setActive] = useState(false);
-    const [clubName, setClubName] = useState("");
 
     useEffect(() => {
-        fetchAllClubs();
-
-        if (allClubs && event) {
-            const club = allClubs.find((club) => club._id === event.clubId);
-            setClubName(club ? club.clubName : "Unknown Club");
-        }
-
         const today = new Date();
         today.setHours(0, 0, 0, 0);
+
         const registrationEndDate = new Date(event.registrationEndDate);
         registrationEndDate.setHours(0, 0, 0, 0);
+
         setActive(registrationEndDate >= today);
-    }, [event, allClubs]);
+    }, [event.registrationEndDate]);
 
     const formatTime = (time: string) => {
         const [hours, minutes] = time.split(':');
@@ -49,7 +41,7 @@ const EventPage = () => {
                 <div className="flex flex-col md:flex-row justify-between my-5 mx-4">
                     <div className="flex-1">
                         <h1 className="font-bold text-3xl">{event.name}</h1>
-                        <p className="mt-4 text-gray-600 dark:text-gray-400"><strong>Organized by:</strong> {clubName}</p>
+                        <p className="mt-4 text-gray-600 dark:text-gray-400"><strong>Organized by:</strong> {event.clubName}</p>
                         <p className="text-sm text-gray-600 mt-2 dark:text-gray-400">{event.description}</p>
                     </div>
                     <div className="flex-1 mt-4 md:mt-0 md:ml-4">
