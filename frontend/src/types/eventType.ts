@@ -11,6 +11,7 @@ export type Event = {
     endTime: string;
     image: string;
     formLink: string;
+    clubName?: string;
 }
 
 export type EventState = {

@@ -59,7 +59,7 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                 {events?.map((event) => (
                     <div key={event._id}>
                         <Card className="max-w-md shadow-lg rounded-lg overflow-hidden relative mx-2">
-                            <Link to={event.name} state={{ event}} className="">
+                            <Link to={event.name} state={{ event }} className="">
                                 <img
                                     // src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
                                     src={event.image}
@@ -77,13 +77,16 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                                 <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                     {event.name}
                                 </h2>
+                                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                                    <strong>Organized by:</strong> {event.clubName}
+                                </p>
                                 <p title={event.description} className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-1">
                                     {event.description}
                                 </p>
                                 <div className="flex flex-col mt-3">
                                     <div className="flex justify-between text-gray-700 dark:text-gray-400">
                                         <span className="font-semibold">Fee:</span>
-                                        <span className="text-green dark:text-yellow-100">₹{event.registrationFee}</span>
+                                        <span className="text-green font-bold dark:text-yellow-100">₹{event.registrationFee}</span>
                                     </div>
                                     <div className="flex justify-between text-gray-700 text-sm dark:text-gray-400 mt-1">
                                         <span className="font-semibold">Registration Ends:</span>

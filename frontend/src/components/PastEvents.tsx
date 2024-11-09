@@ -54,7 +54,7 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
                 {events.map((event) => (
                     <div key={event._id}>
                         <Card className="max-w-md shadow-lg rounded-lg overflow-hidden relative mx-2">
-                            <Link to={event.name} state={{ event}} className="">
+                            <Link to={event.name} state={{ event }} className="">
                                 <img src={event.image} alt={event.name} className="w-full lg:h-48 h-44 object-contain" />
                             </Link>
                             <div className="absolute top-2 right-2 bg-white rounded-full p-1 cursor-pointer text-xs px-2 text-gray-600">
@@ -67,6 +67,9 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
                                 <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                     {event.name}
                                 </h2>
+                                <p className="mt-2 text-gray-600 dark:text-gray-400">
+                                    <strong>Organized by:</strong> {event.clubName}
+                                </p>
                                 <p title={event.description} className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-1">
                                     {event.description}
                                 </p>

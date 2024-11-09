@@ -79,6 +79,9 @@ const AllEvents = () => {
                                             <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                                 {event.name}
                                             </h2>
+                                            <p className="mt-2 text-gray-600 dark:text-gray-400">
+                                                <strong>Organized by:</strong> {event.clubName}
+                                            </p>
                                             <p title={event.description} className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-1">
                                                 {event.description}
                                             </p>
@@ -149,6 +152,9 @@ const AllEvents = () => {
                                             <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                                                 {event.name}
                                             </h2>
+                                            <p className="mt-2 text-gray-600 dark:text-gray-400">
+                                                <strong>Organized by:</strong> {event.clubName}
+                                            </p>
                                             <p title={event.description} className="text-sm text-gray-600 mt-2 dark:text-gray-400 line-clamp-1">
                                                 {event.description}
                                             </p>
