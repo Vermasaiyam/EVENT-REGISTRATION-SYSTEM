@@ -14,6 +14,46 @@ const AllEvents = () => {
     const [activeEvents, setActiveEvents] = useState<EventItem[]>([]);
     const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
 
+    const eventsPerPage = 6;
+
+    // for active evnts
+    const [currentActivePage, setCurrentActivePage] = useState(1);
+    const totalActivePages = Math.ceil(activeEvents.length / eventsPerPage);
+
+    const startActiveIndex = (currentActivePage - 1) * eventsPerPage;
+    const currentActiveEvents = activeEvents.slice(startActiveIndex, startActiveIndex + eventsPerPage);
+
+
+    const handleActiveNext = () => {
+        if (currentActivePage < totalActivePages) setCurrentActivePage(currentActivePage + 1);
+    };
+
+    const handleActivePrev = () => {
+        if (currentActivePage > 1) setCurrentActivePage(currentActivePage - 1);
+    };
+
+    const handleActiveFirst = () => setCurrentActivePage(1);
+    const handleActiveLast = () => setCurrentActivePage(totalActivePages);
+
+    // for past events
+    const [currentPastPage, setCurrentPastPage] = useState(1);
+    const totalPastPages = Math.ceil(pastEvents.length / eventsPerPage);
+
+    const startPastIndex = (currentActivePage - 1) * eventsPerPage;
+    const currentPastEvents = pastEvents.slice(startPastIndex, startPastIndex + eventsPerPage);
+
+
+    const handlePastNext = () => {
+        if (currentActivePage < totalActivePages) setCurrentPastPage(currentActivePage + 1);
+    };
+
+    const handlePastPrev = () => {
+        if (currentActivePage > 1) setCurrentPastPage(currentActivePage - 1);
+    };
+
+    const handlePastFirst = () => setCurrentPastPage(1);
+    const handlePastLast = () => setCurrentPastPage(totalActivePages);
+
     useEffect(() => {
         fetchAllEvents();
         // console.log("all events", allEvents);
@@ -59,7 +99,7 @@ const AllEvents = () => {
                         ) : !loading && allEvents?.length === 0 ? (
                             <NoResultFound />
                         ) : (
-                            activeEvents?.map((event: Event) => (
+                            currentActiveEvents?.map((event: Event) => (
                                 <div key={event._id}>
                                     <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
                                         <Link to={event.name} state={{ event }} className="">
@@ -122,6 +162,57 @@ const AllEvents = () => {
 
                 </div>
 
+                <div className="w-full flex items-center justify-center mt-4">
+                    <div className="flex items-center space-x-2">
+                        {/* First Button */}
+                        <button
+                            onClick={handleActiveFirst}
+                            disabled={currentActivePage === 1}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            First
+                        </button>
+
+                        {/* Previous Button */}
+                        <button
+                            onClick={handleActivePrev}
+                            disabled={currentActivePage === 1}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Previous
+                        </button>
+
+                        {/* Page Numbers */}
+                        {Array.from({ length: totalActivePages }, (_, index) => (
+                            <button
+                                key={index + 1}
+                                onClick={() => setCurrentActivePage(index + 1)}
+                                className={`px-4 py-2 text-sm rounded-md ${currentActivePage === index + 1 ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+
+                        {/* Next Button */}
+                        <button
+                            onClick={handleActiveNext}
+                            disabled={currentActivePage === totalActivePages}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Next
+                        </button>
+
+                        {/* Last Button */}
+                        <button
+                            onClick={handleActiveLast}
+                            disabled={currentActivePage === totalActivePages}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Last
+                        </button>
+                    </div>
+                </div>
+
             </div>
             <div className="flex flex-col items-start">
                 <h1 className="text-2xl md:text-3xl font-semibold mx-16">Past Events</h1>
@@ -132,7 +223,7 @@ const AllEvents = () => {
                         ) : !loading && allEvents?.length === 0 ? (
                             <NoResultFound />
                         ) : (
-                            pastEvents?.map((event: Event) => (
+                            currentPastEvents?.map((event: Event) => (
                                 <div key={event._id}>
                                     <Card className="max-w-sm shadow-lg rounded-lg overflow-hidden relative mx-2">
                                         <Link to={event.name} state={{ event }} className="">
@@ -176,16 +267,6 @@ const AllEvents = () => {
                                                     <span>{`${formatTime(event.startTime)} - ${formatTime(event.endTime)}`}</span>
                                                 </div>
                                             </div>
-                                            {/* <div className="flex justify-center mt-4">
-                                                <a href={event.formLink} target="_blank">
-                                                    <Button
-                                                        variant={"outline"}
-                                                        className="rounded-full border border-green dark:border-yellow-50 dark:text-yellow-50 text-green hover:bg-green hover:text-white"
-                                                    >
-                                                        Register Now
-                                                    </Button>
-                                                </a>
-                                            </div> */}
                                         </CardContent>
                                     </Card>
                                 </div>
@@ -194,7 +275,56 @@ const AllEvents = () => {
                     }
 
                 </div>
+                <div className="w-full flex items-center justify-center mt-4">
+                    <div className="flex items-center space-x-2">
+                        {/* First Button */}
+                        <button
+                            onClick={handlePastFirst}
+                            disabled={currentPastPage === 1}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            First
+                        </button>
 
+                        {/* Previous Button */}
+                        <button
+                            onClick={handlePastPrev}
+                            disabled={currentPastPage === 1}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Previous
+                        </button>
+
+                        {/* Page Numbers */}
+                        {Array.from({ length: totalPastPages }, (_, index) => (
+                            <button
+                                key={index + 1}
+                                onClick={() => setCurrentPastPage(index + 1)}
+                                className={`px-4 py-2 text-sm rounded-md ${currentPastPage === index + 1 ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+
+                        {/* Next Button */}
+                        <button
+                            onClick={handlePastNext}
+                            disabled={currentPastPage === totalPastPages}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Next
+                        </button>
+
+                        {/* Last Button */}
+                        <button
+                            onClick={handlePastLast}
+                            disabled={currentPastPage === totalPastPages}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Last
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )
