@@ -1,12 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const EventPage = () => {
     const location = useLocation();
     const { event } = location.state || {};
 
     const [active, setActive] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         const today = new Date();
@@ -24,6 +26,33 @@ const EventPage = () => {
         const ampm = parseInt(hours) < 12 ? 'AM' : 'PM';
         return `${hoursIn12}:${minutes} ${ampm}`;
     };
+
+    const nextImage = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % event.images.length);
+    };
+
+    const prevImage = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + event.images.length) % event.images.length);
+    };
+
+    const getImageUrl = (image: string | File) => {
+        if (typeof image === "string") {
+            // If the image is already a URL (string), return it directly
+            return image;
+        } else if (image instanceof File) {
+            // If the image is a File object, create a URL for it
+            return URL.createObjectURL(image);
+        }
+        return "";
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % event.images.length);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [event.images.length]);
 
     return (
         <div className="max-w-6xl mx-auto my-10 min-h-[60vh]">
@@ -88,6 +117,32 @@ const EventPage = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Carousel Section for Event Images */}
+                {!active && event.images && event.images.length > 0 && (
+                    <div className="mt-10">
+                        <h2 className="text-2xl font-semibold mb-4">Event Highlights</h2>
+                        <div className="relative">
+                            <img
+                                src={getImageUrl(event.images[currentIndex])}
+                                alt={`Event Highlight ${currentIndex + 1}`}
+                                className="w-full h-64 object-contain rounded-lg"
+                            />
+                            <button
+                                onClick={prevImage}
+                                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-400 dark:bg-gray-900 text-white p-2 rounded-full"
+                            >
+                                <FaAngleLeft />
+                            </button>
+                            <button
+                                onClick={nextImage}
+                                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-400 dark:bg-gray-900 text-white p-2 rounded-full"
+                            >
+                                <FaAngleRight />
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )
