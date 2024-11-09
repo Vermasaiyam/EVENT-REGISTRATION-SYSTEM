@@ -139,6 +139,43 @@ const AddEvents = () => {
         }));
     };
 
+    // pagination 
+    const eventsPerPage = 5; // Number of events to show per page
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Total number of events
+    const totalEvents = club?.events.length || 0;
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(totalEvents / eventsPerPage);
+
+    // Calculate which events to show based on the current page
+    const currentEvents = club?.events.slice(
+        (currentPage - 1) * eventsPerPage,
+        currentPage * eventsPerPage
+    );
+
+    // Handler to navigate to a specific page
+    const goToPage = (page: number) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+
+    // Handle Next and Previous
+    const goToNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const goToPreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+
 
     // const eventItems: EventFormSchema[] = [
     //     {
@@ -168,8 +205,6 @@ const AddEvents = () => {
     //         formLink: "",
     //     },
     // ];
-
-
 
     return (
         <div className="max-w-6xl mx-auto my-10">
@@ -435,13 +470,13 @@ const AddEvents = () => {
 
 
             </div>
-            {club?.events.map((event: any, idx: number) => (
+            {currentEvents?.map((event: any, idx: number) => (
                 <div key={idx} className="mt-6 space-y-4 hover:shadow-lg">
                     <div className="flex flex-col md:flex-row md:items-center md:space-x-4 md:p-4 p-2 shadow-md rounded-lg border relative">
                         <img
                             src={event.image}
                             alt={event.name}
-                            className="md:h-24 md:w-24 h-28 w-full object-cover rounded-lg"
+                            className="md:h-24 md:w-24 h-32 w-full object-contain rounded-lg"
                         />
                         <div onClick={() => deleteEvent(event._id)} className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
                             <Trash2 className="w-4 h-4" />
@@ -498,8 +533,50 @@ const AddEvents = () => {
                         </Button>
                     </div>
                 </div>
-
             ))}
+            <div className="flex justify-center space-x-2 mt-6">
+                <Button
+                    onClick={() => goToPage(1)}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                >
+                    First
+                </Button>
+                <Button
+                    onClick={goToPreviousPage}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                >
+                    Previous
+                </Button>
+
+                {/* Page Number Buttons */}
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <Button
+                        key={index}
+                        onClick={() => goToPage(index + 1)}
+                        className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen rounded-lg`}
+                    >
+                        {index + 1}
+                    </Button>
+                ))}
+
+                <Button
+                    onClick={goToNextPage}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                >
+                    Next
+                </Button>
+
+                <Button
+                    onClick={() => goToPage(totalPages)}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                >
+                    Last
+                </Button>
+            </div>
             {
                 (club?.events.length === 0) && (
                     <div className="text-sm text-gray-600 text-center my-10">
