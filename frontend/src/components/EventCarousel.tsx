@@ -14,7 +14,9 @@ interface EventCarouselProps {
 
 const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
 
-  const activeEventImages = events.map((event) => event.image).filter(Boolean);
+  const reverseEvents = [...events].reverse();
+
+  const activeEventImages = reverseEvents.map((event) => event.image).filter(Boolean);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -48,7 +50,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
           }}
         >
           {activeEventImages.map((image, index) => {
-            const event = events[index];
+            const event = reverseEvents[index];
             return (
               <CarouselItem key={index} className="h-[24rem] w-full">
                 <div className="relative flex items-center justify-center h-full">
