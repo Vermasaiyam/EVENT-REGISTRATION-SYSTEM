@@ -70,7 +70,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
         <div className="absolute top-1/2 left-0 transform -translate-y-1/2">
           <button
             onClick={handlePrevious}
-            className="p-2 bg-gray-900 text-white rounded-full"
+            className="p-2 bg-gray-400 dark:bg-gray-900 text-white rounded-full"
           >
             <FaAngleLeft />
           </button>
@@ -78,7 +78,7 @@ const EventCarousel: React.FC<EventCarouselProps> = ({ events }) => {
         <div className="absolute top-1/2 right-0 transform -translate-y-1/2">
           <button
             onClick={handleNext}
-            className="p-2 bg-gray-900 text-white rounded-full"
+            className="p-2 bg-gray-400 dark:bg-gray-900 text-white rounded-full"
           >
             <FaAngleRight />
           </button>
