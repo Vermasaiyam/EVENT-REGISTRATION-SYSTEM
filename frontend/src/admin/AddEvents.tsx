@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EventFormSchema, eventSchema } from "@/schema/eventSchema";
-import { Loader2, Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2, X } from "lucide-react";
 import { FormEvent, useState } from "react";
 import EditEvent from "./EditEvent";
 import { useEventStore } from "@/store/useEventStore";
@@ -38,6 +38,7 @@ const AddEvents = () => {
         startTime: "",
         endTime: "",
         image: undefined,
+        images: [],
         formLink: "",
     });
 
@@ -111,6 +112,33 @@ const AddEvents = () => {
         const ampm = hours < 12 ? 'AM' : 'PM';
         return `${hoursIn12}:${minutes} ${ampm}`;
     };
+
+    // Handle the image change event
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const newImages = Array.from(e.target.files);
+            // Ensure that no more than 3 images are uploaded
+            const currentImages = input.images ?? [];  // If images is undefined, default to an empty array
+            if (currentImages.length + newImages.length <= 3) {
+                setInput((prev) => ({
+                    ...prev,
+                    images: [...currentImages, ...newImages],  // Append new images
+                }));
+            } else {
+                alert("You can only upload up to 3 images.");
+            }
+        }
+    };
+
+
+    // Handle image deletion
+    const handleDeleteImage = (index: number) => {
+        setInput((prev) => ({
+            ...prev,
+            images: (prev.images ?? []).filter((_, i) => i !== index), // Use an empty array if images is undefined
+        }));
+    };
+
 
     // const eventItems: EventFormSchema[] = [
     //     {
@@ -321,24 +349,8 @@ const AddEvents = () => {
                                             )}
                                         </div>
 
-                                        <div>
-                                            <Label>Upload Event Image</Label>
-                                            <Input
-                                                type="file"
-                                                name="image"
-                                                onChange={(e) =>
-                                                    setInput({
-                                                        ...input,
-                                                        image: e.target.files?.[0] || undefined,
-                                                    })
-                                                }
-                                            />
-                                            {error && (
-                                                <span className="text-xs font-medium text-red-600">
-                                                    {error.image?.name}
-                                                </span>
-                                            )}
-                                        </div>
+
+
 
                                         <div>
                                             <Label>Registration From Link</Label>
@@ -354,6 +366,35 @@ const AddEvents = () => {
                                                     {error.formLink}
                                                 </span>
                                             )}
+                                        </div>
+
+                                        <div>
+                                            <Label>Upload Event Images</Label>
+                                            {(input.images?.length ?? 0) > 0 && (
+                                                <div className="flex gap-2 mb-3">
+                                                    {input.images?.map((image, index) => (
+                                                        <div key={index} className="relative">
+                                                            <img src={URL.createObjectURL(image)} alt={`Event Image ${index + 1}`} className="w-24 h-24 object-cover" />
+                                                            <button
+                                                                type="button"
+                                                                className="absolute top-1 right-1 text-red-600"
+                                                                onClick={() => handleDeleteImage(index)}
+                                                            >
+                                                                <X className="w-5 h-5"/>
+                                                            </button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            <Input
+                                                type="file"
+                                                name="images"
+                                                onChange={handleImageChange}
+                                                multiple
+                                                accept="image/*"
+                                            />
+                                            <span className="text-xs text-gray-500">*Upload images after the event is completed to display on the event page. (Max 3 images)</span>
                                         </div>
 
                                         <DialogFooter className="mt-5">
@@ -386,8 +427,8 @@ const AddEvents = () => {
                             alt={event.name}
                             className="md:h-24 md:w-24 h-28 w-full object-cover rounded-lg"
                         />
-                        <div onClick={()=> deleteEvent(event._id)} className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
-                            <Trash2 className="w-4 h-4"/>
+                        <div onClick={() => deleteEvent(event._id)} className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
+                            <Trash2 className="w-4 h-4" />
                         </div>
                         <div className="flex-1">
                             <h1 className="text-lg font-semibold text-gray-800 dark:text-white">

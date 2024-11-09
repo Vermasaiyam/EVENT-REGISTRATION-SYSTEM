@@ -17,6 +17,11 @@ export const eventSchema = z.object({
     startTime: z.string().nonempty({ message: "Start Time is required." }),
     endTime: z.string().nonempty({ message: "End Time is required." }),
     image: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "Image file is required" }),
+    images: z
+        .array(z.instanceof(File))  // Now, we are validating an array of files
+        .max(3, { message: "You can upload up to 3 images only" })
+        .optional()
+        .refine((files) => files?.every((file) => file?.size > 0), { message: "Each image must be a non-empty file" }),  // Validate non-empty files
     formLink: z.string().nonempty({ message: "Form Link is required" })
 });
 export type EventFormSchema = z.infer<typeof eventSchema>;
