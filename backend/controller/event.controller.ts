@@ -19,7 +19,6 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
 
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
 
-        // Find the club associated with the user
         const club = await Club.findOne({ user: req.id });
         if (!club) {
             res.status(404).json({
@@ -29,7 +28,6 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
             return;
         }
 
-        // Create the event with the clubId
         const event = await Event.create({
             name,
             description,
@@ -42,10 +40,10 @@ export const addEvent = async (req: Request, res: Response): Promise<void> => {
             endTime,
             formLink,
             image: imageUrl,
-            clubId: club._id // Associate the event with the clubId
+            clubId: club._id,
+            clubName: club.clubName,
         });
 
-        // Add the event to the club's events list
         club.events.push(event._id as any);
         await club.save();
 
