@@ -10,8 +10,8 @@ import { Club } from "@/types/clubType";
 
 const AllClubs = () => {
     const { loading, allClubs, fetchAllClubs } = useClubStore();
-    
-    const [currentPage, setCurrentPage] = useState(1); 
+
+    const [currentPage, setCurrentPage] = useState(1);
     const clubsPerPage = 6;
     const totalPages = Math.ceil((allClubs?.length || 0) / clubsPerPage);
 
@@ -109,9 +109,7 @@ const AllClubs = () => {
                         <button
                             key={index + 1}
                             onClick={() => setCurrentPage(index + 1)}
-                            className={`px-4 py-2 text-sm rounded-md ${
-                                currentPage === index + 1 ? "bg-gray-700 text-white" : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-                            }`}
+                            className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
                         >
                             {index + 1}
                         </button>

@@ -187,7 +187,7 @@ const AllEvents = () => {
                             <button
                                 key={index + 1}
                                 onClick={() => setCurrentActivePage(index + 1)}
-                                className={`px-4 py-2 text-sm rounded-md ${currentActivePage === index + 1 ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+                                className={`px-4 py-2 text-sm rounded-md ${currentActivePage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
                             >
                                 {index + 1}
                             </button>
@@ -300,7 +300,7 @@ const AllEvents = () => {
                             <button
                                 key={index + 1}
                                 onClick={() => setCurrentPastPage(index + 1)}
-                                className={`px-4 py-2 text-sm rounded-md ${currentPastPage === index + 1 ? 'bg-gray-700 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`}
+                                className={`px-4 py-2 text-sm rounded-md ${currentPastPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
                             >
                                 {index + 1}
                             </button>
