@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
+import "./css/CountdownStyles.css";
 
 const EventPage = () => {
     const location = useLocation();
@@ -9,6 +10,15 @@ const EventPage = () => {
 
     const [active, setActive] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [prevTimeLeft, setPrevTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+    const formatTime = (time: any) => {
+        const [hours, minutes] = time.split(":");
+        const hoursIn12 = hours % 12 || 12;
+        const ampm = hours < 12 ? "AM" : "PM";
+        return `${hoursIn12}:${minutes} ${ampm}`;
+    };
 
     useEffect(() => {
         const today = new Date();
@@ -20,12 +30,28 @@ const EventPage = () => {
         setActive(registrationEndDate >= today);
     }, [event.registrationEndDate]);
 
-    const formatTime = (time: string) => {
-        const [hours, minutes] = time.split(':');
-        const hoursIn12 = parseInt(hours) % 12 || 12;
-        const ampm = parseInt(hours) < 12 ? 'AM' : 'PM';
-        return `${hoursIn12}:${minutes} ${ampm}`;
+    const calculateTimeLeft = () => {
+        const endDate = new Date(event.registrationEndDate);
+        const diff = endDate.getTime() - new Date().getTime();
+        if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        return { days, hours, minutes, seconds };
     };
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            const newTimeLeft = calculateTimeLeft();
+            setTimeLeft(newTimeLeft);
+            setPrevTimeLeft(timeLeft); // Keep track of previous time
+        }, 1000); // Update every second
+
+        return () => clearInterval(timer);
+    }, [event.registrationEndDate, timeLeft]);
 
     const nextImage = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % event.images.length);
@@ -44,13 +70,9 @@ const EventPage = () => {
         return "";
     };
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % event.images.length);
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, [event.images.length]);
+    const hasChanged = (unit: keyof typeof timeLeft) => {
+        return timeLeft[unit] !== prevTimeLeft[unit];
+    };
 
     return (
         <div className="max-w-6xl mx-auto my-10 min-h-[60vh]">
@@ -92,6 +114,69 @@ const EventPage = () => {
                                     <span>{`${formatTime(event.startTime)} - ${formatTime(event.endTime)}`}</span>
                                 </div>
                             </div>
+
+                            {/* Countdown Timer */}
+                            {
+                                active ? (
+                                    <div className="flex justify-center space-x-6 mt-6">
+                                        <div className="flex flex-col items-center">
+                                            <div className={`flip-card ${hasChanged("days") ? "flip" : ""}`}>
+                                                <div className="flip-card-inner">
+                                                    <div className="flip-card-front flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.days}
+                                                    </div>
+                                                    <div className="flip-card-back flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.days}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span className="mt-2 text-gray-700 font-semibold">Days</span>
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <div className={`flip-card ${hasChanged("hours") ? "flip" : ""}`}>
+                                                <div className="flip-card-inner">
+                                                    <div className="flip-card-front flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.hours}
+                                                    </div>
+                                                    <div className="flip-card-back flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.hours}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span className="mt-2 text-gray-700 font-semibold">Hours</span>
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <div className={`flip-card ${hasChanged("minutes") ? "flip" : ""}`}>
+                                                <div className="flip-card-inner">
+                                                    <div className="flip-card-front flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.minutes}
+                                                    </div>
+                                                    <div className="flip-card-back flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.minutes}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span className="mt-2 text-gray-700 font-semibold">Minutes</span>
+                                        </div>
+                                        <div className="flex flex-col items-center">
+                                            <div className={`flip-card ${hasChanged("seconds") ? "flip" : ""}`}>
+                                                <div className="flip-card-inner">
+                                                    <div className="flip-card-front flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.seconds}
+                                                    </div>
+                                                    <div className="flip-card-back flex items-center justify-center text-3xl font-bold text-white bg-gray-600 rounded-lg">
+                                                        {timeLeft.seconds}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span className="mt-2 text-gray-700 font-semibold">Seconds</span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <p className="mt-3 text-center text-xl font-semibold text-red-500 animate-twinkle">Registration Closed!!!</p>
+                                )
+                            }
+
                             <div className="mt-5">
                                 {active ? (
                                     <a href={event.formLink} target="_blank">
@@ -141,7 +226,7 @@ const EventPage = () => {
 
                             {/* Dots Navigation */}
                             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
-                                {event.images.map((_:any, index: any) => (
+                                {event.images.map((_: any, index: number) => (
                                     <span
                                         key={index}
                                         className={`dot h-2 w-2 rounded-full bg-white bg-opacity-50 cursor-pointer transition-opacity duration-300 ${index === currentIndex ? "bg-opacity-100" : ""
