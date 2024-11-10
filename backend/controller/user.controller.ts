@@ -307,7 +307,7 @@ export const allUsers = async (req: Request, res: Response): Promise<void> => {
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
-export const updateUsers = async (req: Request, res: Response): Promise<void> => {
+export const updateUsersAsClubAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log(req.id);
         const { userId, email, fullname, isAdmin } = req.body;

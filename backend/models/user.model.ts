@@ -9,8 +9,9 @@ export interface IUser {
     current_year: string;
     branch: string;
     profilePicture: string;
-    admin: boolean;
     head: boolean;
+    clubCounselor: boolean;
+    admin: boolean;
     lastLogin?: Date;
     isVerified?: boolean;
     resetPasswordToken?: string;
@@ -57,8 +58,9 @@ const userSchema = new mongoose.Schema<IUserDocument>({
         type: String,
         default: "",
     },
-    admin: { type: Boolean, default: false },
     head: { type: Boolean, default: false },
+    clubCounselor: { type: Boolean, default: false },
+    admin: { type: Boolean, default: false },
     // advanced authentication
     lastLogin: {
         type: Date,
