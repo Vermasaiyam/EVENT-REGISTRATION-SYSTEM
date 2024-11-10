@@ -492,7 +492,7 @@ const AddEvents = () => {
                 </div>
             ))}
             {
-                club && (
+                (club && currentEvents?.length !== 0) && (
                     <div className="flex justify-center space-x-2 mt-6">
                         <Button
                             onClick={() => goToPage(1)}

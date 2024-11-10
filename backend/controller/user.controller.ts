@@ -332,7 +332,7 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
                 res.status(404).json({ success: false, message: "Club not found" });
                 return;
             }
-        } else if (!isClubCounselor && counselorsClub) {
+        } else if (!isClubCounselor && !isAdmin && counselorsClub) {
             const club = await Club.findOneAndUpdate(
                 { clubName: counselorsClub },
                 { $pull: { user: userId } },
