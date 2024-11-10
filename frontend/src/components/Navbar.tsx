@@ -60,7 +60,7 @@ const Navbar = () => {
                                 <MenubarTrigger className="cursor-pointer">Dashboard</MenubarTrigger>
                                 <MenubarContent>
                                     {
-                                        (user?.admin || user?.clubMember) && (
+                                        (user?.admin || user?.clubMember || user?.clubCounselor) && (
                                             <div className="">
                                                 <Link to="/admin/club">
                                                     <MenubarItem className="cursor-pointer">My ClubSpace</MenubarItem>
@@ -241,7 +241,7 @@ const MobileNavbar = () => {
                     {(user?.admin || user?.head || user?.clubCounselor || user?.clubMember) && (
                         <>
                             {
-                                (user?.admin || user?.clubMember) && (
+                                (user?.admin || user?.clubMember || user?.clubCounselor) && (
                                     <div className="">
                                         <Link
                                             to="/admin/club"

@@ -321,8 +321,29 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
             ...(counselorsClub ? { counselorClubName: counselorsClub } : { counselorClubName: "" }),
         };
 
-        // console.log(payload);
+        if (isClubCounselor && counselorsClub) {
+            const club = await Club.findOneAndUpdate(
+                { clubName: counselorsClub },
+                { $addToSet: { user: userId } },
+                { new: true }
+            );
 
+            if (!club) {
+                res.status(404).json({ success: false, message: "Club not found" });
+                return;
+            }
+        } else if (!isClubCounselor && counselorsClub) {
+            const club = await Club.findOneAndUpdate(
+                { clubName: counselorsClub },
+                { $pull: { user: userId } },
+                { new: true }
+            );
+
+            if (!club) {
+                res.status(404).json({ success: false, message: "Club not found" });
+                return;
+            }
+        }
 
         const updateUser = await User.findByIdAndUpdate(userId, payload, { new: true }).select("-password");
 
