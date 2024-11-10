@@ -41,6 +41,7 @@ type UserState = {
     updateProfile: (input: any) => Promise<void>;
     fetchAllUsers: () => Promise<void>;
     updateUsers: (input: any) => Promise<void>;
+    updateMembers: (input: any) => Promise<void>;
 }
 
 export const useUserStore = create<UserState>()(persist((set, get) => ({
@@ -226,7 +227,27 @@ export const useUserStore = create<UserState>()(persist((set, get) => ({
         } finally {
             set({ loading: false });
         }
-    }
+    },
+    updateMembers: async (input: any) => {
+        try {
+            set({ loading: true });
+            const response = await axios.put(`${API_END_POINT}/update-members`, input, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.data.success) {
+                toast.success(response.data.message);
+                set({ loading: false });
+                await get().fetchAllUsers();
+            }
+        } catch (error: any) {
+            toast.error(error.response.data.message);
+            set({ loading: false });
+        } finally {
+            set({ loading: false });
+        }
+    },
 }),
     {
         name: 'user-name',
