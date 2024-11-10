@@ -52,7 +52,7 @@ const AllAdmins = () => {
 
     // Get club name for a specific user
     const getClubName = (userId: string) => {
-        const club = allClubs?.find(club => club.user === userId);
+        const club = allClubs?.find(club => club.user.includes(userId));
         return club ? club.clubName : "No Club Assigned";
     };
 

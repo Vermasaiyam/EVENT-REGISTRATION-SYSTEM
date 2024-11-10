@@ -143,7 +143,7 @@ export default AllClubs;
 const SearchPageSkeleton = () => {
     return (
         <>
-            {[...Array(3)].map((_, index) => (
+            {[...Array(4)].map((_, index) => (
                 <Card key={index} className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden">
                     <div className="relative">
                         <AspectRatio ratio={16 / 6}>
