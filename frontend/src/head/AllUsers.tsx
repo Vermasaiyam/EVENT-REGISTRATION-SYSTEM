@@ -125,6 +125,12 @@ const AllUsers = () => {
         </TableBody>
       </Table>
 
+      {
+        allUsers?.length === 0 && (
+          <p className="w-full flex items-center justify-center my-8">No Users found.</p>
+        )
+      }
+
       <div className="flex overflow-y-scroll justify-center mt-4 space-x-2">
         <button
           className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
