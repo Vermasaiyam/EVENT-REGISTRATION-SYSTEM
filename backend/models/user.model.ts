@@ -13,6 +13,8 @@ export interface IUser {
     clubCounselor: boolean;
     counselorClubName: string;
     admin: boolean;
+    clubMember: boolean;
+    membersClubName: string;
     lastLogin?: Date;
     isVerified?: boolean;
     resetPasswordToken?: string;
@@ -66,6 +68,11 @@ const userSchema = new mongoose.Schema<IUserDocument>({
         default: "",
     },
     admin: { type: Boolean, default: false },
+    clubMember: { type: Boolean, default: false },
+    membersClubName: {
+        type: String,
+        default: "",
+    },
     // advanced authentication
     lastLogin: {
         type: Date,
