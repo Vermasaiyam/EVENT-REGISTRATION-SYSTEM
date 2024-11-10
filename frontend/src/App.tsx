@@ -22,6 +22,7 @@ import AllEvents from "./components/AllEvents"
 import AllUsers from "./head/AllUsers"
 import AllAdmins from "./head/AllAdmins"
 import AllClubCounselors from "./head/AllClubCounselors"
+import CounselorUsers from "./clubCounselor/CounselorUsers"
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
@@ -54,6 +55,16 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
 
   return children;
 }
+const CounselorRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, isAuthenticated } = useUserStore();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+  if (!user?.clubCounselor) {
+    return <Navigate to="/" replace />
+  }
+  return children;
+}
 const HeadRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, isAuthenticated } = useUserStore();
   if (!isAuthenticated) {
@@ -62,7 +73,6 @@ const HeadRoute = ({ children }: { children: React.ReactNode }) => {
   if (!user?.head) {
     return <Navigate to="/" replace />
   }
-
   return children;
 }
 
@@ -126,6 +136,24 @@ const appRouter = createBrowserRouter([
             <AddEvents />
           </AdminRoute>,
       },
+
+
+      // club counselors pages
+      {
+        path: "/clubCounselor/users",
+        element:
+          <CounselorRoute>
+            <CounselorUsers />
+          </CounselorRoute>,
+      },
+      {
+        path: "/head/admins",
+        element:
+          <CounselorRoute>
+            <AllClubCounselors />
+          </CounselorRoute>,
+      },
+
 
       // main head page
       {

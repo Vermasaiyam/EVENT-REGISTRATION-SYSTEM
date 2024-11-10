@@ -13,7 +13,7 @@ import {
 import ChangeUserRole from "./ChangeUserRole";
 import { useClubStore } from "@/store/useClubStore";
 
-const AllUsers = () => {
+const CounselorUsers = () => {
   const [openUpdateRole, setOpenUpdateRole] = useState(false);
   const [updateUserDetails, setUpdateUserDetails] = useState({
     fullname: "",
@@ -199,4 +199,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default CounselorUsers;
