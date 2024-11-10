@@ -55,7 +55,7 @@ const LandingPage = () => {
             const messages = activeEvents.map(
                 (event) => `"${event.clubName}" is hosting a new event: "${event.name}"`
             );
-            setEventMessages(messages.join("      |      "));
+            setEventMessages(messages.join("    |               |   "));
         }
     }, [activeEvents]);
 
