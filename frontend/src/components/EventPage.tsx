@@ -22,16 +22,17 @@ const EventPage = () => {
 
     useEffect(() => {
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
         const registrationEndDate = new Date(event.registrationEndDate);
-        registrationEndDate.setHours(0, 0, 0, 0);
+        registrationEndDate.setHours(23, 59, 59, 999); // Set to 11:59 PM
 
+        // Set active if the current date and time are before the end date and time
         setActive(registrationEndDate >= today);
     }, [event.registrationEndDate]);
 
     const calculateTimeLeft = () => {
         const endDate = new Date(event.registrationEndDate);
+        endDate.setHours(23, 59, 59, 999); // Set end date to 11:59 PM of that day
+
         const diff = endDate.getTime() - new Date().getTime();
         if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
