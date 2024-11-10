@@ -8,7 +8,7 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import { Button } from "./ui/button";
-import { Calendar, Calendar1, Loader2, LogOut, Menu, Moon, Newspaper, Sun, User, User2, UserCheck2, Users2 } from "lucide-react";
+import { Calendar, Calendar1, GraduationCap, Loader2, LogOut, Menu, Moon, Newspaper, Sun, User, User2, UserCheck2, Users2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
@@ -71,12 +71,15 @@ const Navbar = () => {
                                     {
                                         user?.head && (
                                             <div className="">
-                                                <Link to="/head/users">
+                                                <Link to="/head/counselors">
                                                     <Separator className="my-2" />
-                                                    <MenubarItem className="cursor-pointer">All Users</MenubarItem>
+                                                    <MenubarItem className="cursor-pointer">Club Counselors</MenubarItem>
                                                 </Link>
                                                 <Link to="/head/admins">
                                                     <MenubarItem className="cursor-pointer">Club Heads</MenubarItem>
+                                                </Link>
+                                                <Link to="/head/users">
+                                                    <MenubarItem className="cursor-pointer">All Users</MenubarItem>
                                                 </Link>
                                             </div>
                                         )
@@ -244,11 +247,11 @@ const MobileNavbar = () => {
                                     <div className="">
                                         <Separator className="my-2" />
                                         <Link
-                                            to="/head/users"
+                                            to="/head/counselors"
                                             className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
                                         >
-                                            <Users2 />
-                                            <span>All Users</span>
+                                            <GraduationCap />
+                                            <span>Club Counselors</span>
                                         </Link>
                                         <Link
                                             to="/head/admins"
@@ -256,6 +259,13 @@ const MobileNavbar = () => {
                                         >
                                             <UserCheck2 />
                                             <span>Club Heads</span>
+                                        </Link>
+                                        <Link
+                                            to="/head/users"
+                                            className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                                        >
+                                            <Users2 />
+                                            <span>All Users</span>
                                         </Link>
                                     </div>
                                 )
