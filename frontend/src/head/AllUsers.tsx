@@ -63,7 +63,7 @@ const AllUsers = () => {
 
   return (
     <div className='md:mt-4 mt-2'>
-      <div className="flex justify-between items-center mb-4 mx-2">
+      <div className="flex justify-end items-center mb-4 mx-2">
         <label className="text-sm">
           Show
           <select
