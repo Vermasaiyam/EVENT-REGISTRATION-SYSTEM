@@ -317,7 +317,7 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
             ...(fullname && { fullname: fullname }),
             ...({ admin: isAdmin }),
             ...({ clubCounselor: isClubCounselor }),
-            ...(counselorsClub && { counselorClubName: counselorsClub }),
+            ...(counselorsClub ? { counselorClubName: counselorsClub } : {counselorClubName: ""}),
         };
 
         // console.log(payload);
