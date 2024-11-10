@@ -11,6 +11,7 @@ export interface IUser {
     profilePicture: string;
     head: boolean;
     clubCounselor: boolean;
+    counselorClubName: string;
     admin: boolean;
     lastLogin?: Date;
     isVerified?: boolean;
@@ -60,6 +61,10 @@ const userSchema = new mongoose.Schema<IUserDocument>({
     },
     head: { type: Boolean, default: false },
     clubCounselor: { type: Boolean, default: false },
+    counselorClubName: {
+        type: String,
+        default: "",
+    },
     admin: { type: Boolean, default: false },
     // advanced authentication
     lastLogin: {

@@ -85,7 +85,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
                         <div className="">
                             <div className="flex items-center justify-between">
                                 <p>Club Name:</p>
-                                <Select value={counselorsClub} onValueChange={handleOnChangeCounselorsClub}>
+                                <Select name='counselorClubName' value={counselorsClub} onValueChange={handleOnChangeCounselorsClub}>
                                     <SelectTrigger className="w-[180px] dark:bg-gray-800 dark:text-white">
                                         <SelectValue placeholder="Club Counselor" />
                                     </SelectTrigger>
