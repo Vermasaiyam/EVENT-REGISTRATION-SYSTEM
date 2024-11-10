@@ -60,21 +60,14 @@ const AddEvents = () => {
 
     const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(input);
 
         const result = eventSchema.safeParse(input);
-        console.log(result);
-
         if (!result.success) {
             const fieldErrors = result.error.formErrors.fieldErrors;
             setError(fieldErrors as Partial<EventFormSchema>);
             return;
         }
 
-        console.log("HII");
-
-
-        // api
         try {
             const formData = new FormData();
             formData.append("name", input.name);
@@ -88,23 +81,18 @@ const AddEvents = () => {
             formData.append("endTime", input.endTime);
             formData.append("formLink", input.formLink);
 
+            // Append image file
             if (input.image) {
-                formData.append("image", input.image);
+                formData.append("image", input.image); // Ensure `input.image` is a file object
             }
 
-            console.log("hello");
-
-
-            // API function
             await createEvent(formData);
 
         } catch (error) {
             console.error("Error submitting form:", error);
         }
-
-
         setOpen(false);
-    }
+    };
 
     const formatTime = (time: any) => {
         const [hours, minutes] = time.split(':');
@@ -174,37 +162,6 @@ const AddEvents = () => {
             setCurrentPage(currentPage - 1);
         }
     };
-
-
-
-    // const eventItems: EventFormSchema[] = [
-    //     {
-    //         name: "HacoVerse",
-    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
-    //         mode: "Offline",
-    //         registrationFee: 69,
-    //         registrationEndDate: "2024-11-15",
-    //         eventStartDate: "2024-11-16",
-    //         eventEndDate: "2024-11-17",
-    //         startTime: "10:00",
-    //         endTime: "17:00",
-    //         image: undefined,
-    //         formLink: "",
-    //     },
-    //     {
-    //         name: "KT Session",
-    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijds",
-    //         mode: "Offline",
-    //         registrationFee: 69,
-    //         registrationEndDate: "2024-11-20",
-    //         eventStartDate: "2024-11-21",
-    //         eventEndDate: "2024-11-22",
-    //         startTime: "14:00",
-    //         endTime: "18:00",
-    //         image: undefined,
-    //         formLink: "",
-    //     },
-    // ];
 
     return (
         <div className="max-w-6xl mx-auto my-10">

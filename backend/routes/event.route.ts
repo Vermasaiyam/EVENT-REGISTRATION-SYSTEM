@@ -5,21 +5,14 @@ import { addEvent, deleteEvent, editEvent } from "../controller/event.controller
 
 const router = express.Router();
 
-router.route("/").post(
-    isAuthenticated, 
-    upload.fields([
-        { name: "image", maxCount: 1 },  // Single file upload for 'image'
-        { name: "images", maxCount: 3 }, // Multiple file upload for 'images'
-    ]) as express.RequestHandler, // Casting to RequestHandler type
-    addEvent
-);
+router.route("/").post(isAuthenticated, upload.single('image'), addEvent);
 
 router.route("/:id").put(
-    isAuthenticated, 
+    isAuthenticated,
     upload.fields([
         { name: "image", maxCount: 1 },
         { name: "images", maxCount: 3 },
-    ]) as express.RequestHandler, // Casting to RequestHandler type
+    ]) as express.RequestHandler,
     editEvent
 );
 
