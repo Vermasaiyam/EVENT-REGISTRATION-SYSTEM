@@ -339,3 +339,33 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
         res.status(500).json({ message: "Internal Server Error" });
     }
 }
+export const updateMembers = async (req: Request, res: Response): Promise<void> => {
+    try {
+        // console.log(req.id);
+        const { userId, email, fullname, isClubMember, membersClubName } = req.body;
+
+        const payload = {
+            ...(email && { email: email }),
+            ...(fullname && { fullname: fullname }),
+            ...({ clubMember: isClubMember }),
+            ...(membersClubName ? { membersClubName: membersClubName } : {membersClubName: ""}),
+        };
+
+        // console.log(payload);
+
+        const updateUser = await User.findByIdAndUpdate(userId, payload, { new: true }).select("-password");
+
+        if (!updateUser) {
+            res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        res.status(200).json({
+            success: true,
+            updateUser,
+            message: "User Updated Successfully."
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
