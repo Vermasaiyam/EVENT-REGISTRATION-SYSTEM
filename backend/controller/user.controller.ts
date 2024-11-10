@@ -6,6 +6,7 @@ import cloudinary from "../utils/cloudinary";
 import { generateVerificationCode } from "../utils/generateVerificationCode";
 import { generateToken } from "../utils/generateToken";
 import { sendEmail, sendResetSuccessEmail, sendWelcomeEmaill, sendPasswordResetEmail } from "../utils/sendEmail";
+import { Club } from "../models/club.model";
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -317,7 +318,7 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
             ...(fullname && { fullname: fullname }),
             ...({ admin: isAdmin }),
             ...({ clubCounselor: isClubCounselor }),
-            ...(counselorsClub ? { counselorClubName: counselorsClub } : {counselorClubName: ""}),
+            ...(counselorsClub ? { counselorClubName: counselorsClub } : { counselorClubName: "" }),
         };
 
         // console.log(payload);
@@ -341,22 +342,48 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
 }
 export const updateMembers = async (req: Request, res: Response): Promise<void> => {
     try {
-        // console.log(req.id);
-        const { userId, email, fullname, isMember, membersClubName } = req.body;
+        const { userId, email, fullname, isMember, membersClubName, clubName } = req.body;
 
+        // Prepare the payload for the user update
         const payload = {
-            ...(email && { email: email }),
-            ...(fullname && { fullname: fullname }),
-            ...({ clubMember: isMember }),
-            ...( membersClubName ? { membersClubName: membersClubName } : {membersClubName: ""}),
+            ...(email && { email }),
+            ...(fullname && { fullname }),
+            clubMember: isMember,
+            membersClubName: membersClubName || ""
         };
 
-        // console.log(payload);
-
+        // Update the user
         const updateUser = await User.findByIdAndUpdate(userId, payload, { new: true }).select("-password");
 
         if (!updateUser) {
             res.status(404).json({ success: false, message: "User not found" });
+            return;
+        }
+
+        // If isMember is true, add userId to the club's user array
+        if (isMember && clubName) {
+            const club = await Club.findOneAndUpdate(
+                { clubName: clubName },
+                { $addToSet: { user: userId } }, // Add userId only if it’s not already in the array
+                { new: true }
+            );
+
+            if (!club) {
+                res.status(404).json({ success: false, message: "Club not found" });
+                return;
+            }
+        } else if (!isMember && clubName) {
+            // If isMember is false, remove userId from the club's user array
+            const club = await Club.findOneAndUpdate(
+                { clubName: clubName },
+                { $pull: { user: userId } }, // Remove userId from the array
+                { new: true }
+            );
+
+            if (!club) {
+                res.status(404).json({ success: false, message: "Club not found" });
+                return;
+            }
         }
 
         res.status(200).json({
@@ -368,4 +395,4 @@ export const updateMembers = async (req: Request, res: Response): Promise<void> 
         console.error(error);
         res.status(500).json({ message: "Internal Server Error" });
     }
-}
+};

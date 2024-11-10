@@ -44,10 +44,10 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
 
 
         if (isMember){
-            updateMembers({ userId, email, fullname, isMember, membersClubName: clubName});
+            updateMembers({ userId, email, fullname, isMember, membersClubName: clubName, clubName});
         }
         else{
-            updateMembers({ userId, email, fullname, isMember});
+            updateMembers({ userId, email, fullname, isMember, clubName});
         }
         
 
