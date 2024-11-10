@@ -13,7 +13,7 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
         // console.log("Event Types:", eventTypes);
         // console.log("Core Team:", coreTeam);
 
-        const club = await Club.findOne({ user: req.id });
+        const club = await Club.findOne({ user: { $in: [req.id] } });
 
         if (club) {
             res.status(400).json({
@@ -60,7 +60,7 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
 
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
         await Club.create({
-            user: req.id,
+            user: [req.id],
             clubName,
             eventTypes: JSON.parse(eventTypes),
             coreTeam: JSON.parse(coreTeam),
@@ -78,30 +78,36 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
 
 export const getClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const club = await Club.findOne({ user: req.id }).populate('events');
+        // Ensure req.id contains the user ID
+        const userId = req.id;
+
+        // Find the club where user array contains userId
+        const club = await Club.findOne({ user: { $in: [userId] } }).populate('events');
+
         if (!club) {
             res.status(404).json({
                 success: false,
-                club: [],
+                club: null,
                 message: "Club not found."
-            })
+            });
             return;
-        };
+        }
+
         res.status(200).json({
             success: true,
             club
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Internal Server Error." })
+        console.error("Error in getClub:", error);
+        res.status(500).json({ message: "Internal Server Error." });
     }
-}
+};
 
 export const updateClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const { clubName, eventTypes, coreTeam } = req.body;
         const file = req.file;
-        const club = await Club.findOne({ user: req.id });
+        const club = await Club.findOne({ user: { $in: [req.id] } });
         if (!club) {
             res.status(404).json({
                 success: false,
@@ -139,58 +145,13 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
     }
 }
 
-// export const getClubOrder = async (req: Request, res: Response) => {
-//     try {
-//         const club = await Club.findOne({ user: req.id });
-//         if (!club) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "Club not found."
-//             })
-//         };
-//         const orders = await Order.find({ club: club._id }).populate('club').populate('user');
-//         return res.status(200).json({
-//             success: true,
-//             orders
-//         });
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({ message: "Internal Server Error." })
-//     }
-// }
-
-// export const updateOrderStatus = async (req: Request, res: Response) => {
-//     try {
-//         const { orderId } = req.params;
-//         const { status } = req.body;
-//         const order = await Club.findById(orderId);
-//         if (!order) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "Order not found."
-//             })
-//         }
-//         order.status = status;
-//         await order.save();
-//         return res.status(200).json({
-//             success: true,
-//             status: order.status,
-//             message: "Status Updated."
-//         });
-
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).json({ message: "Internal Server Error." })
-//     }
-// }
-
 export const searchClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const searchText = req.params.searchText || "";
         const searchQuery = req.query.searchQuery as string || "";
         const selectedEvents = (req.query.selectedEvents as string || "").split(",").filter(event => event);
         const query: any = {};
-        // basic search based on searchText (name ,city, country)
+
         // console.log(selectedEvents);
 
         if (searchText) {

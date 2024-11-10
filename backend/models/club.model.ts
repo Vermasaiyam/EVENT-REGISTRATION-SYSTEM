@@ -1,7 +1,7 @@
 import mongoose, { Document } from "mongoose";
 
 export interface IClub {
-    user: mongoose.Schema.Types.ObjectId;
+    user: mongoose.Schema.Types.ObjectId[];
     clubName: string;
     eventTypes: string[];
     coreTeam: string[];
@@ -14,11 +14,11 @@ export interface IClubDocument extends IClub, Document {
 }
 
 const clubSchema = new mongoose.Schema<IClubDocument>({
-    user: {
+    user: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
-    },
+    }],
     clubName: {
         type: String,
         required: true

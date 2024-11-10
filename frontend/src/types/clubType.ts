@@ -17,7 +17,7 @@ export type EventItem = {
 }
 export type Club = {
     _id: string;
-    user: string;
+    user: string[];
     clubName: string;
     eventTypes: string[];
     coreTeam: string[];
