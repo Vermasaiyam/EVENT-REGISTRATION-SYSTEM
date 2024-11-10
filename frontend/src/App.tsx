@@ -23,6 +23,7 @@ import AllUsers from "./head/AllUsers"
 import AllAdmins from "./head/AllAdmins"
 import AllClubCounselors from "./head/AllClubCounselors"
 import CounselorUsers from "./clubCounselor/CounselorUsers"
+import AllClubMembers from "./clubCounselor/AllClubMembers"
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
@@ -147,10 +148,10 @@ const appRouter = createBrowserRouter([
           </CounselorRoute>,
       },
       {
-        path: "/head/admins",
+        path: "/clubCounselor/members",
         element:
           <CounselorRoute>
-            <AllClubCounselors />
+            <AllClubMembers />
           </CounselorRoute>,
       },
 
