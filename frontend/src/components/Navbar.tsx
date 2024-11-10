@@ -54,13 +54,13 @@ const Navbar = () => {
                     <Link to="/events" className="hover:text-hoverGreen  font-medium">Events</Link>
                     {/* <Link to="/participation/status" className="hover:text-hoverGreen  font-medium">My Journey</Link> */}
 
-                    {(user?.admin || user?.clubCounselor || user?.head) && (
+                    {(user?.admin || user?.clubCounselor || user?.head || user?.clubMember) && (
                         <Menubar>
                             <MenubarMenu>
                                 <MenubarTrigger className="cursor-pointer">Dashboard</MenubarTrigger>
                                 <MenubarContent>
                                     {
-                                        user?.admin && (
+                                        (user?.admin || user?.clubMember) && (
                                             <div className="">
                                                 <Link to="/admin/club">
                                                     <MenubarItem className="cursor-pointer">My ClubSpace</MenubarItem>
@@ -238,10 +238,10 @@ const MobileNavbar = () => {
                         <Separator />
                     </div>
 
-                    {(user?.admin || user?.head || user?.clubCounselor) && (
+                    {(user?.admin || user?.head || user?.clubCounselor || user?.clubMember) && (
                         <>
                             {
-                                user?.admin && (
+                                (user?.admin || user?.clubMember) && (
                                     <div className="">
                                         <Link
                                             to="/admin/club"

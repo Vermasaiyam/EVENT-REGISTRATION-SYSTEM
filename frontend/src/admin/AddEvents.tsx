@@ -534,49 +534,53 @@ const AddEvents = () => {
                     </div>
                 </div>
             ))}
-            <div className="flex justify-center space-x-2 mt-6">
-                <Button
-                    onClick={() => goToPage(1)}
-                    disabled={currentPage === 1}
-                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
-                >
-                    First
-                </Button>
-                <Button
-                    onClick={goToPreviousPage}
-                    disabled={currentPage === 1}
-                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
-                >
-                    Previous
-                </Button>
+            {
+                club && (
+                    <div className="flex justify-center space-x-2 mt-6">
+                        <Button
+                            onClick={() => goToPage(1)}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                        >
+                            First
+                        </Button>
+                        <Button
+                            onClick={goToPreviousPage}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                        >
+                            Previous
+                        </Button>
 
-                {/* Page Number Buttons */}
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <Button
-                        key={index}
-                        onClick={() => goToPage(index + 1)}
-                        className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen rounded-lg`}
-                    >
-                        {index + 1}
-                    </Button>
-                ))}
+                        {/* Page Number Buttons */}
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <Button
+                                key={index}
+                                onClick={() => goToPage(index + 1)}
+                                className={`px-4 py-2 ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen rounded-lg`}
+                            >
+                                {index + 1}
+                            </Button>
+                        ))}
 
-                <Button
-                    onClick={goToNextPage}
-                    disabled={currentPage === totalPages}
-                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
-                >
-                    Next
-                </Button>
+                        <Button
+                            onClick={goToNextPage}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                        >
+                            Next
+                        </Button>
 
-                <Button
-                    onClick={() => goToPage(totalPages)}
-                    disabled={currentPage === totalPages}
-                    className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
-                >
-                    Last
-                </Button>
-            </div>
+                        <Button
+                            onClick={() => goToPage(totalPages)}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                        >
+                            Last
+                        </Button>
+                    </div>
+                )
+            }
             {
                 (club?.events.length === 0) && (
                     <div className="text-sm text-gray-600 text-center my-10">
