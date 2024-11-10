@@ -138,7 +138,9 @@ const AddEvents = () => {
     const totalPages = Math.ceil(totalEvents / eventsPerPage);
 
     // Calculate which events to show based on the current page
-    const currentEvents = club?.events.slice(
+    const allEvents = club?.events.slice().reverse();
+
+    const currentEvents = allEvents?.slice(
         (currentPage - 1) * eventsPerPage,
         currentPage * eventsPerPage
     );
@@ -491,6 +493,8 @@ const AddEvents = () => {
                     </div>
                 </div>
             ))}
+
+
             {
                 (club && currentEvents?.length !== 0) && (
                     <div className="flex justify-center space-x-2 mt-6">
