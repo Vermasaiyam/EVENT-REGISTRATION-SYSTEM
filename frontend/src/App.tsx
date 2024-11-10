@@ -21,6 +21,7 @@ import { useUserStore } from "./store/useUserStore"
 import AllEvents from "./components/AllEvents"
 import AllUsers from "./head/AllUsers"
 import AllAdmins from "./head/AllAdmins"
+import AllClubCounselors from "./head/AllClubCounselors"
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
@@ -128,10 +129,10 @@ const appRouter = createBrowserRouter([
 
       // main head page
       {
-        path: "/head/users",
+        path: "/head/counselors",
         element:
           <HeadRoute>
-            <AllUsers />
+            <AllClubCounselors />
           </HeadRoute>,
       },
       {
@@ -139,6 +140,13 @@ const appRouter = createBrowserRouter([
         element:
           <HeadRoute>
             <AllAdmins />
+          </HeadRoute>,
+      },
+      {
+        path: "/head/users",
+        element:
+          <HeadRoute>
+            <AllUsers />
           </HeadRoute>,
       },
 
