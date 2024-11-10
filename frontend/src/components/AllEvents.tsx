@@ -76,8 +76,8 @@ const AllEvents = () => {
                 return registrationEndDate < today;
             });
 
-            setActiveEvents(active);
-            setPastEvents(past);
+            setActiveEvents(active.slice().reverse());
+            setPastEvents(past.slice().reverse());
         }
     }, [allEvents]);
 

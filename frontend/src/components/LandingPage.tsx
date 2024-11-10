@@ -160,11 +160,11 @@ const LandingPage = () => {
 
             {/* All Events */}
             <div className="w-[100vw] lg:px-20 md:px-6 pt-4">
-                {activeEvents.length > 0 && <ActiveEvent events={activeEvents} />}
+                {activeEvents.length > 0 && <ActiveEvent events={activeEvents.slice().reverse()} />}
             </div>
 
             <div className="w-[100vw] lg:px-20 md:px-6 pt-4">
-                {pastEvents.length > 0 && <PastEvent events={pastEvents} />}
+                {pastEvents.length > 0 && <PastEvent events={pastEvents.slice().reverse()} />}
             </div>
 
             <EventHighlights events={pastEvents} />
