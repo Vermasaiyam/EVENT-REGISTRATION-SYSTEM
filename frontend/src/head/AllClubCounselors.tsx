@@ -46,15 +46,11 @@ const AllClubCounselors = () => {
 
     useEffect(() => {
         if (allUsers) {
-            setClubCounselorsUsers(allUsers.filter(user => user.clubCounselors === true));
+            setClubCounselorsUsers(allUsers.filter(user => user.clubCounselor === true));
         }
     }, [allUsers]);
 
-    // Get club name for a specific user
-    const getClubName = (userId: string) => {
-        const club = allClubs?.find(club => club.user === userId);
-        return club ? club.clubName : "No Club Assigned";
-    };
+
 
     // Render skeleton rows during loading
     const renderSkeletonRows = () => {
@@ -127,7 +123,7 @@ const AllClubCounselors = () => {
                         paginatedUsers.map((el, index) => (
                             <TableRow key={index} className="dark:bg-black dark:hover:bg-black bg-white hover:bg-white">
                                 <TableCell className="font-medium">{(currentPage - 1) * entriesPerPage + index + 1}</TableCell>
-                                <TableCell className="font-semibold">{getClubName(el?._id)}</TableCell>
+                                <TableCell className="font-semibold">{el.counselorClubName}</TableCell>
                                 <TableCell>{el?.fullname}</TableCell>
                                 <TableCell>{el?.email}</TableCell>
                                 <TableCell>{el?.contact}</TableCell>

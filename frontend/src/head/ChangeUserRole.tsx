@@ -29,7 +29,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     onClose,
     userId
 }) => {
-    // Use state to track the user role
+    
     const [userClubCounselorRole, setUserClubCounselorRole] = useState(clubCounselor ? "yes" : "no");
     const [counselorsClub, setCounselorsClub] = useState("");
     const [userClubHeadRole, setUserClubHeadRole] = useState(admin ? "yes" : "no");
@@ -47,14 +47,18 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
         setCounselorsClub(club);
     };
 
-    // Use the updateUsers function from the store
+    // user store
     const { updateUsers } = useUserStore();
 
     // Function to handle the "Change Role" button click
     const handleChangeRole = () => {
-        const isAdmin = userClubHeadRole === "yes"; // Determine if the user is an admin based on the selection
-        updateUsers({ userId, email, fullname, isAdmin }); // Pass the correct value to update
-        onClose(); // Close the modal after update
+        const isAdmin = userClubHeadRole === "yes";
+        const isClubCounselor = userClubCounselorRole === "yes";
+        console.log("club - ",counselorsClub);
+        
+
+        updateUsers({ userId, email, fullname, isAdmin, isClubCounselor, counselorsClub });
+        onClose();
     };
 
     return (
@@ -85,7 +89,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
                         <div className="">
                             <div className="flex items-center justify-between">
                                 <p>Club Name:</p>
-                                <Select name='counselorClubName' value={counselorsClub} onValueChange={handleOnChangeCounselorsClub}>
+                                <Select name='counselorClubName' value={counselorsClub} onValueChange={handleOnChangeCounselorsClub} required>
                                     <SelectTrigger className="w-[180px] dark:bg-gray-800 dark:text-white">
                                         <SelectValue placeholder="Club Counselor" />
                                     </SelectTrigger>
