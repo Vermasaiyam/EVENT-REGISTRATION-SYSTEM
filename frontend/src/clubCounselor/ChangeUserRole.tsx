@@ -41,9 +41,16 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     // Function to handle the "Change Role" button click
     const handleChangeRole = () => {
         const isMember = userClubMemberRole === "yes";
+
+
+        if (isMember){
+            updateMembers({ userId, email, fullname, isMember, membersClubName: clubName});
+        }
+        else{
+            updateMembers({ userId, email, fullname, isMember});
+        }
         
 
-        updateMembers({ userId, email, fullname, isMember, membersClubName: clubName});
         onClose();
     };
 

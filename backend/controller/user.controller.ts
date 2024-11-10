@@ -348,7 +348,7 @@ export const updateMembers = async (req: Request, res: Response): Promise<void> 
             ...(email && { email: email }),
             ...(fullname && { fullname: fullname }),
             ...({ clubMember: isMember }),
-            ...(membersClubName ? { membersClubName: membersClubName } : {membersClubName: ""}),
+            ...( membersClubName ? { membersClubName: membersClubName } : {membersClubName: ""}),
         };
 
         // console.log(payload);
