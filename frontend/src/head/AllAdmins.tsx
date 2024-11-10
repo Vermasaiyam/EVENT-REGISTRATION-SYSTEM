@@ -1,5 +1,5 @@
 import { useUserStore } from "@/store/useUserStore";
-import { useClubStore } from "@/store/useClubStore"; // Import useClubStore
+import { useClubStore } from "@/store/useClubStore";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { MdModeEdit } from "react-icons/md";
@@ -26,9 +26,13 @@ const AllAdmins = () => {
     });
     const [adminUsers, setAdminUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [entriesPerPage, setEntriesPerPage] = useState(10);
 
     const { allUsers, fetchAllUsers } = useUserStore();
     const { allClubs, fetchAllClubs } = useClubStore();
+
+    const totalPages = Math.ceil(adminUsers.length / entriesPerPage);
 
     useEffect(() => {
         const loadData = async () => {
@@ -45,14 +49,15 @@ const AllAdmins = () => {
         }
     }, [allUsers]);
 
-    // get club name
+    // Get club name for a specific user
     const getClubName = (userId: string) => {
         const club = allClubs?.find(club => club.user === userId);
         return club ? club.clubName : "No Club Assigned";
     };
 
+    // Render skeleton rows during loading
     const renderSkeletonRows = () => {
-        return Array.from({ length: 5 }).map((_, index) => (
+        return Array.from({ length: entriesPerPage }).map((_, index) => (
             <TableRow key={index} className="animate-pulse dark:bg-black bg-white">
                 {Array.from({ length: 9 }).map((_, cellIndex) => (
                     <TableCell key={cellIndex}>
@@ -63,9 +68,42 @@ const AllAdmins = () => {
         ));
     };
 
-    return (
-        <div className="bg-white md:mt-4 mt-2">
+    // Pagination controls
+    const goToPage = (page: number) => {
+        if (page >= 1 && page <= totalPages) setCurrentPage(page);
+    };
+    const goToNextPage = () => goToPage(currentPage + 1);
+    const goToPreviousPage = () => goToPage(currentPage - 1);
 
+    // Get paginated users
+    const paginatedUsers = adminUsers.slice(
+        (currentPage - 1) * entriesPerPage,
+        currentPage * entriesPerPage
+    );
+
+    return (
+        <div className="md:mt-4 mt-2">
+            {/* Entries per page selector */}
+            <div className="flex justify-between items-center mb-4 mx-2">
+                <label className="text-sm">
+                    Show
+                    <select
+                        value={entriesPerPage}
+                        onChange={(e) => {
+                            setEntriesPerPage(Number(e.target.value));
+                            setCurrentPage(1); // Reset to first page on changing entries per page
+                        }}
+                        className="mx-2 p-1 border rounded dark:bg-gray-600"
+                    >
+                        {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((num) => (
+                            <option key={num} value={num}>{num}</option>
+                        ))}
+                    </select>
+                    entries
+                </label>
+            </div>
+
+            {/* Table displaying admin users */}
             <Table className="lg:text-base md:text-sm text-xs">
                 <TableHeader>
                     <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
@@ -85,9 +123,9 @@ const AllAdmins = () => {
                     {loading ? (
                         renderSkeletonRows()
                     ) : (
-                        adminUsers?.map((el, index) => (
+                        paginatedUsers.map((el, index) => (
                             <TableRow key={index} className="dark:bg-black dark:hover:bg-black bg-white hover:bg-white">
-                                <TableCell className="font-medium">{index + 1}</TableCell>
+                                <TableCell className="font-medium">{(currentPage - 1) * entriesPerPage + index + 1}</TableCell>
                                 <TableCell className="font-semibold">{getClubName(el?._id)}</TableCell>
                                 <TableCell>{el?.fullname}</TableCell>
                                 <TableCell>{el?.email}</TableCell>
@@ -113,6 +151,32 @@ const AllAdmins = () => {
                 </TableBody>
             </Table>
 
+            {/* Pagination controls */}
+            <div className="flex overflow-y-scroll justify-center mt-4 space-x-2">
+                <button onClick={() => goToPage(1)} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300">
+                    First
+                </button>
+                <button onClick={goToPreviousPage} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300">
+                    Previous
+                </button>
+                {Array.from({ length: totalPages }).map((_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => goToPage(index + 1)}
+                        className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button onClick={goToNextPage} disabled={currentPage === totalPages} className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300">
+                    Next
+                </button>
+                <button onClick={() => goToPage(totalPages)} disabled={currentPage === totalPages} className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300">
+                    Last
+                </button>
+            </div>
+
+            {/* Modal for updating user role */}
             {openUpdateRole && (
                 <ChangeUserRole
                     onClose={() => setOpenUpdateRole(false)}
