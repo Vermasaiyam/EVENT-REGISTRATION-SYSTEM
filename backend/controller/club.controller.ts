@@ -3,42 +3,40 @@ import { Request, Response } from "express";
 import { Club } from "../models/club.model";
 import { Multer } from "multer";
 import uploadImageOnCloudinary from "../utils/uploadImage";
+import { User } from "../models/user.model";
 
 export const createClub = async (req: Request, res: Response): Promise<void> => {
     try {
         const { clubName, eventTypes, coreTeam } = req.body;
         const file = req.file;
 
-        // console.log("Request body:", req.body);
-        // console.log("Event Types:", eventTypes);
-        // console.log("Core Team:", coreTeam);
-
         const club = await Club.findOne({ user: { $in: [req.id] } });
 
+        // Check if the user already has a club
         if (club) {
             res.status(400).json({
                 success: false,
                 message: "Club already exists for this user."
-            })
+            });
             return;
         }
 
-        const user = await Club.findOne({ clubName: clubName });
-        if (user) {
+        // Check if the club with the same name already exists
+        const userWithSameClubName = await Club.findOne({ clubName: clubName });
+        if (userWithSameClubName) {
             res.status(400).json({
                 success: false,
                 message: "Club with this name already exists."
-            })
+            });
             return;
         }
 
-
-
+        // Check if an image is provided
         if (!file) {
             res.status(400).json({
                 success: false,
                 message: "Image is required."
-            })
+            });
             return;
         }
 
@@ -58,23 +56,37 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             return;
         }
 
+        // Upload the image to Cloudinary
         const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
-        await Club.create({
+
+        // Create the club
+        const newClub = await Club.create({
             user: [req.id],
             clubName,
-            eventTypes: JSON.parse(eventTypes),
-            coreTeam: JSON.parse(coreTeam),
+            eventTypes: parsedEventTypes,
+            coreTeam: parsedCoreTeam,
             imageUrl
         });
+
+        // Update the user's details
+        const user = await User.findById(req.id);
+        if (user) {
+            user.clubMember = true;
+            user.membersClubName = clubName;
+            await user.save();
+        }
+
+        // Return success response
         res.status(201).json({
             success: true,
             message: "Club Added Successfully."
         });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Internal Server Error." })
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error." });
     }
-}
+};
+
 
 export const getClub = async (req: Request, res: Response): Promise<void> => {
     try {
