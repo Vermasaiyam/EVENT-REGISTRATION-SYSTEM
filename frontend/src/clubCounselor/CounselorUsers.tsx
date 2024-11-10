@@ -14,6 +14,9 @@ import ChangeUserRole from "./ChangeUserRole";
 import { useClubStore } from "@/store/useClubStore";
 
 const CounselorUsers = () => {
+
+  const {user} = useUserStore();
+
   const [openUpdateRole, setOpenUpdateRole] = useState(false);
   const [updateUserDetails, setUpdateUserDetails] = useState({
     fullname: "",
@@ -120,7 +123,7 @@ const CounselorUsers = () => {
                 <TableCell>{el?.branch === "Branch" ? "-" : el.branch}</TableCell>
                 <TableCell>{el?.current_year ? el.current_year : '-'}</TableCell>
                 <TableCell>{el?.admin ? "Yes" : "No"}</TableCell>
-                <TableCell>{el?.clubMember ? "Yes" : "No"}</TableCell>
+                <TableCell>{el?.membersClubName === user?.counselorClubName  ? "Yes" : "No"}</TableCell>
                 <TableCell>{moment(el?.createdAt).format('LL')}</TableCell>
                 <TableCell>
                   <button className='bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green dark:hover:bg-[#2E3A52] hover:text-white'

@@ -54,17 +54,23 @@ const Navbar = () => {
                     <Link to="/events" className="hover:text-hoverGreen  font-medium">Events</Link>
                     {/* <Link to="/participation/status" className="hover:text-hoverGreen  font-medium">My Journey</Link> */}
 
-                    {user?.admin && (
+                    {(user?.admin || user?.clubCounselor || user?.head) && (
                         <Menubar>
                             <MenubarMenu>
                                 <MenubarTrigger className="cursor-pointer">Dashboard</MenubarTrigger>
                                 <MenubarContent>
-                                    <Link to="/admin/club">
-                                        <MenubarItem className="cursor-pointer">My ClubSpace</MenubarItem>
-                                    </Link>
-                                    <Link to="/admin/events">
-                                        <MenubarItem className="cursor-pointer">My Events</MenubarItem>
-                                    </Link>
+                                    {
+                                        user?.admin && (
+                                            <div className="">
+                                                <Link to="/admin/club">
+                                                    <MenubarItem className="cursor-pointer">My ClubSpace</MenubarItem>
+                                                </Link>
+                                                <Link to="/admin/events">
+                                                    <MenubarItem className="cursor-pointer">My Events</MenubarItem>
+                                                </Link>
+                                            </div>
+                                        )
+                                    }
                                     {/* <Link to="/admin/participants">
                                         <MenubarItem className="cursor-pointer">Participants</MenubarItem>
                                     </Link> */}
@@ -232,22 +238,29 @@ const MobileNavbar = () => {
                         <Separator />
                     </div>
 
-                    {user?.admin && (
+                    {(user?.admin || user?.head || user?.clubCounselor) && (
                         <>
-                            <Link
-                                to="/admin/club"
-                                className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
-                            >
-                                <Newspaper />
-                                <span>My ClubSpace</span>
-                            </Link>
-                            <Link
-                                to="/admin/events"
-                                className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
-                            >
-                                <Calendar1 />
-                                <span>My Events</span>
-                            </Link>
+                            {
+                                user?.admin && (
+                                    <div className="">
+                                        <Link
+                                            to="/admin/club"
+                                            className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                                        >
+                                            <Newspaper />
+                                            <span>My ClubSpace</span>
+                                        </Link>
+                                        <Link
+                                            to="/admin/events"
+                                            className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                                        >
+                                            <Calendar1 />
+                                            <span>My Events</span>
+                                        </Link>
+                                        <Separator className="my-2" />
+                                    </div>
+                                )
+                            }
                             {/* <Link
                                 to="/admin/participants"
                                 className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
@@ -260,7 +273,6 @@ const MobileNavbar = () => {
                             {
                                 user?.head && (
                                     <div className="">
-                                        <Separator className="my-2" />
                                         <Link
                                             to="/head/counselors"
                                             className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
@@ -282,6 +294,7 @@ const MobileNavbar = () => {
                                             <Users2 />
                                             <span>All Users</span>
                                         </Link>
+                                        <Separator className="my-2" />
                                     </div>
                                 )
                             }
@@ -289,7 +302,6 @@ const MobileNavbar = () => {
                             {
                                 user?.clubCounselor && (
                                     <div className="">
-                                        <Separator className="my-2" />
                                         <Link
                                             to="/clubCounselor/members"
                                             className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
