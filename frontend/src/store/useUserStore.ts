@@ -15,8 +15,12 @@ type User = {
     current_year: string;
     branch: string;
     profilePicture: string;
-    admin: boolean;
     head: boolean;
+    clubCounselor: boolean;
+    counselorClubName: string;
+    admin: boolean;
+    clubMember: boolean;
+    membersClubName: string;
     isVerified: boolean;
     createdAt: Date;
 }

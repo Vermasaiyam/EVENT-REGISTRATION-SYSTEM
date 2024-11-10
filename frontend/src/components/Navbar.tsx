@@ -84,6 +84,19 @@ const Navbar = () => {
                                             </div>
                                         )
                                     }
+                                    {
+                                        user?.clubCounselor && (
+                                            <div className="">
+                                                <Link to="/clubCounselor/members">
+                                                    <Separator className="my-2" />
+                                                    <MenubarItem className="cursor-pointer">My Club Members</MenubarItem>
+                                                </Link>
+                                                <Link to="/clubCounselor/users">
+                                                    <MenubarItem className="cursor-pointer">All Users</MenubarItem>
+                                                </Link>
+                                            </div>
+                                        )
+                                    }
                                 </MenubarContent>
                             </MenubarMenu>
                         </Menubar>
@@ -242,6 +255,8 @@ const MobileNavbar = () => {
                                 <Users />
                                 <span>Participants</span>
                             </Link> */}
+
+                            {/* for head - super admin */}
                             {
                                 user?.head && (
                                     <div className="">
@@ -262,6 +277,28 @@ const MobileNavbar = () => {
                                         </Link>
                                         <Link
                                             to="/head/users"
+                                            className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                                        >
+                                            <Users2 />
+                                            <span>All Users</span>
+                                        </Link>
+                                    </div>
+                                )
+                            }
+                            {/* for club Counselors */}
+                            {
+                                user?.clubCounselor && (
+                                    <div className="">
+                                        <Separator className="my-2" />
+                                        <Link
+                                            to="/clubCounselor/members"
+                                            className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
+                                        >
+                                            <UserCheck2 />
+                                            <span>My Club Members</span>
+                                        </Link>
+                                        <Link
+                                            to="/clubCounselor/users"
                                             className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
                                         >
                                             <Users2 />
