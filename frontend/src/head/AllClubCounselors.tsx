@@ -24,7 +24,7 @@ const AllClubCounselors = () => {
         admin: false,
         _id: ""
     });
-    const [adminUsers, setAdminUsers] = useState<any[]>([]);
+    const [clubCounselorsUsers, setClubCounselorsUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -32,7 +32,7 @@ const AllClubCounselors = () => {
     const { allUsers, fetchAllUsers } = useUserStore();
     const { allClubs, fetchAllClubs } = useClubStore();
 
-    const totalPages = Math.ceil(adminUsers.length / entriesPerPage);
+    const totalPages = Math.ceil(clubCounselorsUsers.length / entriesPerPage);
 
     useEffect(() => {
         const loadData = async () => {
@@ -45,7 +45,7 @@ const AllClubCounselors = () => {
 
     useEffect(() => {
         if (allUsers) {
-            setAdminUsers(allUsers.filter(user => user.admin === true));
+            setClubCounselorsUsers(allUsers.filter(user => user.clubCounselors === true));
         }
     }, [allUsers]);
 
@@ -76,7 +76,7 @@ const AllClubCounselors = () => {
     const goToPreviousPage = () => goToPage(currentPage - 1);
 
     // Get paginated users
-    const paginatedUsers = adminUsers.slice(
+    const paginatedUsers = clubCounselorsUsers.slice(
         (currentPage - 1) * entriesPerPage,
         currentPage * entriesPerPage
     );
@@ -150,6 +150,11 @@ const AllClubCounselors = () => {
                     )}
                 </TableBody>
             </Table>
+            {
+                clubCounselorsUsers.length === 0 && (
+                    <p className="w-full flex items-center justify-center my-8">No Club Counselors found.</p>
+                )
+            }
 
             {/* Pagination controls */}
             <div className="flex overflow-y-scroll justify-center mt-4 space-x-2">
