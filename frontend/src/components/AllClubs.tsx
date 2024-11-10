@@ -84,56 +84,61 @@ const AllClubs = () => {
                 )}
             </div>
 
-            <div className="flex items-center justify-center mt-6">
-                <div className="flex items-center space-x-2">
-                    {/* First Button */}
-                    <button
-                        onClick={handleFirst}
-                        disabled={currentPage === 1}
-                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                    >
-                        First
-                    </button>
+            {
+                allClubs?.length !== 0 && (
+                    <div className="flex items-center justify-center mt-6">
+                        <div className="flex items-center space-x-2">
+                            {/* First Button */}
+                            <button
+                                onClick={handleFirst}
+                                disabled={currentPage === 1}
+                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                            >
+                                First
+                            </button>
 
-                    {/* Previous Button */}
-                    <button
-                        onClick={handlePrev}
-                        disabled={currentPage === 1}
-                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                    >
-                        Previous
-                    </button>
+                            {/* Previous Button */}
+                            <button
+                                onClick={handlePrev}
+                                disabled={currentPage === 1}
+                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                            >
+                                Previous
+                            </button>
 
-                    {/* Page Numbers */}
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index + 1}
-                            onClick={() => setCurrentPage(index + 1)}
-                            className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
+                            {/* Page Numbers */}
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <button
+                                    key={index + 1}
+                                    onClick={() => setCurrentPage(index + 1)}
+                                    className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
 
-                    {/* Next Button */}
-                    <button
-                        onClick={handleNext}
-                        disabled={currentPage === totalPages}
-                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                    >
-                        Next
-                    </button>
+                            {/* Next Button */}
+                            <button
+                                onClick={handleNext}
+                                disabled={currentPage === totalPages}
+                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                            >
+                                Next
+                            </button>
 
-                    {/* Last Button */}
-                    <button
-                        onClick={handleLast}
-                        disabled={currentPage === totalPages}
-                        className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                    >
-                        Last
-                    </button>
-                </div>
-            </div>
+                            {/* Last Button */}
+                            <button
+                                onClick={handleLast}
+                                disabled={currentPage === totalPages}
+                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                            >
+                                Last
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
+
         </div>
     );
 };

@@ -162,56 +162,61 @@ const AllEvents = () => {
 
                 </div>
 
-                <div className="w-full flex items-center justify-center mt-4">
-                    <div className="flex items-center space-x-2">
-                        {/* First Button */}
-                        <button
-                            onClick={handleActiveFirst}
-                            disabled={currentActivePage === 1}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            First
-                        </button>
+                {
+                    activeEvents.length !== 0 && (
+                        <div className="w-full flex items-center justify-center mt-4">
+                            <div className="flex items-center space-x-2">
+                                {/* First Button */}
+                                <button
+                                    onClick={handleActiveFirst}
+                                    disabled={currentActivePage === 1}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    First
+                                </button>
 
-                        {/* Previous Button */}
-                        <button
-                            onClick={handleActivePrev}
-                            disabled={currentActivePage === 1}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            Previous
-                        </button>
+                                {/* Previous Button */}
+                                <button
+                                    onClick={handleActivePrev}
+                                    disabled={currentActivePage === 1}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    Previous
+                                </button>
 
-                        {/* Page Numbers */}
-                        {Array.from({ length: totalActivePages }, (_, index) => (
-                            <button
-                                key={index + 1}
-                                onClick={() => setCurrentActivePage(index + 1)}
-                                className={`px-4 py-2 text-sm rounded-md ${currentActivePage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
+                                {/* Page Numbers */}
+                                {Array.from({ length: totalActivePages }, (_, index) => (
+                                    <button
+                                        key={index + 1}
+                                        onClick={() => setCurrentActivePage(index + 1)}
+                                        className={`px-4 py-2 text-sm rounded-md ${currentActivePage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
 
-                        {/* Next Button */}
-                        <button
-                            onClick={handleActiveNext}
-                            disabled={currentActivePage === totalActivePages}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            Next
-                        </button>
+                                {/* Next Button */}
+                                <button
+                                    onClick={handleActiveNext}
+                                    disabled={currentActivePage === totalActivePages}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    Next
+                                </button>
 
-                        {/* Last Button */}
-                        <button
-                            onClick={handleActiveLast}
-                            disabled={currentActivePage === totalActivePages}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            Last
-                        </button>
-                    </div>
-                </div>
+                                {/* Last Button */}
+                                <button
+                                    onClick={handleActiveLast}
+                                    disabled={currentActivePage === totalActivePages}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    Last
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
+
 
             </div>
             <div className="flex flex-col items-start">
@@ -267,56 +272,61 @@ const AllEvents = () => {
                     }
 
                 </div>
-                <div className="w-full flex items-center justify-center mt-4">
-                    <div className="flex items-center space-x-2">
-                        {/* First Button */}
-                        <button
-                            onClick={handlePastFirst}
-                            disabled={currentPastPage === 1}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            First
-                        </button>
 
-                        {/* Previous Button */}
-                        <button
-                            onClick={handlePastPrev}
-                            disabled={currentPastPage === 1}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            Previous
-                        </button>
+                {
+                    pastEvents.length !== 0 && (
+                        <div className="w-full flex items-center justify-center mt-4">
+                            <div className="flex items-center space-x-2">
+                                {/* First Button */}
+                                <button
+                                    onClick={handlePastFirst}
+                                    disabled={currentPastPage === 1}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    First
+                                </button>
 
-                        {/* Page Numbers */}
-                        {Array.from({ length: totalPastPages }, (_, index) => (
-                            <button
-                                key={index + 1}
-                                onClick={() => setCurrentPastPage(index + 1)}
-                                className={`px-4 py-2 text-sm rounded-md ${currentPastPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
-                            >
-                                {index + 1}
-                            </button>
-                        ))}
+                                {/* Previous Button */}
+                                <button
+                                    onClick={handlePastPrev}
+                                    disabled={currentPastPage === 1}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    Previous
+                                </button>
 
-                        {/* Next Button */}
-                        <button
-                            onClick={handlePastNext}
-                            disabled={currentPastPage === totalPastPages}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            Next
-                        </button>
+                                {/* Page Numbers */}
+                                {Array.from({ length: totalPastPages }, (_, index) => (
+                                    <button
+                                        key={index + 1}
+                                        onClick={() => setCurrentPastPage(index + 1)}
+                                        className={`px-4 py-2 text-sm rounded-md ${currentPastPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                ))}
 
-                        {/* Last Button */}
-                        <button
-                            onClick={handlePastLast}
-                            disabled={currentPastPage === totalPastPages}
-                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                        >
-                            Last
-                        </button>
-                    </div>
-                </div>
+                                {/* Next Button */}
+                                <button
+                                    onClick={handlePastNext}
+                                    disabled={currentPastPage === totalPastPages}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    Next
+                                </button>
+
+                                {/* Last Button */}
+                                <button
+                                    onClick={handlePastLast}
+                                    disabled={currentPastPage === totalPastPages}
+                                    className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                >
+                                    Last
+                                </button>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )
