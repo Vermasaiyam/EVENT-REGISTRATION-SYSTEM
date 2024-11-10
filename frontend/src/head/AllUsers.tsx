@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import ChangeUserRole from "./ChangeUserRole";
+import { useClubStore } from "@/store/useClubStore";
 
 const AllUsers = () => {
   const [openUpdateRole, setOpenUpdateRole] = useState(false);
@@ -22,16 +23,26 @@ const AllUsers = () => {
     branch: "",
     current_year: "",
     admin: false,
+    clubCounselor: false,
     _id: ""
   });
 
-  const { loading, allUsers, fetchAllUsers } = useUserStore();
+  const [loading, setLoading] = useState(true);
+
+  const { allUsers, fetchAllUsers } = useUserStore();
+  const { allClubs, fetchAllClubs } = useClubStore();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
 
   useEffect(() => {
-    fetchAllUsers();
-  }, [fetchAllUsers]);
+    const loadData = async () => {
+      await fetchAllUsers();
+      await fetchAllClubs();
+      setLoading(false);
+    };
+    loadData();
+  }, [fetchAllUsers, fetchAllClubs]);
 
   const totalPages = Math.ceil((allUsers?.length || 0) / entriesPerPage);
 
@@ -177,6 +188,8 @@ const AllUsers = () => {
           fullname={updateUserDetails.fullname}
           email={updateUserDetails.email}
           admin={updateUserDetails.admin}
+          clubCounselor={updateUserDetails.clubCounselor}
+          allClubs={allClubs}
           userId={updateUserDetails._id}
         />
       )}

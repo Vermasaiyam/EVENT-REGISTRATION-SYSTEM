@@ -8,11 +8,14 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useUserStore } from '@/store/useUserStore';
+import { Club } from '@/types/clubType';
 
 interface ChangeUserRoleProps {
     fullname: string;
     email: string;
     admin: boolean;
+    clubCounselor: boolean;
+    allClubs: Club[] | any;
     onClose: () => void;
     userId: string;
 }
@@ -21,15 +24,27 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     fullname,
     email,
     admin,
+    clubCounselor,
+    allClubs,
     onClose,
     userId
 }) => {
     // Use state to track the user role
-    const [userRole, setUserRole] = useState(admin ? "yes" : "no");
+    const [userClubCounselorRole, setUserClubCounselorRole] = useState(clubCounselor ? "yes" : "no");
+    const [counselorsClub, setCounselorsClub] = useState("");
+    const [userClubHeadRole, setUserClubHeadRole] = useState(admin ? "yes" : "no");
 
     // Handle role change
-    const handleOnChange = (newRole: string) => {
-        setUserRole(newRole);
+    const handleOnChangeClubHead = (newRole: string) => {
+        setUserClubHeadRole(newRole);
+    };
+    // for club counselor
+    const handleOnChangeClubCounselor = (newRole: string) => {
+        setUserClubCounselorRole(newRole);
+    };
+    // for counselors club
+    const handleOnChangeCounselorsClub = (club: string) => {
+        setCounselorsClub(club);
     };
 
     // Use the updateUsers function from the store
@@ -37,7 +52,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
 
     // Function to handle the "Change Role" button click
     const handleChangeRole = () => {
-        const isAdmin = userRole === "yes"; // Determine if the user is an admin based on the selection
+        const isAdmin = userClubHeadRole === "yes"; // Determine if the user is an admin based on the selection
         updateUsers({ userId, email, fullname, isAdmin }); // Pass the correct value to update
         onClose(); // Close the modal after update
     };
@@ -54,10 +69,45 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
                 <p>Email: {email}</p>
 
                 <div className="flex items-center justify-between my-4">
-                    <p>Admin:</p>
-                    <Select value={userRole} onValueChange={handleOnChange}>
+                    <p>Club Counselor:</p>
+                    <Select value={userClubCounselorRole} onValueChange={handleOnChangeClubCounselor}>
                         <SelectTrigger className="w-[180px] dark:bg-gray-800 dark:text-white">
-                            <SelectValue placeholder="Admin" />
+                            <SelectValue placeholder="Club Counselor" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="yes">Yes</SelectItem>
+                            <SelectItem value="no">No</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                {
+                    userClubCounselorRole === "yes" && (
+                        <div className="">
+                            <div className="flex items-center justify-between">
+                                <p>Club Name:</p>
+                                <Select value={counselorsClub} onValueChange={handleOnChangeCounselorsClub}>
+                                    <SelectTrigger className="w-[180px] dark:bg-gray-800 dark:text-white">
+                                        <SelectValue placeholder="Club Counselor" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {allClubs.map((club: Club) => (
+                                            <SelectItem key={club._id} value={club.clubName}>
+                                                {club.clubName}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+
+                                </Select>
+                            </div>
+                            <p className='text-right text-xs text-gray-700 dark:text-gray-400 mt-1'>*For Club Counselors Only</p>
+                        </div>
+                    )
+                }
+                <div className="flex items-center justify-between my-4">
+                    <p>Club Head:</p>
+                    <Select value={userClubHeadRole} onValueChange={handleOnChangeClubHead}>
+                        <SelectTrigger className="w-[180px] dark:bg-gray-800 dark:text-white">
+                            <SelectValue placeholder="Club Head" />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="yes">Yes</SelectItem>

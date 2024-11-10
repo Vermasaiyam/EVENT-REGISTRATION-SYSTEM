@@ -21,6 +21,7 @@ const AllAdmins = () => {
         contact: null,
         addmission_no: "",
         branch: "",
+        clubCounselor: false,
         admin: false,
         _id: ""
     });
@@ -189,6 +190,8 @@ const AllAdmins = () => {
                     fullname={updateUserDetails.fullname}
                     email={updateUserDetails.email}
                     admin={updateUserDetails.admin}
+                    clubCounselor={updateUserDetails.clubCounselor}
+                    allClubs={allClubs}
                     userId={updateUserDetails._id}
                 />
             )}
