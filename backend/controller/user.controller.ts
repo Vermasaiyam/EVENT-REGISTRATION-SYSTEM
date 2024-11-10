@@ -342,12 +342,12 @@ export const updateUsers = async (req: Request, res: Response): Promise<void> =>
 export const updateMembers = async (req: Request, res: Response): Promise<void> => {
     try {
         // console.log(req.id);
-        const { userId, email, fullname, isClubMember, membersClubName } = req.body;
+        const { userId, email, fullname, isMember, membersClubName } = req.body;
 
         const payload = {
             ...(email && { email: email }),
             ...(fullname && { fullname: fullname }),
-            ...({ clubMember: isClubMember }),
+            ...({ clubMember: isMember }),
             ...(membersClubName ? { membersClubName: membersClubName } : {membersClubName: ""}),
         };
 

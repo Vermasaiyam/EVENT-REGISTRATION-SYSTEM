@@ -8,14 +8,12 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useUserStore } from '@/store/useUserStore';
-import { Club } from '@/types/clubType';
 
 interface ChangeUserRoleProps {
     fullname: string;
     email: string;
     clubMember: boolean;
-    clubCounselor: boolean;
-    allClubs: Club[] | any;
+    clubName: string | undefined;
     onClose: () => void;
     userId: string;
 }
@@ -24,8 +22,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     fullname,
     email,
     clubMember,
-    clubCounselor,
-    allClubs,
+    clubName,
     onClose,
     userId
 }) => {
@@ -39,14 +36,14 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     // 
 
     // user store
-    // const { updateUsers } = useUserStore();
+    const { updateMembers } = useUserStore();
 
     // Function to handle the "Change Role" button click
     const handleChangeRole = () => {
         const isMember = userClubMemberRole === "yes";
         
 
-        // updateUsers({ userId, email, fullname, isAdmin, isClubCounselor, counselorsClub });
+        updateMembers({ userId, email, fullname, isMember, membersClubName: clubName});
         onClose();
     };
 

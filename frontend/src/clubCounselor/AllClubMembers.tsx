@@ -1,5 +1,4 @@
 import { useUserStore } from "@/store/useUserStore";
-import { useClubStore } from "@/store/useClubStore";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { MdModeEdit } from "react-icons/md";
@@ -15,7 +14,7 @@ import ChangeUserRole from "./ChangeUserRole";
 
 const AllClubMembers = () => {
 
-    const {user} = useUserStore();
+    const { user } = useUserStore();
 
     const [openUpdateRole, setOpenUpdateRole] = useState(false);
     const [updateUserDetails, setUpdateUserDetails] = useState({
@@ -26,7 +25,7 @@ const AllClubMembers = () => {
         branch: "",
         clubCounselor: false,
         clubMember: false,
-        membersClubName:"",
+        membersClubName: "",
         _id: ""
     });
     const [myClubUsers, setMyClubUsers] = useState<any[]>([]);
@@ -35,18 +34,16 @@ const AllClubMembers = () => {
     const [entriesPerPage, setEntriesPerPage] = useState(10);
 
     const { allUsers, fetchAllUsers } = useUserStore();
-    const { allClubs, fetchAllClubs } = useClubStore();
 
     const totalPages = Math.ceil(myClubUsers.length / entriesPerPage);
 
     useEffect(() => {
         const loadData = async () => {
             await fetchAllUsers();
-            await fetchAllClubs();
             setLoading(false);
         };
         loadData();
-    }, [fetchAllUsers, fetchAllClubs]);
+    }, [fetchAllUsers]);
 
     useEffect(() => {
         if (allUsers) {
@@ -188,8 +185,7 @@ const AllClubMembers = () => {
                     fullname={updateUserDetails.fullname}
                     email={updateUserDetails.email}
                     clubMember={updateUserDetails.clubMember && updateUserDetails?.membersClubName === user?.counselorClubName}
-                    clubCounselor={updateUserDetails.clubCounselor}
-                    allClubs={allClubs}
+                    clubName={user?.counselorClubName}
                     userId={updateUserDetails._id}
                 />
             )}

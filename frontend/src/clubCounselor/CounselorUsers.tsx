@@ -11,11 +11,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import ChangeUserRole from "./ChangeUserRole";
-import { useClubStore } from "@/store/useClubStore";
 
 const CounselorUsers = () => {
 
-  const {user} = useUserStore();
+  const { user } = useUserStore();
 
   const [openUpdateRole, setOpenUpdateRole] = useState(false);
   const [updateUserDetails, setUpdateUserDetails] = useState({
@@ -34,7 +33,6 @@ const CounselorUsers = () => {
   const [loading, setLoading] = useState(true);
 
   const { allUsers, fetchAllUsers } = useUserStore();
-  const { allClubs, fetchAllClubs } = useClubStore();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -42,11 +40,10 @@ const CounselorUsers = () => {
   useEffect(() => {
     const loadData = async () => {
       await fetchAllUsers();
-      await fetchAllClubs();
       setLoading(false);
     };
     loadData();
-  }, [fetchAllUsers, fetchAllClubs]);
+  }, [fetchAllUsers]);
 
   const totalPages = Math.ceil((allUsers?.length || 0) / entriesPerPage);
 
@@ -124,7 +121,7 @@ const CounselorUsers = () => {
                 <TableCell>{el?.branch === "Branch" ? "-" : el.branch}</TableCell>
                 <TableCell>{el?.current_year ? el.current_year : '-'}</TableCell>
                 <TableCell>{el?.admin ? "Yes" : "No"}</TableCell>
-                <TableCell>{el?.membersClubName === user?.counselorClubName  ? "Yes" : "No"}</TableCell>
+                <TableCell>{el?.membersClubName === user?.counselorClubName ? "Yes" : "No"}</TableCell>
                 <TableCell>{moment(el?.createdAt).format('LL')}</TableCell>
                 <TableCell>
                   <button className='bg-green-100 p-2 rounded-full cursor-pointer hover:bg-green dark:hover:bg-[#2E3A52] hover:text-white'
@@ -194,8 +191,7 @@ const CounselorUsers = () => {
           fullname={updateUserDetails.fullname}
           email={updateUserDetails.email}
           clubMember={updateUserDetails.clubMember && updateUserDetails?.membersClubName === user?.counselorClubName}
-          clubCounselor={updateUserDetails.clubCounselor}
-          allClubs={allClubs}
+          clubName={user?.counselorClubName}
           userId={updateUserDetails._id}
         />
       )}
