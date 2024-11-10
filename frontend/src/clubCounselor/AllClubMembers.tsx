@@ -25,7 +25,8 @@ const AllClubMembers = () => {
         addmission_no: "",
         branch: "",
         clubCounselor: false,
-        admin: false,
+        clubMember: false,
+        membersClubName:"",
         _id: ""
     });
     const [myClubUsers, setMyClubUsers] = useState<any[]>([]);
@@ -52,12 +53,6 @@ const AllClubMembers = () => {
             setMyClubUsers(allUsers.filter(u => u.membersClubName === user?.counselorClubName));
         }
     }, [allUsers]);
-
-    // Get club name for a specific user
-    const getClubName = (userId: string) => {
-        const club = allClubs?.find(club => club.user === userId);
-        return club ? club.clubName : "No Club Assigned";
-    };
 
     // Render skeleton rows during loading
     const renderSkeletonRows = () => {
@@ -130,7 +125,7 @@ const AllClubMembers = () => {
                         paginatedUsers.map((el, index) => (
                             <TableRow key={index} className="dark:bg-black dark:hover:bg-black bg-white hover:bg-white">
                                 <TableCell className="font-medium">{(currentPage - 1) * entriesPerPage + index + 1}</TableCell>
-                                <TableCell className="font-semibold">{getClubName(el?._id)}</TableCell>
+                                <TableCell className="font-semibold">{el?.membersClubName}</TableCell>
                                 <TableCell>{el?.fullname}</TableCell>
                                 <TableCell>{el?.email}</TableCell>
                                 <TableCell>{el?.contact}</TableCell>
@@ -192,7 +187,7 @@ const AllClubMembers = () => {
                     onClose={() => setOpenUpdateRole(false)}
                     fullname={updateUserDetails.fullname}
                     email={updateUserDetails.email}
-                    admin={updateUserDetails.admin}
+                    clubMember={updateUserDetails.clubMember && updateUserDetails?.membersClubName === user?.counselorClubName}
                     clubCounselor={updateUserDetails.clubCounselor}
                     allClubs={allClubs}
                     userId={updateUserDetails._id}

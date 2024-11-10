@@ -25,7 +25,8 @@ const CounselorUsers = () => {
     addmission_no: "",
     branch: "",
     current_year: "",
-    admin: false,
+    clubMember: false,
+    membersClubName: "",
     clubCounselor: false,
     _id: ""
   });
@@ -192,7 +193,7 @@ const CounselorUsers = () => {
           onClose={() => setOpenUpdateRole(false)}
           fullname={updateUserDetails.fullname}
           email={updateUserDetails.email}
-          admin={updateUserDetails.admin}
+          clubMember={updateUserDetails.clubMember && updateUserDetails?.membersClubName === user?.counselorClubName}
           clubCounselor={updateUserDetails.clubCounselor}
           allClubs={allClubs}
           userId={updateUserDetails._id}
