@@ -7,7 +7,7 @@ import { User } from "../models/user.model";
 
 export const createClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { clubName, eventTypes, coreTeam } = req.body;
+        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle } = req.body;
         const file = req.file;
 
         const club = await Club.findOne({ user: { $in: [req.id] } });
@@ -65,6 +65,9 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             clubName,
             eventTypes: parsedEventTypes,
             coreTeam: parsedCoreTeam,
+            instaHandle,
+            linkedinHandle,
+            xHandle,
             imageUrl
         });
 
@@ -117,13 +120,13 @@ export const getClub = async (req: Request, res: Response): Promise<void> => {
 
 export const updateClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { clubName, eventTypes, coreTeam } = req.body;
+        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle } = req.body;
         const file = req.file;
         const club = await Club.findOne({ user: { $in: [req.id] } });
         if (!club) {
             res.status(404).json({
                 success: false,
-                message: "Club not found"
+                message: "Club not found."
             })
             return;
         };
@@ -140,6 +143,9 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
         club.clubName = clubName;
         club.eventTypes = JSON.parse(eventTypes);
         club.coreTeam = JSON.parse(coreTeam);
+        club.instaHandle = instaHandle;
+        club.linkedinHandle = linkedinHandle;
+        club.xHandle = xHandle;
 
         if (file) {
             const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);
