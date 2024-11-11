@@ -12,6 +12,9 @@ const Club = () => {
         clubName: "",
         eventTypes: [],
         coreTeam: [],
+        instaHandle: "",
+        linkedinHandle: "",
+        xHandle: "",
         imageFile: undefined,
     });
 
@@ -49,6 +52,17 @@ const Club = () => {
             formData.append("eventTypes", JSON.stringify(input.eventTypes));
             formData.append("coreTeam", JSON.stringify(input.coreTeam));
 
+            if (input.instaHandle){
+                formData.append("instaHandle", input.instaHandle);
+            }
+            if (input.linkedinHandle){
+                formData.append("linkedinHandle", input.linkedinHandle);
+            }
+            if (input.xHandle){
+                formData.append("xHandle", input.xHandle);
+            }
+
+
             if (input.imageFile) {
                 formData.append("imageFile", input.imageFile);
             }
@@ -75,11 +89,14 @@ const Club = () => {
                 setInput({
                     clubName: club.clubName || "",
                     eventTypes: club.eventTypes
-                        ? club.eventTypes.map((event: string) => event)
-                        : [],
+                    ? club.eventTypes.map((event: string) => event)
+                    : [],
                     coreTeam: club.coreTeam
-                        ? club.coreTeam.map((member: string) => member)
-                        : [],
+                    ? club.coreTeam.map((member: string) => member)
+                    : [],
+                    instaHandle: club.instaHandle || "",
+                    linkedinHandle: club.linkedinHandle || "",
+                    xHandle: club.xHandle || "",
                     imageFile: undefined,
                 });
             };
@@ -150,6 +167,51 @@ const Club = () => {
                                 {errors && (
                                     <span className="text-xs text-red-600 font-medium">
                                         {errors.coreTeam}
+                                    </span>
+                                )}
+                            </div>
+                            <div>
+                                <Label>Instagram Handle</Label>
+                                <Input
+                                    type="text"
+                                    name="instaHandle"
+                                    value={input.instaHandle}
+                                    onChange={changeEventHandler}
+                                    placeholder="Enter your Instagram Handle"
+                                />
+                                {errors && (
+                                    <span className="text-xs text-red-600 font-medium">
+                                        {errors.instaHandle}
+                                    </span>
+                                )}
+                            </div>
+                            <div>
+                                <Label>Linkedin Handle</Label>
+                                <Input
+                                    type="text"
+                                    name="linkedinHandle"
+                                    value={input.linkedinHandle}
+                                    onChange={changeEventHandler}
+                                    placeholder="Enter your Linkedin Handle"
+                                />
+                                {errors && (
+                                    <span className="text-xs text-red-600 font-medium">
+                                        {errors.linkedinHandle}
+                                    </span>
+                                )}
+                            </div>
+                            <div>
+                                <Label>X Handle</Label>
+                                <Input
+                                    type="text"
+                                    name="xHandle"
+                                    value={input.xHandle}
+                                    onChange={changeEventHandler}
+                                    placeholder="Enter your X Handle"
+                                />
+                                {errors && (
+                                    <span className="text-xs text-red-600 font-medium">
+                                        {errors.xHandle}
                                     </span>
                                 )}
                             </div>

@@ -21,6 +21,9 @@ export type Club = {
     clubName: string;
     eventTypes: string[];
     coreTeam: string[];
+    instaHandle: string;
+    linkedinHandle: string;
+    xHandle: string;
     imageUrl: string;
     events: EventItem[];
 }
