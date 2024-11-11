@@ -29,18 +29,20 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     onClose,
     userId
 }) => {
-    
+
     const [userClubCounselorRole, setUserClubCounselorRole] = useState(clubCounselor ? "yes" : "no");
     const [counselorsClub, setCounselorsClub] = useState("");
     const [userClubHeadRole, setUserClubHeadRole] = useState(admin ? "yes" : "no");
+    const [error, setError] = useState("");
 
     // Handle role change
     const handleOnChangeClubHead = (newRole: string) => {
         setUserClubHeadRole(newRole);
     };
     // for club counselor
-    const handleOnChangeClubCounselor = (newRole: string) => {
-        setUserClubCounselorRole(newRole);
+    const handleOnChangeClubCounselor = (value: any) => {
+        setUserClubCounselorRole(value);
+        if (value === "no") setCounselorsClub(""); // Clear club selection if role is set to "no"
     };
     // for counselors club
     const handleOnChangeCounselorsClub = (club: string) => {
@@ -51,11 +53,19 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     const { updateUsers } = useUserStore();
 
     // Function to handle the "Change Role" button click
-    const handleChangeRole = () => {
+    const handleChangeRole = (e: any) => {
+        e.preventDefault();
+
         const isAdmin = userClubHeadRole === "yes";
         const isClubCounselor = userClubCounselorRole === "yes";
-        console.log("club - ",counselorsClub);
-        
+        console.log("club - ", counselorsClub);
+
+        if (userClubCounselorRole === "yes" && !counselorsClub) {
+            setError("Please select a club name for Club Counselors.");
+            return;
+        } else {
+            setError("");
+        }
 
         updateUsers({ userId, email, fullname, isAdmin, isClubCounselor, counselorsClub });
         onClose();
@@ -104,6 +114,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
                                 </Select>
                             </div>
                             <p className='text-right text-xs text-gray-700 dark:text-gray-400 mt-1'>*For Club Counselors Only</p>
+                            {error && <p className="text-red-500 text-xs mt-1 text-center">{error}</p>}
                         </div>
                     )
                 }
