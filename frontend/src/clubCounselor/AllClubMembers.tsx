@@ -105,6 +105,7 @@ const AllClubMembers = () => {
                     <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
                         <TableHead className="font-bold dark:text-black text-white">S.No.</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Club Name</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Club Member</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Club Head</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
@@ -124,6 +125,7 @@ const AllClubMembers = () => {
                                 <TableCell className="font-medium">{(currentPage - 1) * entriesPerPage + index + 1}</TableCell>
                                 <TableCell className="font-semibold">{el?.membersClubName}</TableCell>
                                 <TableCell>{el?.fullname}</TableCell>
+                                <TableCell>{(el?.admin && el?.membersClubName === user?.counselorClubName) ? "Yes" : "No"}</TableCell>
                                 <TableCell>{el?.email}</TableCell>
                                 <TableCell>{el?.contact}</TableCell>
                                 <TableCell>{el?.addmission_no === "Addmission Number" ? "-" : el.addmission_no}</TableCell>
