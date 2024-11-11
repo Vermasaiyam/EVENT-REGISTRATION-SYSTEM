@@ -43,7 +43,7 @@ const AllClubs = () => {
         <div className="my-6 mx-4 lg:mx-12 md:mx-6 md:my-10">
             {
                 allClubs?.length !== 0 && (
-                    <div className="flex items-center justify-end mb-4">
+                    <div className="flex items-center justify-end mb-4 mx-2">
                         <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
                         <select
                             id="entriesPerPage"

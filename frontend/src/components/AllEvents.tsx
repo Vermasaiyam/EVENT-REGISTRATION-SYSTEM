@@ -106,10 +106,10 @@ const AllEvents = () => {
                 <h1 className="text-2xl md:text-3xl font-semibold mx-16">Active Events</h1>
                 {
                     activeEvents.length !== 0 && (
-                        <div className="flex items-center mx-4 justify-end mb-4">
-                            <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                        <div className="flex items-center justify-end mb-4 mx-2">
+                            <label htmlFor="activeEntriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
                             <select
-                                id="entriesPerPage"
+                                id="activeEntriesPerPage"
                                 value={activeEventsPerPage}
                                 onChange={handleActiveEntriesChange}
                                 className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
@@ -254,8 +254,8 @@ const AllEvents = () => {
                 <h1 className="text-2xl md:text-3xl font-semibold mx-16">Past Events</h1>
                 {
                     pastEvents.length !== 0 && (
-                        <div className="flex items-center mx-4 justify-end mb-4">
-                            <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                        <div className="flex items-center justify-end mb-4 mx-2">
+                            <label htmlFor="pastEntriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
                             <select
                                 id="pastEntriesPerPage"
                                 value={pastEventsPerPage}

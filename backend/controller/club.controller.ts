@@ -7,7 +7,7 @@ import { User } from "../models/user.model";
 
 export const createClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle } = req.body;
+        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle, email } = req.body;
         const file = req.file;
 
         const club = await Club.findOne({ user: { $in: [req.id] } });
@@ -68,7 +68,8 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             instaHandle,
             linkedinHandle,
             xHandle,
-            imageUrl
+            email,
+            imageUrl,
         });
 
         // Update the user's details
@@ -120,7 +121,7 @@ export const getClub = async (req: Request, res: Response): Promise<void> => {
 
 export const updateClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle } = req.body;
+        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle, email } = req.body;
         const file = req.file;
         const club = await Club.findOne({ user: { $in: [req.id] } });
         if (!club) {
@@ -146,6 +147,7 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
         club.instaHandle = instaHandle;
         club.linkedinHandle = linkedinHandle;
         club.xHandle = xHandle;
+        club.email = email;
 
         if (file) {
             const imageUrl = await uploadImageOnCloudinary(file as Express.Multer.File);

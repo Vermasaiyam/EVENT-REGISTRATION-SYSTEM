@@ -15,6 +15,7 @@ const Club = () => {
         instaHandle: "",
         linkedinHandle: "",
         xHandle: "",
+        email: "",
         imageFile: undefined,
     });
 
@@ -61,6 +62,9 @@ const Club = () => {
             if (input.xHandle){
                 formData.append("xHandle", input.xHandle);
             }
+            if (input.email){
+                formData.append("email", input.email);
+            }
 
 
             if (input.imageFile) {
@@ -97,6 +101,7 @@ const Club = () => {
                     instaHandle: club.instaHandle || "",
                     linkedinHandle: club.linkedinHandle || "",
                     xHandle: club.xHandle || "",
+                    email: club.email || "",
                     imageFile: undefined,
                 });
             };
@@ -212,6 +217,21 @@ const Club = () => {
                                 {errors && (
                                     <span className="text-xs text-red-600 font-medium">
                                         {errors.xHandle}
+                                    </span>
+                                )}
+                            </div>
+                            <div>
+                                <Label>Club Email</Label>
+                                <Input
+                                    type="text"
+                                    name="email"
+                                    value={input.email}
+                                    onChange={changeEventHandler}
+                                    placeholder="Enter your Club Email"
+                                />
+                                {errors && (
+                                    <span className="text-xs text-red-600 font-medium">
+                                        {errors.email}
                                     </span>
                                 )}
                             </div>

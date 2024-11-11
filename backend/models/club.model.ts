@@ -8,6 +8,7 @@ export interface IClub {
     instaHandle: string;
     linkedinHandle: string;
     xHandle: string;
+    email: string;
     imageUrl: string;
     events: mongoose.Schema.Types.ObjectId[]
 }
@@ -37,6 +38,10 @@ const clubSchema = new mongoose.Schema<IClubDocument>({
         default: "",
     },
     xHandle: {
+        type: String,
+        default: "",
+    },
+    email: {
         type: String,
         default: "",
     },

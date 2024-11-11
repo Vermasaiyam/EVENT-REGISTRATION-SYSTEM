@@ -46,7 +46,7 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
             </h1>
             {
                 events.length !== 0 && (
-                    <div className="flex items-center justify-end mb-4">
+                    <div className="flex items-center justify-end mb-4 mx-2">
                         <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
                         <select
                             id="entriesPerPage"

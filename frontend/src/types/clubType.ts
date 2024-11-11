@@ -24,6 +24,7 @@ export type Club = {
     instaHandle: string;
     linkedinHandle: string;
     xHandle: string;
+    email: string;
     imageUrl: string;
     events: EventItem[];
 }

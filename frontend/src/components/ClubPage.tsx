@@ -7,6 +7,7 @@ import PastEvent from "./PastEvents";
 import { useClubStore } from "@/store/useClubStore";
 // import { Event } from "@/types/eventType";
 import { EventItem } from "@/types/clubType";
+import { FaEnvelope, FaInstagram, FaLinkedin, FaX } from "react-icons/fa6";
 
 
 const ClubPage = () => {
@@ -53,7 +54,6 @@ const ClubPage = () => {
                 <div className="relative w-full h-32 md:h-64 lg:h-72 ">
                     <img
                         src={singleClub?.imageUrl || "Loading..."}
-                        // src="https://technovate-2.devfolio.co/_next/image?url=https%3A%2F%2Fassets.devfolio.co%2Fhackathons%2Fabab2fc5c170491f8277d3ad46a39abc%2Fassets%2Ffavicon%2F761.jpeg&w=1440&q=75"
                         alt="Club Cover Image"
                         className="object-contain w-full h-full rounded-lg shadow-lg"
                     />
@@ -62,7 +62,6 @@ const ClubPage = () => {
                     <div className="my-5">
                         <h1 className="font-bold md:text-3xl text-2xl my-2">
                             {singleClub?.clubName || "Loading..."}
-                            {/* DataVerse */}
                         </h1>
                         <div className="flex gap-2 my-2 flex-wrap">
                             {singleClub?.eventTypes.map((event: string, idx: number) => (
@@ -75,7 +74,6 @@ const ClubPage = () => {
                                 singleClub?.events &&
                                 <ActiveEvent events={activeEvents} />
                             }
-                            {/* <ActiveEvent /> */}
                         </div>
 
                         <div className="flex gap-2 my-2 flex-wrap">
@@ -83,7 +81,6 @@ const ClubPage = () => {
                                 singleClub?.events &&
                                 <PastEvent events={pastEvents} />
                             }
-                            {/* <PastEvent /> */}
                         </div>
 
                         <h1 className="font-medium text-xl">
@@ -93,6 +90,30 @@ const ClubPage = () => {
                             {singleClub?.coreTeam.map((member: string, idx: number) => (
                                 <Badge variant={"secondary"} key={idx}>{member}</Badge>
                             ))}
+                        </div>
+
+                        <h2 className="font-semibold text-xl mt-8 mb-6">Connect with Us</h2>
+                        <div className="flex gap-4">
+                            {singleClub?.instaHandle && (
+                                <a href={singleClub.instaHandle} target="_blank" rel="noopener noreferrer">
+                                    <FaInstagram size={24} className="text-pink-500 hover:text-pink-700" />
+                                </a>
+                            )}
+                            {singleClub?.linkedinHandle && (
+                                <a href={singleClub.linkedinHandle} target="_blank" rel="noopener noreferrer">
+                                    <FaLinkedin size={24} className="text-blue-600 hover:text-blue-800" />
+                                </a>
+                            )}
+                            {singleClub?.xHandle && (
+                                <a href={singleClub.xHandle} target="_blank" rel="noopener noreferrer">
+                                    <FaX size={24} className="text-blue-500 hover:text-blue-700" />
+                                </a>
+                            )}
+                            {singleClub?.email && (
+                                <a href={`mailto:${singleClub.email}`} target="_blank" rel="noopener noreferrer">
+                                    <FaEnvelope size={24} className="text-gray-700 hover:text-gray-900" />
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>

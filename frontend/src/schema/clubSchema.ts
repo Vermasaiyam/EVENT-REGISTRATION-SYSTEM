@@ -7,6 +7,7 @@ export const clubFormSchema = z.object({
     instaHandle: z.string().optional(),
     linkedinHandle: z.string().optional(),
     xHandle: z.string().optional(),
+    email: z.string().optional(),
     imageFile: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "Image file is required" }),
 });
 
