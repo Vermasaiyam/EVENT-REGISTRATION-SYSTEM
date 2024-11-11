@@ -128,7 +128,8 @@ const AddEvents = () => {
     };
 
     // pagination 
-    const eventsPerPage = 5; // Number of events to show per page
+    const [eventsPerPage, setEventsPerPage] = useState(6);
+
     const [currentPage, setCurrentPage] = useState(1);
 
     // Total number of events
@@ -163,6 +164,11 @@ const AddEvents = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         }
+    };
+
+    const handleEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setEventsPerPage(Number(event.target.value));
+        setCurrentPage(1)
     };
 
     return (
@@ -429,6 +435,25 @@ const AddEvents = () => {
 
 
             </div>
+            {
+                currentEvents?.length !== 0 && (
+                    <div className="flex items-center justify-end my-4 mx-2">
+                        <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                        <select
+                            id="entriesPerPage"
+                            value={eventsPerPage}
+                            onChange={handleEntriesChange}
+                            className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
+                        >
+                            {[2, 3, 4, 5, 6, 7, 8].map((number) => (
+                                <option key={number} value={number}>
+                                    {number}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )
+            }
             {currentEvents?.map((event: any, idx: number) => {
                 const today = new Date();
                 const registrationEndDate = new Date(event.registrationEndDate);
@@ -437,6 +462,7 @@ const AddEvents = () => {
 
                 return (
                     <div key={idx} className="mt-6 space-y-4 hover:shadow-lg">
+
                         <div className="flex flex-col md:flex-row md:items-center md:space-x-4 md:p-4 p-2 shadow-md rounded-lg border relative">
 
                             {/* Registration Status */}
