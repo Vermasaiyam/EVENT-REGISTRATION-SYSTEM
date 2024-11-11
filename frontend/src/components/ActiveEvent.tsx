@@ -147,7 +147,7 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                             <button
                                 key={index + 1}
                                 onClick={() => setCurrentPage(index + 1)}
-                                className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
+                                className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen hover:text-white`}
                             >
                                 {index + 1}
                             </button>
