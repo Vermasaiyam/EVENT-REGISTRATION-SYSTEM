@@ -15,6 +15,7 @@ interface ChangeUserRoleProps {
     email: string;
     admin: boolean;
     clubCounselor: boolean;
+    counselorClub: string;
     allClubs: Club[] | any;
     onClose: () => void;
     userId: string;
@@ -25,13 +26,14 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     email,
     admin,
     clubCounselor,
+    counselorClub,
     allClubs,
     onClose,
     userId
 }) => {
 
     const [userClubCounselorRole, setUserClubCounselorRole] = useState(clubCounselor ? "yes" : "no");
-    const [counselorsClub, setCounselorsClub] = useState("");
+    const [counselorsClub, setCounselorsClub] = useState(counselorClub || "");
     const [userClubHeadRole, setUserClubHeadRole] = useState(admin ? "yes" : "no");
     const [error, setError] = useState("");
 
@@ -58,7 +60,7 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
 
         const isAdmin = userClubHeadRole === "yes";
         const isClubCounselor = userClubCounselorRole === "yes";
-        console.log("club - ", counselorsClub);
+        // console.log("club - ", counselorsClub);
 
         if (userClubCounselorRole === "yes" && !counselorsClub) {
             setError("Please select a club name for Club Counselors.");

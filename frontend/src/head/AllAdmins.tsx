@@ -22,6 +22,7 @@ const AllAdmins = () => {
         addmission_no: "",
         branch: "",
         clubCounselor: false,
+        counselorsClub: "",
         admin: false,
         _id: ""
     });
@@ -191,6 +192,7 @@ const AllAdmins = () => {
                     email={updateUserDetails.email}
                     admin={updateUserDetails.admin}
                     clubCounselor={updateUserDetails.clubCounselor}
+                    counselorClub={updateUserDetails.counselorsClub}
                     allClubs={allClubs}
                     userId={updateUserDetails._id}
                 />

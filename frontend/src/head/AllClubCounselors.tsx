@@ -23,6 +23,7 @@ const AllClubCounselors = () => {
         branch: "",
         admin: false,
         clubCounselor: false,
+        counselorsClub: "",
         _id: ""
     });
     const [clubCounselorsUsers, setClubCounselorsUsers] = useState<any[]>([]);
@@ -186,6 +187,7 @@ const AllClubCounselors = () => {
                     email={updateUserDetails.email}
                     admin={updateUserDetails.admin}
                     clubCounselor={updateUserDetails.clubCounselor}
+                    counselorClub={updateUserDetails.counselorsClub}
                     allClubs={allClubs}
                     userId={updateUserDetails._id}
                 />
