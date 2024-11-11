@@ -9,7 +9,7 @@ interface PastEventProps {
 }
 
 const PastEvent: React.FC<PastEventProps> = ({ events }) => {
-    const eventsPerPage = 6;
+    const [eventsPerPage, setEventsPerPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const totalPages = Math.ceil(events.length / eventsPerPage);
 
@@ -34,40 +34,35 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
     const handleFirst = () => setCurrentPage(1);
     const handleLast = () => setCurrentPage(totalPages);
 
-    // const eventItems: EventFormSchema[] = [
-    //     {
-    //         name: "HacoVerse",
-    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijd sLorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
-    //         mode: "Offline",
-    //         registrationFee: 69,
-    //         registrationEndDate: "2024-11-15",
-    //         eventStartDate: "2024-11-16",
-    //         eventEndDate: "2024-11-17",
-    //         startTime: "10:00",
-    //         endTime: "17:00",
-    //         image: undefined,
-    //         formLink: "",
-    //     },
-    //     {
-    //         name: "Workshop",
-    //         description: "lorem gyrfudiosk vyfuhidjs ygfeijds Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex et perspiciatis cumque impedit similique atque.",
-    //         mode: "Online",
-    //         registrationFee: 69,
-    //         registrationEndDate: "2024-11-20",
-    //         eventStartDate: "2024-11-21",
-    //         eventEndDate: "2024-11-22",
-    //         startTime: "14:00",
-    //         endTime: "18:00",
-    //         image: undefined,
-    //         formLink: "",
-    //     },
-    // ];
+    const handleEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setEventsPerPage(Number(event.target.value));
+        setCurrentPage(1)
+    };
 
     return (
         <div className="my-2 w-full">
             <h1 className="text-2xl md:text-2xl font-semibold mb-6 mx-2">
                 Past Events
             </h1>
+            {
+                events.length !== 0 && (
+                    <div className="flex items-center justify-end mb-4">
+                        <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                        <select
+                            id="entriesPerPage"
+                            value={eventsPerPage}
+                            onChange={handleEntriesChange}
+                            className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
+                        >
+                            {[2, 3, 4, 5, 6, 7, 8].map((number) => (
+                                <option key={number} value={number}>
+                                    {number}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )
+            }
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
                 {currentEvents.map((event) => (
                     <div key={event._id}>

@@ -42,23 +42,27 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
     return (
         <div className="my-4 w-full">
             <h1 className="text-2xl md:text-2xl font-semibold mb-6 mx-2">Active Events</h1>
-            
+
             {/* Entries per page selector */}
-            <div className="flex items-center justify-end mb-4">
-                <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
-                <select
-                    id="entriesPerPage"
-                    value={eventsPerPage}
-                    onChange={handleEntriesChange}
-                    className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
-                >
-                    {[2, 3, 4, 5, 6, 7, 8].map((number) => (
-                        <option key={number} value={number}>
-                            {number}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            {
+                events.length !== 0 && (
+                    <div className="flex items-center justify-end mb-4">
+                        <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                        <select
+                            id="entriesPerPage"
+                            value={eventsPerPage}
+                            onChange={handleEntriesChange}
+                            className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
+                        >
+                            {[2, 3, 4, 5, 6, 7, 8].map((number) => (
+                                <option key={number} value={number}>
+                                    {number}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )
+            }
 
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
                 {currentEvents?.map((event) => (
