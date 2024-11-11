@@ -14,7 +14,7 @@ const EventHighlights: React.FC<EventProps> = ({ events }) => {
             name: event.name,
             clubName: event.clubName,
         })) || []
-    );
+    ).reverse();
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
