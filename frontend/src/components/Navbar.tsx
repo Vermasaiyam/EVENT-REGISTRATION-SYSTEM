@@ -52,7 +52,6 @@ const Navbar = () => {
                     <Link to="/" className="hover:text-hoverGreen font-medium">Home</Link>
                     <Link to="/clubs" className="hover:text-hoverGreen  font-medium">Clubs</Link>
                     <Link to="/events" className="hover:text-hoverGreen  font-medium">Events</Link>
-                    {/* <Link to="/participation/status" className="hover:text-hoverGreen  font-medium">My Journey</Link> */}
 
                     {(user?.admin || user?.clubCounselor || user?.head || user?.clubMember) && (
                         <Menubar>
@@ -71,9 +70,6 @@ const Navbar = () => {
                                             </div>
                                         )
                                     }
-                                    {/* <Link to="/admin/participants">
-                                        <MenubarItem className="cursor-pointer">Participants</MenubarItem>
-                                    </Link> */}
                                     {
                                         user?.head && (
                                             <div className="">
@@ -227,13 +223,6 @@ const MobileNavbar = () => {
                         <Calendar />
                         <span>Events</span>
                     </Link>
-                    {/* <Link
-                        to="/participation/status"
-                        className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
-                    >
-                        <Route />
-                        <span>My Journey</span>
-                    </Link> */}
                     <div className="my-2">
                         <Separator />
                     </div>
@@ -261,13 +250,6 @@ const MobileNavbar = () => {
                                     </div>
                                 )
                             }
-                            {/* <Link
-                                to="/admin/participants"
-                                className="flex items-center gap-4 hover:bg-gray-200 px-3 py-2 rounded-lg cursor-pointer hover:text-gray-900 font-medium"
-                            >
-                                <Users />
-                                <span>Participants</span>
-                            </Link> */}
 
                             {/* for head - super admin */}
                             {
@@ -298,6 +280,7 @@ const MobileNavbar = () => {
                                     </div>
                                 )
                             }
+
                             {/* for club Counselors */}
                             {
                                 user?.clubCounselor && (
@@ -329,7 +312,6 @@ const MobileNavbar = () => {
                             <AvatarFallback><InitialsAvatar name={user?.fullname || "??"} className="h-full w-full flex items-center justify-center bg-slate-200 p-2 rounded-full" /></AvatarFallback>
                         </Avatar>
                         <h1 className="font-bold">{user?.fullname}</h1>
-                        {/* <h1 className="font-bold">ABES</h1> */}
                     </Link>
                     <SheetClose asChild>
                         {loading ? (
