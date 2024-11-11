@@ -13,6 +13,7 @@ interface ChangeUserRoleProps {
     fullname: string;
     email: string;
     clubMember: boolean;
+    clubHead: boolean;
     clubName: string | undefined;
     onClose: () => void;
     userId: string;
@@ -22,35 +23,41 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     fullname,
     email,
     clubMember,
+    clubHead,
     clubName,
     onClose,
     userId
 }) => {
-    
+
     const [userClubMemberRole, setUserClubMemberRole] = useState(clubMember ? "yes" : "no");
+    const [userClubHeadRole, setUserClubHeadRole] = useState(clubHead ? "yes" : "no");
 
     // Handle role change
     const handleOnChangeClubMember = (newRole: string) => {
         setUserClubMemberRole(newRole);
     };
-    // 
+    // Handle role change
+    const handleOnChangeClubHead = (newRole: string) => {
+        setUserClubHeadRole(newRole);
+    };
 
     // user store
-    const { updateMembers } = useUserStore();
+    const { updateMembers, updateUsers } = useUserStore();
 
     // Function to handle the "Change Role" button click
     const handleChangeRole = () => {
         const isMember = userClubMemberRole === "yes";
 
+        const isAdmin = userClubHeadRole === "yes";
 
-        if (isMember){
-            updateMembers({ userId, email, fullname, isMember, membersClubName: clubName, clubName});
-        }
-        else{
-            updateMembers({ userId, email, fullname, isMember, clubName});
-        }
-        
+        updateUsers({ userId, email, fullname, isAdmin });
 
+        if (isMember) {
+            updateMembers({ userId, email, fullname, isMember, membersClubName: clubName, clubName });
+        }
+        else {
+            updateMembers({ userId, email, fullname, isMember, clubName });
+        }
         onClose();
     };
 
@@ -65,6 +72,18 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
                 <p>Name: {fullname}</p>
                 <p>Email: {email}</p>
 
+                <div className="flex items-center justify-between my-4">
+                    <p>Club Head:</p>
+                    <Select value={userClubHeadRole} onValueChange={handleOnChangeClubHead}>
+                        <SelectTrigger className="w-[180px] dark:bg-gray-800 dark:text-white">
+                            <SelectValue placeholder="Club Head" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="yes">Yes</SelectItem>
+                            <SelectItem value="no">No</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
                 <div className="flex items-center justify-between my-4">
                     <p>Club Member:</p>
                     <Select value={userClubMemberRole} onValueChange={handleOnChangeClubMember}>

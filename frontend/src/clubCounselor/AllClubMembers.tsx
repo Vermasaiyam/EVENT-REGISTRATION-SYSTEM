@@ -23,6 +23,7 @@ const AllClubMembers = () => {
         contact: null,
         addmission_no: "",
         branch: "",
+        admin: false,
         clubCounselor: false,
         clubMember: false,
         membersClubName: "",
@@ -187,6 +188,7 @@ const AllClubMembers = () => {
                     fullname={updateUserDetails.fullname}
                     email={updateUserDetails.email}
                     clubMember={updateUserDetails.clubMember && updateUserDetails?.membersClubName === user?.counselorClubName}
+                    clubHead={(updateUserDetails?.admin && updateUserDetails?.membersClubName === user?.counselorClubName)}
                     clubName={user?.counselorClubName}
                     userId={updateUserDetails._id}
                 />
