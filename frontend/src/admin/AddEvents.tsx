@@ -429,70 +429,87 @@ const AddEvents = () => {
 
 
             </div>
-            {currentEvents?.map((event: any, idx: number) => (
-                <div key={idx} className="mt-6 space-y-4 hover:shadow-lg">
-                    <div className="flex flex-col md:flex-row md:items-center md:space-x-4 md:p-4 p-2 shadow-md rounded-lg border relative">
-                        <img
-                            src={event.image}
-                            alt={event.name}
-                            className="md:h-24 md:w-24 h-32 w-full object-contain rounded-lg"
-                        />
-                        <div onClick={() => deleteEvent(event._id)} className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
-                            <Trash2 className="w-4 h-4" />
-                        </div>
-                        <div className="flex-1">
-                            <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
-                                {event.name}
-                            </h1>
-                            <p title={event.description} className="text-sm text-gray-600 mt-1 dark:text-gray-400 line-clamp-1">{event.description}</p>
+            {currentEvents?.map((event: any, idx: number) => {
+                const today = new Date();
+                const registrationEndDate = new Date(event.registrationEndDate);
+                registrationEndDate.setHours(23, 59, 59, 999);
+                const isRegistrationClosed = registrationEndDate < today;
 
-                            <h2 className="text-md font-semibold mt-2 flex items-center">
-                                Registration Fee: <span className="text-green dark:text-yellow-100 flex items-center mx-2">₹{event.registrationFee}</span>
-                            </h2>
+                return (
+                    <div key={idx} className="mt-6 space-y-4 hover:shadow-lg">
+                        <div className="flex flex-col md:flex-row md:items-center md:space-x-4 md:p-4 p-2 shadow-md rounded-lg border relative">
 
-                            <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
-                                <div className="text-sm text-gray-700 dark:text-gray-400">
-                                    <span className="font-semibold">Registration End Date: </span>
-                                    {new Date(event.registrationEndDate).toLocaleDateString('en-GB')}
+                            {/* Registration Status */}
+                            <div className={`absolute top-2 left-2 px-2 py-1 text-xs font-semibold rounded-md ${isRegistrationClosed ? 'bg-red-500 text-white' : 'bg-green text-white'}`}>
+                                {isRegistrationClosed ? "Closed" : "Open"}
+                            </div>
+
+                            <img
+                                src={event.image}
+                                alt={event.name}
+                                className="md:h-24 md:w-24 h-32 w-full object-contain rounded-lg"
+                            />
+
+                            <div onClick={() => deleteEvent(event._id)} className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1.5 cursor-pointer text-xs text-white">
+                                <Trash2 className="w-4 h-4" />
+                            </div>
+
+                            <div className="flex-1">
+                                <h1 className="text-lg font-semibold text-gray-800 dark:text-white">
+                                    {event.name}
+                                </h1>
+                                <p title={event.description} className="text-sm text-gray-600 mt-1 dark:text-gray-400 line-clamp-1">{event.description}</p>
+
+                                <h2 className="text-md font-semibold mt-2 flex items-center">
+                                    Registration Fee: <span className="text-green dark:text-yellow-100 flex items-center mx-2">₹{event.registrationFee}</span>
+                                </h2>
+
+                                <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
+                                    <div className="text-sm text-gray-700 dark:text-gray-400">
+                                        <span className="font-semibold">Registration End Date: </span>
+                                        {registrationEndDate.toLocaleDateString('en-GB')}
+                                    </div>
+                                    <div className="text-sm text-gray-700 dark:text-gray-400">
+                                        <span className="font-semibold">Event Start Date: </span>
+                                        {new Date(event.eventStartDate).toLocaleDateString('en-GB')}
+                                    </div>
+                                    <div className="text-sm text-gray-700 dark:text-gray-400">
+                                        <span className="font-semibold">Event End Date: </span>
+                                        {new Date(event.eventEndDate).toLocaleDateString('en-GB')}
+                                    </div>
+                                    <div className="text-sm text-gray-700 dark:text-gray-400">
+                                        <span className="font-semibold">Mode: </span>
+                                        <span className="capitalize">{event.mode}</span>
+                                    </div>
                                 </div>
-                                <div className="text-sm text-gray-700 dark:text-gray-400">
-                                    <span className="font-semibold">Event Start Date: </span>
-                                    {new Date(event.eventStartDate).toLocaleDateString('en-GB')}
-                                </div>
-                                <div className="text-sm text-gray-700 dark:text-gray-400">
-                                    <span className="font-semibold">Event End Date: </span>
-                                    {new Date(event.eventEndDate).toLocaleDateString('en-GB')}
-                                </div>
-                                <div className="text-sm text-gray-700 dark:text-gray-400">
-                                    <span className="font-semibold">Mode: </span>
-                                    <span className="capitalize">{event.mode}</span>
+
+                                <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
+                                    <div className="text-sm text-gray-700 dark:text-gray-400">
+                                        <span className="font-semibold">Start Time: </span>
+                                        {formatTime(event.startTime)}
+                                    </div>
+                                    <div className="text-sm text-gray-700 dark:text-gray-400">
+                                        <span className="font-semibold">End Time: </span>
+                                        {formatTime(event.endTime)}
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="flex flex-col md:flex-row md:space-x-4 mt-3">
-                                <div className="text-sm text-gray-700 dark:text-gray-400">
-                                    <span className="font-semibold">Start Time: </span>
-                                    {formatTime(event.startTime)}
-                                </div>
-                                <div className="text-sm text-gray-700 dark:text-gray-400">
-                                    <span className="font-semibold">End Time: </span>
-                                    {formatTime(event.endTime)}
-                                </div>
-                            </div>
+                            <Button
+                                onClick={() => {
+                                    setSelectedEvent(event);
+                                    setEditOpen(true);
+                                }}
+                                size={"sm"}
+                                className="bg-green hover:bg-hoverGreen mt-2 dark:text-white"
+                            >
+                                Edit
+                            </Button>
                         </div>
-                        <Button
-                            onClick={() => {
-                                setSelectedEvent(event);
-                                setEditOpen(true);
-                            }}
-                            size={"sm"}
-                            className="bg-green hover:bg-hoverGreen mt-2 dark:text-white"
-                        >
-                            Edit
-                        </Button>
                     </div>
-                </div>
-            ))}
+                );
+            })}
+
 
 
             {
