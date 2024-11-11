@@ -518,14 +518,14 @@ const AddEvents = () => {
                         <Button
                             onClick={() => goToPage(1)}
                             disabled={currentPage === 1}
-                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
                         >
                             First
                         </Button>
                         <Button
                             onClick={goToPreviousPage}
                             disabled={currentPage === 1}
-                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
                         >
                             Previous
                         </Button>
@@ -544,7 +544,7 @@ const AddEvents = () => {
                         <Button
                             onClick={goToNextPage}
                             disabled={currentPage === totalPages}
-                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
                         >
                             Next
                         </Button>
@@ -552,7 +552,7 @@ const AddEvents = () => {
                         <Button
                             onClick={() => goToPage(totalPages)}
                             disabled={currentPage === totalPages}
-                            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
                         >
                             Last
                         </Button>
