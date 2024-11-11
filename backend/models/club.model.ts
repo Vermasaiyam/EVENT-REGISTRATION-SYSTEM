@@ -5,6 +5,9 @@ export interface IClub {
     clubName: string;
     eventTypes: string[];
     coreTeam: string[];
+    instaHandle: string;
+    linkedinHandle: string;
+    xHandle: string;
     imageUrl: string;
     events: mongoose.Schema.Types.ObjectId[]
 }
@@ -25,6 +28,18 @@ const clubSchema = new mongoose.Schema<IClubDocument>({
     },
     eventTypes: [{ type: String, required: true }],
     coreTeam: [{ type: String, required: true }],
+    instaHandle: {
+        type: String,
+        default: "",
+    },
+    linkedinHandle: {
+        type: String,
+        default: "",
+    },
+    xHandle: {
+        type: String,
+        default: "",
+    },
     events: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
     imageUrl: {
         type: String,
