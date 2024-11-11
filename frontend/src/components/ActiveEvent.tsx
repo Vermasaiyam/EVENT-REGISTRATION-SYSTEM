@@ -9,8 +9,8 @@ interface ActiveEventProps {
 }
 
 const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
-    const eventsPerPage = 6;
     const [currentPage, setCurrentPage] = useState(1);
+    const [eventsPerPage, setEventsPerPage] = useState(6);
     const totalPages = Math.ceil(events.length / eventsPerPage);
 
     const startIndex = (currentPage - 1) * eventsPerPage;
@@ -34,9 +34,32 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
     const handleFirst = () => setCurrentPage(1);
     const handleLast = () => setCurrentPage(totalPages);
 
+    const handleEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setEventsPerPage(Number(event.target.value));
+        setCurrentPage(1)
+    };
+
     return (
         <div className="my-4 w-full">
             <h1 className="text-2xl md:text-2xl font-semibold mb-6 mx-2">Active Events</h1>
+            
+            {/* Entries per page selector */}
+            <div className="flex items-center justify-end mb-4">
+                <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                <select
+                    id="entriesPerPage"
+                    value={eventsPerPage}
+                    onChange={handleEntriesChange}
+                    className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
+                >
+                    {[2, 3, 4, 5, 6, 7, 8].map((number) => (
+                        <option key={number} value={number}>
+                            {number}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-4">
                 {currentEvents?.map((event) => (
                     <div key={event._id}>
@@ -98,66 +121,56 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                 ))}
             </div>
 
-            {
-                (events.length !== 0) && (
-                    <div className="flex items-center justify-center mt-4">
-                        <div className="flex items-center space-x-2">
-                            {/* First Button */}
+            {/* Pagination controls */}
+            {events.length !== 0 && (
+                <div className="flex items-center justify-center mt-4">
+                    <div className="flex items-center space-x-2">
+                        <button
+                            onClick={handleFirst}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            First
+                        </button>
+                        <button
+                            onClick={handlePrev}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Previous
+                        </button>
+                        {Array.from({ length: totalPages }, (_, index) => (
                             <button
-                                onClick={handleFirst}
-                                disabled={currentPage === 1}
-                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                                key={index + 1}
+                                onClick={() => setCurrentPage(index + 1)}
+                                className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
                             >
-                                First
+                                {index + 1}
                             </button>
-
-                            {/* Previous Button */}
-                            <button
-                                onClick={handlePrev}
-                                disabled={currentPage === 1}
-                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                            >
-                                Previous
-                            </button>
-
-                            {/* Page Numbers */}
-                            {Array.from({ length: totalPages }, (_, index) => (
-                                <button
-                                    key={index + 1}
-                                    onClick={() => setCurrentPage(index + 1)}
-                                    className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
-                                >
-                                    {index + 1}
-                                </button>
-                            ))}
-
-                            {/* Next Button */}
-                            <button
-                                onClick={handleNext}
-                                disabled={currentPage === totalPages}
-                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                            >
-                                Next
-                            </button>
-
-                            {/* Last Button */}
-                            <button
-                                onClick={handleLast}
-                                disabled={currentPage === totalPages}
-                                className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
-                            >
-                                Last
-                            </button>
-                        </div>
+                        ))}
+                        <button
+                            onClick={handleNext}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Next
+                        </button>
+                        <button
+                            onClick={handleLast}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300"
+                        >
+                            Last
+                        </button>
                     </div>
-                )
-            }
+                </div>
+            )}
 
-            <div className="flex items-center justify-center w-full mx-auto">
-                {events.length === 0 && (
+            {events.length === 0 && (
+                <div className="flex items-center justify-center w-full mx-auto">
                     <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Active Events Found.</p>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };
