@@ -23,15 +23,14 @@ const EventPage = () => {
     useEffect(() => {
         const today = new Date();
         const registrationEndDate = new Date(event.registrationEndDate);
-        registrationEndDate.setHours(23, 59, 59, 999); // Set to 11:59 PM
-
-        // Set active if the current date and time are before the end date and time
+        registrationEndDate.setHours(23, 59, 59, 999); 
+        
         setActive(registrationEndDate >= today);
     }, [event.registrationEndDate]);
 
     const calculateTimeLeft = () => {
         const endDate = new Date(event.registrationEndDate);
-        endDate.setHours(23, 59, 59, 999); // Set end date to 11:59 PM of that day
+        endDate.setHours(23, 59, 59, 999);
 
         const diff = endDate.getTime() - new Date().getTime();
         if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
@@ -48,8 +47,8 @@ const EventPage = () => {
         const timer = setInterval(() => {
             const newTimeLeft = calculateTimeLeft();
             setTimeLeft(newTimeLeft);
-            setPrevTimeLeft(timeLeft); // Keep track of previous time
-        }, 1000); // Update every second
+            setPrevTimeLeft(timeLeft);
+        }, 1000);
 
         return () => clearInterval(timer);
     }, [event.registrationEndDate, timeLeft]);
@@ -81,8 +80,8 @@ const EventPage = () => {
                 <div className="relative w-full h-32 md:h-64 lg:h-72 overflow-hidden rounded-lg shadow-lg">
                     <img
                         src={event.image}
-                        alt="Event Cover Image"
-                        className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
+                        alt={event.name}
+                        className="object-contain w-full h-full transition-transform duration-300 hover:scale-110"
                     />
                     <div className="absolute top-3 right-3 bg-white rounded-full p-1 text-sm px-2 text-gray-600 shadow">
                         {event.mode}

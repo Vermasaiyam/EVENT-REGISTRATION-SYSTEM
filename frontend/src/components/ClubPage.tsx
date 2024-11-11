@@ -54,7 +54,7 @@ const ClubPage = () => {
                 <div className="relative w-full h-32 md:h-64 lg:h-72 ">
                     <img
                         src={singleClub?.imageUrl || "Loading..."}
-                        alt="Club Cover Image"
+                        alt={singleClub?.clubName}
                         className="object-contain w-full h-full rounded-lg shadow-lg"
                     />
                 </div>
