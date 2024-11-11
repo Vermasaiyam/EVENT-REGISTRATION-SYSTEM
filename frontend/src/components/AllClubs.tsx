@@ -12,7 +12,8 @@ const AllClubs = () => {
     const { loading, allClubs, fetchAllClubs } = useClubStore();
 
     const [currentPage, setCurrentPage] = useState(1);
-    const clubsPerPage = 6;
+    const [clubsPerPage, setClubsPerPage] = useState(6);
+
     const totalPages = Math.ceil((allClubs?.length || 0) / clubsPerPage);
 
     useEffect(() => {
@@ -33,8 +34,32 @@ const AllClubs = () => {
     const handleFirst = () => setCurrentPage(1);
     const handleLast = () => setCurrentPage(totalPages);
 
+    const handleEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setClubsPerPage(Number(event.target.value));
+        setCurrentPage(1)
+    };
+
     return (
         <div className="my-6 mx-4 lg:mx-12 md:mx-6 md:my-10">
+            {
+                allClubs?.length !== 0 && (
+                    <div className="flex items-center justify-end mb-4">
+                        <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                        <select
+                            id="entriesPerPage"
+                            value={clubsPerPage}
+                            onChange={handleEntriesChange}
+                            className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
+                        >
+                            {[2, 3, 4, 5, 6, 7, 8].map((number) => (
+                                <option key={number} value={number}>
+                                    {number}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )
+            }
             <div className="grid lg:grid-cols-4 md:grid-cols-3 gap-5">
                 {loading ? (
                     <SearchPageSkeleton />

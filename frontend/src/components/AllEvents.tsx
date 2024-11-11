@@ -56,7 +56,6 @@ const AllEvents = () => {
 
     useEffect(() => {
         fetchAllEvents();
-        // console.log("all events", allEvents);
     }, []);
 
     useEffect(() => {
