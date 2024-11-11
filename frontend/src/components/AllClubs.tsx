@@ -112,7 +112,7 @@ const AllClubs = () => {
             {
                 allClubs?.length !== 0 && (
                     <div className="flex items-center justify-center mt-6">
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 overflow-y-scroll ml-2">
                             {/* First Button */}
                             <button
                                 onClick={handleFirst}
