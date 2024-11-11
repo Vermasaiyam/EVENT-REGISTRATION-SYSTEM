@@ -14,14 +14,14 @@ const AllEvents = () => {
     const [activeEvents, setActiveEvents] = useState<EventItem[]>([]);
     const [pastEvents, setPastEvents] = useState<EventItem[]>([]);
 
-    const eventsPerPage = 6;
+    const [activeEventsPerPage, setActiveEventsPerPage] = useState(6);
 
     // for active evnts
     const [currentActivePage, setCurrentActivePage] = useState(1);
-    const totalActivePages = Math.ceil(activeEvents.length / eventsPerPage);
+    const totalActivePages = Math.ceil(activeEvents.length / activeEventsPerPage);
 
-    const startActiveIndex = (currentActivePage - 1) * eventsPerPage;
-    const currentActiveEvents = activeEvents.slice(startActiveIndex, startActiveIndex + eventsPerPage);
+    const startActiveIndex = (currentActivePage - 1) * activeEventsPerPage;
+    const currentActiveEvents = activeEvents.slice(startActiveIndex, startActiveIndex + activeEventsPerPage);
 
 
     const handleActiveNext = () => {
@@ -35,24 +35,37 @@ const AllEvents = () => {
     const handleActiveFirst = () => setCurrentActivePage(1);
     const handleActiveLast = () => setCurrentActivePage(totalActivePages);
 
-    // for past events
-    const [currentPastPage, setCurrentPastPage] = useState(1);
-    const totalPastPages = Math.ceil(pastEvents.length / eventsPerPage);
+    const handleActiveEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setActiveEventsPerPage(Number(event.target.value));
+        setCurrentActivePage(1);
+    };
 
-    const startPastIndex = (currentActivePage - 1) * eventsPerPage;
-    const currentPastEvents = pastEvents.slice(startPastIndex, startPastIndex + eventsPerPage);
+    // for past events
+
+    const [pastEventsPerPage, setPastEventsPerPage] = useState(6);
+    
+    const [currentPastPage, setCurrentPastPage] = useState(1);
+    const totalPastPages = Math.ceil(pastEvents.length / pastEventsPerPage);
+
+    const startPastIndex = (currentPastPage - 1) * pastEventsPerPage;
+    const currentPastEvents = pastEvents.slice(startPastIndex, startPastIndex + pastEventsPerPage);
 
 
     const handlePastNext = () => {
-        if (currentActivePage < totalActivePages) setCurrentPastPage(currentActivePage + 1);
+        if (currentPastPage < totalPastPages) setCurrentPastPage(currentPastPage + 1);
     };
 
     const handlePastPrev = () => {
-        if (currentActivePage > 1) setCurrentPastPage(currentActivePage - 1);
+        if (currentPastPage > 1) setCurrentPastPage(currentPastPage - 1);
     };
 
     const handlePastFirst = () => setCurrentPastPage(1);
-    const handlePastLast = () => setCurrentPastPage(totalActivePages);
+    const handlePastLast = () => setCurrentPastPage(totalPastPages);
+
+    const handlePastEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setPastEventsPerPage(Number(event.target.value));
+        setCurrentPastPage(1);
+    };
 
     useEffect(() => {
         fetchAllEvents();
@@ -89,8 +102,27 @@ const AllEvents = () => {
 
     return (
         <div className="my-10 mx-4">
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col w-full">
                 <h1 className="text-2xl md:text-3xl font-semibold mx-16">Active Events</h1>
+                {
+                    activeEvents.length !== 0 && (
+                        <div className="flex items-center mx-4 justify-end mb-4">
+                            <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                            <select
+                                id="entriesPerPage"
+                                value={activeEventsPerPage}
+                                onChange={handleActiveEntriesChange}
+                                className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
+                            >
+                                {[2, 3, 4, 5, 6, 7, 8].map((number) => (
+                                    <option key={number} value={number}>
+                                        {number}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )
+                }
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 md:gap-8 gap-8 md:mx-12 md:my-10 my-6 mx-6">
                     {
                         loading ? (
@@ -218,8 +250,27 @@ const AllEvents = () => {
 
 
             </div>
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col w-full">
                 <h1 className="text-2xl md:text-3xl font-semibold mx-16">Past Events</h1>
+                {
+                    pastEvents.length !== 0 && (
+                        <div className="flex items-center mx-4 justify-end mb-4">
+                            <label htmlFor="entriesPerPage" className="mr-2 text-gray-700 dark:text-gray-400">Number of entries:</label>
+                            <select
+                                id="pastEntriesPerPage"
+                                value={pastEventsPerPage}
+                                onChange={handlePastEntriesChange}
+                                className="border border-gray-300 rounded-md p-1 dark:bg-gray-800 dark:text-white"
+                            >
+                                {[2, 3, 4, 5, 6, 7, 8].map((number) => (
+                                    <option key={number} value={number}>
+                                        {number}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    )
+                }
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 md:gap-8 gap-8 md:mx-12 md:my-10 my-6 mx-6">
                     {
                         loading ? (
