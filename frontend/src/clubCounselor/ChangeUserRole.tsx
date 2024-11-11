@@ -12,6 +12,7 @@ import { useUserStore } from '@/store/useUserStore';
 interface ChangeUserRoleProps {
     fullname: string;
     email: string;
+    adminCount: number;
     clubMember: boolean;
     clubHead: boolean;
     clubName: string | undefined;
@@ -22,6 +23,7 @@ interface ChangeUserRoleProps {
 const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
     fullname,
     email,
+    adminCount,
     clubMember,
     clubHead,
     clubName,
@@ -79,7 +81,12 @@ const ChangeUserRole: React.FC<ChangeUserRoleProps> = ({
                             <SelectValue placeholder="Club Head" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="yes">Yes</SelectItem>
+                            <SelectItem
+                                value="yes"
+                                disabled={adminCount === 1 && userClubHeadRole === "no"}
+                            >
+                                Yes
+                            </SelectItem>
                             <SelectItem value="no">No</SelectItem>
                         </SelectContent>
                     </Select>

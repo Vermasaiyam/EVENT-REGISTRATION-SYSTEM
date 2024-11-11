@@ -30,6 +30,7 @@ const AllClubMembers = () => {
         _id: ""
     });
     const [myClubUsers, setMyClubUsers] = useState<any[]>([]);
+    const [adminCount, setAdminCount] = useState(0);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -49,6 +50,7 @@ const AllClubMembers = () => {
     useEffect(() => {
         if (allUsers) {
             setMyClubUsers(allUsers.filter(u => u.membersClubName === user?.counselorClubName));
+            setAdminCount(allUsers.filter(u => ((u.membersClubName === user?.counselorClubName) && u.admin)).length);
         }
     }, [allUsers]);
 
@@ -187,6 +189,7 @@ const AllClubMembers = () => {
                     onClose={() => setOpenUpdateRole(false)}
                     fullname={updateUserDetails.fullname}
                     email={updateUserDetails.email}
+                    adminCount={adminCount}
                     clubMember={updateUserDetails.clubMember && updateUserDetails?.membersClubName === user?.counselorClubName}
                     clubHead={(updateUserDetails?.admin && updateUserDetails?.membersClubName === user?.counselorClubName)}
                     clubName={user?.counselorClubName}

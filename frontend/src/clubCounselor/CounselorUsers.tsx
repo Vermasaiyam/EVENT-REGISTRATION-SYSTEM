@@ -34,6 +34,7 @@ const CounselorUsers = () => {
   const [loading, setLoading] = useState(true);
 
   const { allUsers, fetchAllUsers } = useUserStore();
+  const [adminCount, setAdminCount] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
@@ -45,6 +46,12 @@ const CounselorUsers = () => {
     };
     loadData();
   }, [fetchAllUsers]);
+
+  useEffect(() => {
+    if (allUsers) {
+        setAdminCount(allUsers.filter(u => ((u.membersClubName === user?.counselorClubName) && u.admin)).length);
+    }
+}, [allUsers]);
 
   const totalPages = Math.ceil((allUsers?.length || 0) / entriesPerPage);
 
@@ -191,6 +198,7 @@ const CounselorUsers = () => {
           onClose={() => setOpenUpdateRole(false)}
           fullname={updateUserDetails.fullname}
           email={updateUserDetails.email}
+          adminCount={adminCount}
           clubMember={updateUserDetails.clubMember && updateUserDetails?.membersClubName === user?.counselorClubName}
           clubHead={(updateUserDetails?.admin && updateUserDetails?.membersClubName === user?.counselorClubName)}
           clubName={user?.counselorClubName}
