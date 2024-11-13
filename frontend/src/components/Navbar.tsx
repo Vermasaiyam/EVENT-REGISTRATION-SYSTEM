@@ -1,5 +1,5 @@
 // import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
     Menubar,
     MenubarContent,
@@ -36,6 +36,9 @@ import { useUserStore } from "@/store/useUserStore";
 const Navbar = () => {
     const { user, logout } = useUserStore();
     // const admin: boolean = true;
+    const location = useLocation();
+
+    const isActive = (path:any) => location.pathname === path ? "text-hoverGreen" : "";
 
     const { setTheme } = useThemeStore();
 
@@ -49,9 +52,10 @@ const Navbar = () => {
                 </Link>
 
                 <div className="hidden lg:flex space-x-6 items-center">
-                    <Link to="/" className="hover:text-hoverGreen font-medium">Home</Link>
-                    <Link to="/clubs" className="hover:text-hoverGreen  font-medium">Clubs</Link>
-                    <Link to="/events" className="hover:text-hoverGreen  font-medium">Events</Link>
+                    <Link to="/" className={`hover:text-hoverGreen font-medium ${isActive("/")}`}>Home</Link>
+                    <Link to="/clubs" className={`hover:text-hoverGreen font-medium ${isActive("/clubs")}`}>Clubs</Link>
+                    <Link to="/events" className={`hover:text-hoverGreen font-medium ${isActive("/events")}`}>Events</Link>
+
 
                     {(user?.admin || user?.clubCounselor || user?.head || user?.clubMember) && (
                         <Menubar>
