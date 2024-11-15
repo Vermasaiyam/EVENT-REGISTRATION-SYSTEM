@@ -12,6 +12,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import ChangeUserRole from "./ChangeUserRole";
+import { Input } from "@/components/ui/input";
 
 const AllAdmins = () => {
     const [openUpdateRole, setOpenUpdateRole] = useState(false);
@@ -30,6 +31,7 @@ const AllAdmins = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [entriesPerPage, setEntriesPerPage] = useState(10);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const { allUsers, fetchAllUsers } = useUserStore();
     const { allClubs, fetchAllClubs } = useClubStore();
@@ -51,13 +53,28 @@ const AllAdmins = () => {
         }
     }, [allUsers]);
 
-    // Get club name for a specific user
+    // Get club name
     const getClubName = (userId: string) => {
         const club = allClubs?.find(club => club.user.includes(userId));
         return club ? club.clubName : "No Club Assigned";
     };
 
-    // Render skeleton rows during loading
+    // Search functionality
+    const filteredUsers = adminUsers.filter((user) => {
+        const clubName = getClubName(user._id);
+        const searchLower = searchTerm.toLowerCase();
+        return (
+            user.fullname.toLowerCase().includes(searchLower) ||
+            user.email.toLowerCase().includes(searchLower) ||
+            user.contact?.toString().includes(searchLower) ||
+            user.addmission_no.toLowerCase().includes(searchLower) ||
+            user.branch.toLowerCase().includes(searchLower) ||
+            user.current_year?.toString().includes(searchLower) ||
+            clubName.toLowerCase().includes(searchLower)
+        );
+    });
+
+
     const renderSkeletonRows = () => {
         return Array.from({ length: entriesPerPage }).map((_, index) => (
             <TableRow key={index} className="animate-pulse dark:bg-black bg-white">
@@ -78,24 +95,24 @@ const AllAdmins = () => {
     const goToPreviousPage = () => goToPage(currentPage - 1);
 
     // Get paginated users
-    const paginatedUsers = adminUsers.slice(
+    const paginatedUsers = filteredUsers.slice(
         (currentPage - 1) * entriesPerPage,
         currentPage * entriesPerPage
     );
 
     return (
         <div className="md:mt-4 mt-2">
-            {/* Entries per page selector */}
-            <div className="flex justify-end items-center mb-4 mx-2">
-                <label className="text-sm">
+
+            <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 mx-2 space-y-2 md:space-y-0">
+                <label className="text-sm flex items-center">
                     Show
                     <select
                         value={entriesPerPage}
                         onChange={(e) => {
                             setEntriesPerPage(Number(e.target.value));
-                            setCurrentPage(1); // Reset to first page on changing entries per page
+                            setCurrentPage(1);
                         }}
-                        className="mx-2 p-1 border rounded dark:bg-gray-600"
+                        className="mx-2 p-1 border rounded dark:bg-gray-600 w-20 md:w-auto"
                     >
                         {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((num) => (
                             <option key={num} value={num}>{num}</option>
@@ -103,9 +120,16 @@ const AllAdmins = () => {
                     </select>
                     entries
                 </label>
+
+                <Input
+                    type="text"
+                    placeholder="Search by name, email, admission no, contact, branch, or club name"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none transition ease-in-out dark:bg-gray-600 dark:text-white w-full md:w-1/3"
+                />
             </div>
 
-            {/* Table displaying admin users */}
             <Table className="lg:text-base md:text-sm text-xs">
                 <TableHeader>
                     <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
@@ -114,7 +138,7 @@ const AllAdmins = () => {
                         <TableHead className="dark:text-black font-bold text-white">Club Head</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
-                        <TableHead className="dark:text-black font-bold text-white">Addmission Number</TableHead>
+                        <TableHead className="dark:text-black font-bold text-white">Admission Number</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Year</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
@@ -154,12 +178,12 @@ const AllAdmins = () => {
             </Table>
 
             {
-                adminUsers.length === 0 && (
+                filteredUsers.length === 0 && (
                     <p className="w-full flex items-center justify-center my-8">No Club Heads found.</p>
                 )
             }
 
-            {/* Pagination controls */}
+            {/* Pagination Controls */}
             <div className="flex overflow-y-scroll justify-center my-4 space-x-2">
                 <button onClick={() => goToPage(1)} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300">
                     First
@@ -184,7 +208,6 @@ const AllAdmins = () => {
                 </button>
             </div>
 
-            {/* Modal for updating user role */}
             {openUpdateRole && (
                 <ChangeUserRole
                     onClose={() => setOpenUpdateRole(false)}
