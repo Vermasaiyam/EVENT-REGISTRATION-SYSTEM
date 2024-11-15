@@ -38,7 +38,7 @@ const Navbar = () => {
     // const admin: boolean = true;
     const location = useLocation();
 
-    const isActive = (path:any) => location.pathname === path ? "text-hoverGreen" : "";
+    const isActive = (path:any) => location.pathname === path ? "text-hoverGreen dark:text-green" : "";
 
     const { setTheme } = useThemeStore();
 
