@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import ChangeUserRole from "./ChangeUserRole";
 import { useClubStore } from "@/store/useClubStore";
+import { Input } from "@/components/ui/input";
 
 const AllUsers = () => {
   const [openUpdateRole, setOpenUpdateRole] = useState(false);
@@ -29,6 +30,7 @@ const AllUsers = () => {
   });
 
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { allUsers, fetchAllUsers } = useUserStore();
   const { allClubs, fetchAllClubs } = useClubStore();
@@ -51,9 +53,9 @@ const AllUsers = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleEntriesChange = (event: any) => {
     setEntriesPerPage(parseInt(event.target.value, 10));
-    setCurrentPage(1); // Reset to first page when entries per page change
+    setCurrentPage(1);
   };
 
   const renderSkeletonRows = () => {
@@ -68,20 +70,33 @@ const AllUsers = () => {
     ));
   };
 
-  const paginatedUsers = (allUsers || []).slice(
+
+  const filteredUsers = (allUsers || []).filter((user) => {
+    const searchLower = searchTerm.toLowerCase();
+    return (
+      user.fullname?.toLowerCase().includes(searchLower) ||
+      user.email?.toLowerCase().includes(searchLower) ||
+      user.contact?.toString().includes(searchLower) ||
+      user.addmission_no?.toLowerCase().includes(searchLower) ||
+      user.branch?.toLowerCase().includes(searchLower) ||
+      user.current_year?.toString().includes(searchLower)
+    );
+  });
+
+  const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
 
   return (
     <div className='md:mt-4 mt-2'>
-      <div className="flex justify-end items-center mb-4 mx-2">
-        <label className="text-sm">
+      <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 mx-2 space-y-2 md:space-y-0">
+        <label className="text-sm flex items-center">
           Show
           <select
             value={entriesPerPage}
             onChange={handleEntriesChange}
-            className="mx-2 p-1 border rounded dark:bg-gray-600"
+            className="mx-2 p-1 border rounded dark:bg-gray-600 w-20 md:w-auto"
           >
             {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((num) => (
               <option key={num} value={num}>{num}</option>
@@ -89,6 +104,14 @@ const AllUsers = () => {
           </select>
           entries
         </label>
+
+        <Input
+          type="text"
+          placeholder="Search by name, email, admission no, contact, branch, or year"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none transition ease-in-out dark:bg-gray-600 dark:text-white w-full md:w-1/3"
+        />
       </div>
 
       <Table>
@@ -139,11 +162,9 @@ const AllUsers = () => {
         </TableBody>
       </Table>
 
-      {
-        allUsers?.length === 0 && (
-          <p className="w-full flex items-center justify-center my-8">No Users found.</p>
-        )
-      }
+      {filteredUsers?.length === 0 && (
+        <p className="w-full flex items-center justify-center my-8">No Users found.</p>
+      )}
 
       <div className="flex overflow-y-scroll justify-center my-4 space-x-2">
         <button
