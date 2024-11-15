@@ -12,6 +12,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import ChangeUserRole from "./ChangeUserRole";
+import { Input } from "@/components/ui/input";
 
 const AllClubCounselors = () => {
     const [openUpdateRole, setOpenUpdateRole] = useState(false);
@@ -30,6 +31,7 @@ const AllClubCounselors = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [entriesPerPage, setEntriesPerPage] = useState(10);
+    const [searchQuery, setSearchQuery] = useState("");
 
     const { allUsers, fetchAllUsers } = useUserStore();
     const { allClubs, fetchAllClubs } = useClubStore();
@@ -51,7 +53,19 @@ const AllClubCounselors = () => {
         }
     }, [allUsers]);
 
+    // Search functionality
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value.toLowerCase());
+    };
 
+    const filteredUsers = clubCounselorsUsers.filter((user) => {
+        return (
+            user.fullname.toLowerCase().includes(searchQuery) ||
+            user.counselorClubName.toLowerCase().includes(searchQuery) ||
+            user.email.toLowerCase().includes(searchQuery) ||
+            user.contact.toString().includes(searchQuery)
+        );
+    });
 
     // Render skeleton rows during loading
     const renderSkeletonRows = () => {
@@ -74,24 +88,23 @@ const AllClubCounselors = () => {
     const goToPreviousPage = () => goToPage(currentPage - 1);
 
     // Get paginated users
-    const paginatedUsers = clubCounselorsUsers.slice(
+    const paginatedUsers = filteredUsers.slice(
         (currentPage - 1) * entriesPerPage,
         currentPage * entriesPerPage
     );
 
     return (
         <div className="md:mt-4 mt-2">
-            {/* Entries per page selector */}
-            <div className="flex justify-end items-center mb-4 mx-2">
-                <label className="text-sm">
+            <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 mx-2 space-y-2 md:space-y-0">
+                <label className="text-sm flex items-center">
                     Show
                     <select
                         value={entriesPerPage}
                         onChange={(e) => {
                             setEntriesPerPage(Number(e.target.value));
-                            setCurrentPage(1); // Reset to first page on changing entries per page
+                            setCurrentPage(1);
                         }}
-                        className="mx-2 p-1 border rounded dark:bg-gray-600"
+                        className="mx-2 p-1 border rounded dark:bg-gray-600 w-20 md:w-auto"
                     >
                         {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((num) => (
                             <option key={num} value={num}>{num}</option>
@@ -99,9 +112,17 @@ const AllClubCounselors = () => {
                     </select>
                     entries
                 </label>
+
+                <Input
+                    type="text"
+                    placeholder="Search by name, email, admission no, contact, branch, club name or year"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none transition ease-in-out dark:bg-gray-600 dark:text-white w-full md:w-1/3"
+                />
             </div>
 
-            {/* Table displaying admin users */}
+
             <Table className="lg:text-base md:text-sm text-xs">
                 <TableHeader>
                     <TableRow className="bg-black hover:bg-black dark:bg-white dark:hover:bg-white">
@@ -110,9 +131,6 @@ const AllClubCounselors = () => {
                         <TableHead className="dark:text-black font-bold text-white">Club Counselor</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Email</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Contact Number</TableHead>
-                        {/* <TableHead className="dark:text-black font-bold text-white">Addmission Number</TableHead>
-                        <TableHead className="dark:text-black font-bold text-white">Branch</TableHead>
-                        <TableHead className="dark:text-black font-bold text-white">Year</TableHead> */}
                         <TableHead className="dark:text-black font-bold text-white">Created Date</TableHead>
                         <TableHead className="dark:text-black font-bold text-white">Edit</TableHead>
                     </TableRow>
@@ -128,9 +146,6 @@ const AllClubCounselors = () => {
                                 <TableCell>{el?.fullname}</TableCell>
                                 <TableCell>{el?.email}</TableCell>
                                 <TableCell>{el?.contact}</TableCell>
-                                {/* <TableCell>{el?.addmission_no === "Addmission Number" ? "-" : el.addmission_no}</TableCell>
-                                <TableCell>{el?.branch === "Branch" ? "-" : el.branch}</TableCell>
-                                <TableCell>{el?.current_year ? el.current_year : '-'}</TableCell> */}
                                 <TableCell>{moment(el?.createdAt).format("LL")}</TableCell>
                                 <TableCell>
                                     <button
@@ -148,11 +163,11 @@ const AllClubCounselors = () => {
                     )}
                 </TableBody>
             </Table>
-            {
-                clubCounselorsUsers.length === 0 && (
-                    <p className="w-full flex items-center justify-center my-8">No Club Counselors found.</p>
-                )
-            }
+
+            {/* No users message */}
+            {filteredUsers.length === 0 && (
+                <p className="w-full flex items-center justify-center my-8">No Club Counselors found.</p>
+            )}
 
             {/* Pagination controls */}
             <div className="flex overflow-y-scroll justify-center my-4 space-x-2">
