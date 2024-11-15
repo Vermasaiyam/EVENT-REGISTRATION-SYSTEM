@@ -185,13 +185,13 @@ const AllClubMembers = () => {
                 <button onClick={goToPreviousPage} disabled={currentPage === 1} className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300">
                     Previous
                 </button>
-                {Array.from({ length: totalPages }).map((_, i) => (
+                {Array.from({ length: totalPages }).map((_, index) => (
                     <button
-                        key={i}
-                        onClick={() => goToPage(i + 1)}
-                        className={`px-4 py-2 rounded-md text-sm ${currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-gray-300`}
+                        key={index}
+                        onClick={() => goToPage(index + 1)}
+                        className={`px-4 py-2 text-sm rounded-md ${currentPage === index + 1 ? 'bg-green text-white' : 'bg-gray-200 text-gray-700'} hover:bg-hoverGreen`}
                     >
-                        {i + 1}
+                        {index + 1}
                     </button>
                 ))}
                 <button onClick={goToNextPage} disabled={currentPage === totalPages} className="px-4 py-2 bg-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-300 disabled:bg-gray-300">
