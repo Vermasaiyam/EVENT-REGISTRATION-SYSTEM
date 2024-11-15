@@ -11,9 +11,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import ChangeUserRole from "./ChangeUserRole";
+import { Input } from "@/components/ui/input";
 
 const CounselorUsers = () => {
-
   const { user } = useUserStore();
 
   const [openUpdateRole, setOpenUpdateRole] = useState(false);
@@ -32,12 +32,12 @@ const CounselorUsers = () => {
   });
 
   const [loading, setLoading] = useState(true);
-
   const { allUsers, fetchAllUsers } = useUserStore();
   const [adminCount, setAdminCount] = useState(0);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const [filter, setFilter] = useState(""); // State for the filter input
 
   useEffect(() => {
     const loadData = async () => {
@@ -49,9 +49,9 @@ const CounselorUsers = () => {
 
   useEffect(() => {
     if (allUsers) {
-        setAdminCount(allUsers.filter(u => ((u.membersClubName === user?.counselorClubName) && u.admin)).length);
+      setAdminCount(allUsers.filter(u => ((u.membersClubName === user?.counselorClubName) && u.admin)).length);
     }
-}, [allUsers]);
+  }, [allUsers]);
 
   const totalPages = Math.ceil((allUsers?.length || 0) / entriesPerPage);
 
@@ -76,20 +76,32 @@ const CounselorUsers = () => {
     ));
   };
 
-  const paginatedUsers = (allUsers || []).slice(
+  const filteredUsers = (allUsers || []).filter(user => {
+    const lowerCaseFilter = filter.toLowerCase();
+    return (
+      user?.fullname.toLowerCase().includes(lowerCaseFilter) ||
+      user?.email.toLowerCase().includes(lowerCaseFilter) ||
+      (user?.contact?.toString().includes(lowerCaseFilter)) ||
+      (user?.addmission_no?.toLowerCase().includes(lowerCaseFilter)) ||
+      (user?.branch?.toLowerCase().includes(lowerCaseFilter)) ||
+      (user?.current_year?.toString().includes(lowerCaseFilter))
+    );
+  });
+
+  const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
 
   return (
     <div className='md:mt-4 mt-2'>
-      <div className="flex justify-end items-center mb-4 mx-2">
-        <label className="text-sm">
+      <div className="flex flex-col md:flex-row md:justify-between items-center mb-4 mx-2 space-y-2 md:space-y-0">
+        <label className="text-sm flex items-center">
           Show
           <select
             value={entriesPerPage}
             onChange={handleEntriesChange}
-            className="mx-2 p-1 border rounded dark:bg-gray-600"
+            className="mx-2 p-1 border rounded dark:bg-gray-600 w-20 md:w-auto"
           >
             {[5, 10, 15, 20, 25, 30, 35, 40, 45, 50].map((num) => (
               <option key={num} value={num}>{num}</option>
@@ -97,6 +109,13 @@ const CounselorUsers = () => {
           </select>
           entries
         </label>
+        <Input
+          type="text"
+          placeholder="Filter by name, email, contact, admission no, branch, year"
+          className="p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-green-500 focus:outline-none transition ease-in-out dark:bg-gray-600 dark:text-white w-full md:w-1/3"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
       </div>
 
       <Table>
@@ -148,7 +167,7 @@ const CounselorUsers = () => {
       </Table>
 
       {
-        allUsers?.length === 0 && (
+        filteredUsers.length === 0 && (
           <p className="w-full flex items-center justify-center my-8">No Users found.</p>
         )
       }
