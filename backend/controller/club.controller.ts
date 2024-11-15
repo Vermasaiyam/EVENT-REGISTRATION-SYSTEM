@@ -4,6 +4,7 @@ import { Club } from "../models/club.model";
 import { Multer } from "multer";
 import uploadImageOnCloudinary from "../utils/uploadImage";
 import { User } from "../models/user.model";
+import { sendClubCreationEmail } from "../utils/sendEmail";
 
 export const createClub = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -79,6 +80,21 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             user.membersClubName = clubName;
             await user.save();
         }
+
+        const message = `Congratulations on Creating Your Club!`;
+
+        await sendClubCreationEmail({
+            email: user?.email,
+            subject: `Congratulations on Creating Your Club!`,
+            message,
+            clubName: newClub.clubName,
+            eventTypes: newClub.eventTypes,
+            coreTeam: newClub.coreTeam,
+            instaHandle: newClub.instaHandle,
+            linkedinHandle: newClub.linkedinHandle,
+            xHandle: newClub.xHandle,
+            clubEmail: newClub.email,
+        })
 
         // Return success response
         res.status(201).json({

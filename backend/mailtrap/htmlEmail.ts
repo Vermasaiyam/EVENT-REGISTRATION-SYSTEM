@@ -77,7 +77,7 @@ export const htmlContent: string = `
     `;
 
 export const generateWelcomeEmailHtml = (name: string) => {
-    return `
+  return `
           <html>
             <head>
               <style>
@@ -133,7 +133,7 @@ export const generateWelcomeEmailHtml = (name: string) => {
 };
 
 export const generatePasswordResetEmailHtml = (resetURL: string) => {
-    return `
+  return `
       <html>
         <head>
           <style>
@@ -196,10 +196,10 @@ export const generatePasswordResetEmailHtml = (resetURL: string) => {
         </body>
       </html>
     `;
-  };
+};
 
-  export const generateResetSuccessEmailHtml = () => {
-    return `
+export const generateResetSuccessEmailHtml = () => {
+  return `
       <html>
         <head>
           <style>
@@ -251,4 +251,87 @@ export const generatePasswordResetEmailHtml = (resetURL: string) => {
         </body>
       </html>
     `;
-  };
+};
+
+export const generateClubCreationEmailHtml = (
+  clubName: string,
+  eventTypes: string[],
+  coreTeam: string[],
+  clubEmail: string,
+  instaHandle: string,
+  linkedinHandle: string,
+  xHandle: string
+) => {
+  return `
+      <html>
+        <head>
+          <style>
+            .email-container {
+              font-family: Arial, sans-serif;
+              line-height: 1.6;
+              color: #333;
+              padding: 20px;
+              background-color: #f4f4f4;
+              border-radius: 10px;
+              max-width: 600px;
+              margin: auto;
+            }
+            .email-header {
+              background-color: #4CAF50;
+              color: white;
+              padding: 10px;
+              text-align: center;
+              border-radius: 10px 10px 0 0;
+            }
+            .email-body {
+              padding: 20px;
+              background-color: white;
+              border-radius: 0 0 10px 10px;
+            }
+            .email-footer {
+              text-align: center;
+              padding: 10px;
+              font-size: 12px;
+              color: #777;
+            }
+            .social-icons {
+              display: flex;
+              justify-content: center;
+              gap: 15px;
+              margin-top: 10px;
+            }
+            .social-icon {
+              font-size: 18px;
+              color: #333;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="email-container">
+            <div class="email-header">
+              <h1>Congratulations on Creating Your Club!</h1>
+            </div>
+            <div class="email-body">
+              <p>Hi there,</p>
+              <p>Congratulations on successfully creating the <strong>${clubName}</strong> club! We are excited to see your club grow and contribute to the community.</p>
+              <p>Here are the details of your newly created club:</p>
+              <ul>
+                <li><strong>Club Name:</strong> ${clubName}</li>
+                <li><strong>Event Types:</strong> ${eventTypes.join(", ")}</li>
+                <li><strong>Core Team:</strong> ${coreTeam.join(", ")}</li>
+                <li><strong>Email:</strong> ${clubEmail}</li>
+                <li><strong>Instagram Handle:</strong> <a href="https://instagram.com/${instaHandle}" target="_blank">${instaHandle}</a></li>
+                <li><strong>LinkedIn Handle:</strong> <a href="https://linkedin.com/in/${linkedinHandle}" target="_blank">${linkedinHandle}</a></li>
+                <li><strong>X (formerly Twitter) Handle:</strong> <a href="https://x.com/${xHandle}" target="_blank">${xHandle}</a></li>
+              </ul>
+              <p>We wish you great success in managing your club and hosting exciting events. If you need any help, don't hesitate to reach out to us!</p>
+              <p>Best Regards,<br/>ABES - EventHub Team</p>
+            </div>
+            <div class="email-footer">
+              <p>&copy; 2024 ABES - EventHub. All rights reserved.</p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+};
