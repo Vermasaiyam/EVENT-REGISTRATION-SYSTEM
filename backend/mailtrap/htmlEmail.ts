@@ -335,3 +335,86 @@ export const generateClubCreationEmailHtml = (
       </html>
     `;
 };
+
+export const generateClubEditEmailHtml = (
+  clubName: string,
+  eventTypes: string[],
+  coreTeam: string[],
+  email: string,
+  instaHandle: string,
+  linkedinHandle: string,
+  xHandle: string
+) => {
+  return `
+    <html>
+      <head>
+        <style>
+          .email-container {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: auto;
+          }
+          .email-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+          }
+          .email-body {
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 0 10px 10px;
+          }
+          .email-footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #777;
+          }
+          .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+          }
+          .social-icon {
+            font-size: 18px;
+            color: #333;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="email-container">
+          <div class="email-header">
+            <h1>Your Club Has Been Successfully Edited!</h1>
+          </div>
+          <div class="email-body">
+            <p>Hi there,</p>
+            <p>We wanted to let you know that the <strong>${clubName}</strong> club has been successfully updated!</p>
+            <p>Here are the new details of your club:</p>
+            <ul>
+              <li><strong>Club Name:</strong> ${clubName}</li>
+              <li><strong>Event Types:</strong> ${eventTypes.join(", ")}</li>
+              <li><strong>Core Team:</strong> ${coreTeam.join(", ")}</li>
+              <li><strong>Email:</strong> ${email}</li>
+              <li><strong>Instagram Handle:</strong> <a href="https://instagram.com/${instaHandle}" target="_blank">${instaHandle}</a></li>
+              <li><strong>LinkedIn Handle:</strong> <a href="https://linkedin.com/in/${linkedinHandle}" target="_blank">${linkedinHandle}</a></li>
+              <li><strong>X (formerly Twitter) Handle:</strong> <a href="https://x.com/${xHandle}" target="_blank">${xHandle}</a></li>
+            </ul>
+            <p>If you have any further updates or need any assistance, feel free to reach out to us.</p>
+            <p>Best Regards,<br/>ABES - EventHub Team</p>
+          </div>
+          <div class="email-footer">
+            <p>&copy; 2024 ABES - EventHub. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+};

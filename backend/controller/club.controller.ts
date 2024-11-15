@@ -4,7 +4,7 @@ import { Club } from "../models/club.model";
 import { Multer } from "multer";
 import uploadImageOnCloudinary from "../utils/uploadImage";
 import { User } from "../models/user.model";
-import { sendClubCreationEmail } from "../utils/sendEmail";
+import { sendClubCreationEmail, sendClubEditEmail } from "../utils/sendEmail";
 
 export const createClub = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -170,6 +170,25 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
             club.imageUrl = imageUrl;
         }
         await club.save();
+
+        const user = await User.findById(req.id);
+
+        const message = `Club details updated successfully!`;
+
+        await sendClubEditEmail({
+            email: user?.email,
+            subject: `Club details updated successfully!`,
+            message,
+            clubName: club.clubName,
+            eventTypes: club.eventTypes,
+            coreTeam: club.coreTeam,
+            instaHandle: club.instaHandle,
+            linkedinHandle: club.linkedinHandle,
+            xHandle: club.xHandle,
+            clubEmail: club.email,
+        })
+
+
         res.status(200).json({
             success: true,
             message: "Club Updated.",
