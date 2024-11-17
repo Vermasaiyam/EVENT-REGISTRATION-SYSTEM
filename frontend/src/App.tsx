@@ -24,6 +24,7 @@ import AllAdmins from "./head/AllAdmins"
 import AllClubCounselors from "./head/AllClubCounselors"
 import CounselorUsers from "./clubCounselor/CounselorUsers"
 import AllClubMembers from "./clubCounselor/AllClubMembers"
+import Loading from "./components/Loading"
 
 const ProtectedRoutes = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useUserStore();
@@ -227,14 +228,15 @@ const appRouter = createBrowserRouter([
 ])
 
 function App() {
-
+  const { checkAuthentication, isCheckingAuth } = useUserStore();
   const initializeTheme = useThemeStore((state: any) => state.initializeTheme);
   // checking auth every time when page is loaded
   useEffect(() => {
-    // checkAuthentication();
+    checkAuthentication();
     initializeTheme();
-  }, []);
+  }, [checkAuthentication]);
 
+  if (isCheckingAuth) return <Loading />
 
   return (
     <>
