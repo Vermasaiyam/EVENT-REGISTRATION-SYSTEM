@@ -130,7 +130,7 @@ const EventPage = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span className="mt-2 text-gray-700 font-semibold">Days</span>
+                                            <span className="mt-2 text-gray-700 dark:text-gray-400 font-semibold">Days</span>
                                         </div>
                                         <div className="flex flex-col items-center">
                                             <div className={`flip-card ${hasChanged("hours") ? "flip" : ""}`}>
@@ -143,7 +143,7 @@ const EventPage = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span className="mt-2 text-gray-700 font-semibold">Hours</span>
+                                            <span className="mt-2 text-gray-700 dark:text-gray-400 font-semibold">Hours</span>
                                         </div>
                                         <div className="flex flex-col items-center">
                                             <div className={`flip-card ${hasChanged("minutes") ? "flip" : ""}`}>
@@ -156,7 +156,7 @@ const EventPage = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span className="mt-2 text-gray-700 font-semibold">Minutes</span>
+                                            <span className="mt-2 text-gray-700 dark:text-gray-400 font-semibold">Minutes</span>
                                         </div>
                                         <div className="flex flex-col items-center">
                                             <div className={`flip-card ${hasChanged("seconds") ? "flip" : ""}`}>
@@ -169,7 +169,7 @@ const EventPage = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <span className="mt-2 text-gray-700 font-semibold">Seconds</span>
+                                            <span className="mt-2 text-gray-700 dark:text-gray-400 font-semibold">Seconds</span>
                                         </div>
                                     </div>
                                 ) : (
