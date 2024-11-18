@@ -100,7 +100,55 @@ const ClubPage = () => {
                             {singleClub?.events && <PastEvent events={pastEvents} />}
                         </div>
 
-                        <h1 className="font-medium text-xl">Core Team</h1>
+                        <h1 className="font-medium text-xl mt-8 mb-4">Club Counselor</h1>
+                        <div className="flex gap-4 my-2 flex-wrap">
+                            {singleClub?.user
+                                ?.filter((member: any) => member.clubCounselor)
+                                .map((counselor: any, idx: number) => (
+                                    <div
+                                        key={idx}
+                                        className="relative w-32 h-32 rounded-full overflow-hidden group"
+                                    >
+                                        <img
+                                            src={counselor.profilePicture || "/user.png"}
+                                            alt={`${counselor.fullname}'s Avatar`}
+                                            className="w-full h-full object-contain"
+                                        />
+
+                                        <div className="absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                            <span className="text-white text-sm font-semibold">
+                                                {counselor?.fullname || "Unknown"}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>
+                        <h1 className="font-medium text-xl mt-8 mb-4">Club Members</h1>
+                        <div className="flex gap-4 my-2 flex-wrap">
+                            {singleClub?.user
+                                ?.filter((member: any) => !member.clubCounselor)
+                                .map((member: any, idx: number) => (
+                                    <div
+                                        key={idx}
+                                        className="relative w-32 h-32 rounded-full overflow-hidden group"
+                                    >
+                                        <img
+                                            src={member.profilePicture || "/user.png"}
+                                            alt={`${member.fullname}'s Avatar`}
+                                            className="w-full h-full object-contain"
+                                        />
+
+                                        <div className="absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                            <span className="text-white text-sm font-semibold">
+                                                {member?.fullname || "Unknown"}{" "}
+                                                {member.admin && "(P)"}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>
+                        
+                        <h1 className="font-medium text-xl mt-8 mb-4">Core Team</h1>
                         <div className="flex gap-2 my-2 flex-wrap">
                             {singleClub?.coreTeam.map((member: string, idx: number) => (
                                 <Badge variant={"secondary"} key={idx}>
@@ -108,6 +156,7 @@ const ClubPage = () => {
                                 </Badge>
                             ))}
                         </div>
+
                         {
                             imageEventMap?.length > 0 && (
                                 <div className="">

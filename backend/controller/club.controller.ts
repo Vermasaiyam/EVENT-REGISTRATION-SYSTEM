@@ -247,7 +247,7 @@ export const getSingleClub = async (req: Request, res: Response): Promise<void> 
         const club = await Club.findById(clubId).populate({
             path: 'events',
             options: { createdAt: -1 }
-        });
+        }).populate("user");
         if (!club) {
             res.status(404).json({
                 success: false,
