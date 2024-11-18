@@ -92,29 +92,35 @@ const ClubPage = () => {
                             ))}
                         </div>
 
-                        <h2 className="font-semibold text-xl mt-8 mb-6">Connect with Us</h2>
-                        <div className="flex gap-4">
-                            {singleClub?.instaHandle && (
-                                <a href={singleClub.instaHandle} target="_blank" rel="noopener noreferrer">
-                                    <FaInstagram size={24} className="text-pink-500 hover:text-pink-700" />
-                                </a>
-                            )}
-                            {singleClub?.linkedinHandle && (
-                                <a href={singleClub.linkedinHandle} target="_blank" rel="noopener noreferrer">
-                                    <FaLinkedin size={24} className="text-blue-600 hover:text-blue-800" />
-                                </a>
-                            )}
-                            {singleClub?.xHandle && (
-                                <a href={singleClub.xHandle} target="_blank" rel="noopener noreferrer">
-                                    <FaX size={24} className="text-blue-500 hover:text-blue-700" />
-                                </a>
-                            )}
-                            {singleClub?.email && (
-                                <a href={`mailto:${singleClub.email}`} target="_blank" rel="noopener noreferrer">
-                                    <FaEnvelope size={24} className="text-gray-700 hover:text-gray-900" />
-                                </a>
-                            )}
-                        </div>
+                        {
+                            (singleClub?.instaHandle || singleClub?.linkedinHandle || singleClub?.xHandle || singleClub?.email) && (
+                                <div className="">
+                                    <h2 className="font-semibold text-xl mt-8 mb-6">Connect with Us</h2>
+                                    <div className="flex gap-4">
+                                        {singleClub?.instaHandle && (
+                                            <a href={singleClub.instaHandle} target="_blank" rel="noopener noreferrer">
+                                                <FaInstagram size={24} className="text-pink-500 hover:text-pink-700" />
+                                            </a>
+                                        )}
+                                        {singleClub?.linkedinHandle && (
+                                            <a href={singleClub.linkedinHandle} target="_blank" rel="noopener noreferrer">
+                                                <FaLinkedin size={24} className="text-blue-600 hover:text-blue-800" />
+                                            </a>
+                                        )}
+                                        {singleClub?.xHandle && (
+                                            <a href={singleClub.xHandle} target="_blank" rel="noopener noreferrer">
+                                                <FaX size={24} className="text-blue-500 hover:text-blue-700" />
+                                            </a>
+                                        )}
+                                        {singleClub?.email && (
+                                            <a href={`mailto:${singleClub.email}`} target="_blank" rel="noopener noreferrer">
+                                                <FaEnvelope size={24} className="text-gray-700 hover:text-gray-900" />
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
