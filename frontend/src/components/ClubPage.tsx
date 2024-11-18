@@ -111,7 +111,7 @@ const ClubPage = () => {
                         {
                             imageEventMap?.length > 0 && (
                                 <div className="">
-                                    <h2 className="font-semibold text-xl mb-4">Past Event Highlights</h2>
+                                    <h2 className="font-semibold text-xl mb-4">Flashback Frames</h2>
                                     <div className="carousel-container relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
                                         {imageEventMap?.length > 0 ? (
                                             <>
