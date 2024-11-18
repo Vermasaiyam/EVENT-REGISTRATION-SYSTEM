@@ -7,13 +7,23 @@ interface EventProps {
 }
 
 const EventHighlights: React.FC<EventProps> = ({ events }) => {
+    // Get the date 2 months ago
+    const twoMonthsAgo = new Date();
+    twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
 
-    const imageEventMap = events.flatMap((event) =>
-        event.images?.map((image) => ({
-            image,
-            name: event.name,
-            clubName: event.clubName,
-        })) || []
+    const filteredEvents = events.filter((event) => {
+        const eventStartDate = new Date(event.eventStartDate);
+        return eventStartDate >= twoMonthsAgo;
+    });
+
+    const imageEventMap = filteredEvents.flatMap((event) =>
+        event.images?.length ? [
+            {
+                image: event.images[0],
+                name: event.name,
+                clubName: event.clubName,
+            }
+        ] : []
     ).reverse();
 
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,9 +49,8 @@ const EventHighlights: React.FC<EventProps> = ({ events }) => {
 
     return (
         <div className="mx-2">
-
             <div className="event-highlights max-w-7xl mx-auto my-10 py-8">
-                <h2 className="text-2xl font-semibold mb-6">Event Highlights</h2>
+                <h2 className="text-2xl font-semibold mb-6">Events at a Glance</h2>
 
                 {/* Carousel Container */}
                 <div className="carousel-container relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
