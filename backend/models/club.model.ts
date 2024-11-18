@@ -4,7 +4,7 @@ export interface IClub {
     user: mongoose.Schema.Types.ObjectId[];
     clubName: string;
     eventTypes: string[];
-    coreTeam: string[];
+    // coreTeam: string[];
     instaHandle: string;
     linkedinHandle: string;
     xHandle: string;
@@ -28,7 +28,7 @@ const clubSchema = new mongoose.Schema<IClubDocument>({
         required: true
     },
     eventTypes: [{ type: String, required: true }],
-    coreTeam: [{ type: String, required: true }],
+    // coreTeam: [{ type: String, required: true }],
     instaHandle: {
         type: String,
         default: "",

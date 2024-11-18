@@ -8,7 +8,7 @@ import { sendClubCreationEmail, sendClubEditEmail } from "../utils/sendEmail";
 
 export const createClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle, email } = req.body;
+        const { clubName, eventTypes, instaHandle, linkedinHandle, xHandle, email } = req.body;
         const file = req.file;
 
         const club = await Club.findOne({ user: { $in: [req.id] } });
@@ -43,16 +43,16 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
 
         // Parse eventTypes and coreTeam with error handling
         let parsedEventTypes;
-        let parsedCoreTeam;
+        // let parsedCoreTeam;
 
         try {
             parsedEventTypes = eventTypes ? JSON.parse(eventTypes) : [];
-            parsedCoreTeam = coreTeam ? JSON.parse(coreTeam) : [];
+            // parsedCoreTeam = coreTeam ? JSON.parse(coreTeam) : [];
         } catch (parseError) {
             console.error("JSON parsing error:", parseError);
             res.status(400).json({
                 success: false,
-                message: "Invalid JSON format for eventTypes or coreTeam."
+                message: "Invalid JSON format for EventTypes."
             });
             return;
         }
@@ -65,7 +65,7 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             user: [req.id],
             clubName,
             eventTypes: parsedEventTypes,
-            coreTeam: parsedCoreTeam,
+            // coreTeam: parsedCoreTeam,
             instaHandle,
             linkedinHandle,
             xHandle,
@@ -89,7 +89,7 @@ export const createClub = async (req: Request, res: Response): Promise<void> => 
             message,
             clubName: newClub.clubName,
             eventTypes: newClub.eventTypes,
-            coreTeam: newClub.coreTeam,
+            // coreTeam: newClub.coreTeam,
             instaHandle: newClub.instaHandle,
             linkedinHandle: newClub.linkedinHandle,
             xHandle: newClub.xHandle,
@@ -137,7 +137,7 @@ export const getClub = async (req: Request, res: Response): Promise<void> => {
 
 export const updateClub = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { clubName, eventTypes, coreTeam, instaHandle, linkedinHandle, xHandle, email } = req.body;
+        const { clubName, eventTypes, instaHandle, linkedinHandle, xHandle, email } = req.body;
         const file = req.file;
         const club = await Club.findOne({ user: { $in: [req.id] } });
         if (!club) {
@@ -159,7 +159,7 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
 
         club.clubName = clubName;
         club.eventTypes = JSON.parse(eventTypes);
-        club.coreTeam = JSON.parse(coreTeam);
+        // club.coreTeam = JSON.parse(coreTeam);
         club.instaHandle = instaHandle;
         club.linkedinHandle = linkedinHandle;
         club.xHandle = xHandle;
@@ -181,7 +181,7 @@ export const updateClub = async (req: Request, res: Response): Promise<void> => 
             message,
             clubName: club.clubName,
             eventTypes: club.eventTypes,
-            coreTeam: club.coreTeam,
+            // coreTeam: club.coreTeam,
             instaHandle: club.instaHandle,
             linkedinHandle: club.linkedinHandle,
             xHandle: club.xHandle,
@@ -213,7 +213,7 @@ export const searchClub = async (req: Request, res: Response): Promise<void> => 
             query.$or = [
                 { clubName: { $regex: searchText, $options: 'i' } },
                 { eventTypes: { $regex: searchText, $options: 'i' } },
-                { coreTeam: { $regex: searchText, $options: 'i' } },
+                // { coreTeam: { $regex: searchText, $options: 'i' } },
             ]
         }
         // filter on the basis of searchQuery
@@ -221,7 +221,7 @@ export const searchClub = async (req: Request, res: Response): Promise<void> => 
             query.$or = [
                 { clubName: { $regex: searchQuery, $options: 'i' } },
                 { eventTypes: { $regex: searchQuery, $options: 'i' } },
-                { coreTeam: { $regex: searchQuery, $options: 'i' } },
+                // { coreTeam: { $regex: searchQuery, $options: 'i' } },
             ]
         }
         // console.log(query);

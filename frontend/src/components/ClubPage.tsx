@@ -107,7 +107,7 @@ const ClubPage = () => {
                                 .map((counselor: any, idx: number) => (
                                     <div
                                         key={idx}
-                                        className="relative w-32 h-32 rounded-full overflow-hidden group"
+                                        className="relative w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden group"
                                     >
                                         <img
                                             src={counselor.profilePicture || "/user.png"}
@@ -115,8 +115,8 @@ const ClubPage = () => {
                                             className="w-full h-full object-contain"
                                         />
 
-                                        <div className="absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                                            <span className="text-white text-sm font-semibold">
+                                        <div className="absolute bottom-0 left-0 w-full lg:h-1/2 h-full bg-black bg-opacity-70 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                            <span className="text-white text-xs font-semibold">
                                                 {counselor?.fullname || "Unknown"}
                                             </span>
                                         </div>
@@ -124,13 +124,13 @@ const ClubPage = () => {
                                 ))}
                         </div>
                         <h1 className="font-medium text-xl mt-8 mb-4">Club Members</h1>
-                        <div className="flex gap-4 my-2 flex-wrap">
+                        <div className="overflow-y-auto flex items-start justify-start gap-4 my-2">
                             {singleClub?.user
                                 ?.filter((member: any) => !member.clubCounselor)
                                 .map((member: any, idx: number) => (
                                     <div
                                         key={idx}
-                                        className="relative w-32 h-32 rounded-full overflow-hidden group"
+                                        className="relative w-16 h-16 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden group"
                                     >
                                         <img
                                             src={member.profilePicture || "/user.png"}
@@ -138,24 +138,24 @@ const ClubPage = () => {
                                             className="w-full h-full object-contain"
                                         />
 
-                                        <div className="absolute bottom-0 left-0 w-full h-full bg-black bg-opacity-70 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                                            <span className="text-white text-sm font-semibold">
-                                                {member?.fullname || "Unknown"}{" "}
-                                                {member.admin && "(P)"}
+                                        <div className="absolute bottom-0 left-0 w-full lg:h-1/2 h-full bg-black bg-opacity-70 flex items-center justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                                            <span className="text-white text-xs font-semibold">
+                                                {member?.fullname || "Unknown"} {member.admin && "(P)"}
                                             </span>
                                         </div>
                                     </div>
                                 ))}
                         </div>
-                        
-                        <h1 className="font-medium text-xl mt-8 mb-4">Core Team</h1>
+
+
+                        {/* <h1 className="font-medium text-xl mt-8 mb-4">Core Team</h1>
                         <div className="flex gap-2 my-2 flex-wrap">
                             {singleClub?.coreTeam.map((member: string, idx: number) => (
                                 <Badge variant={"secondary"} key={idx}>
                                     {member}
                                 </Badge>
                             ))}
-                        </div>
+                        </div> */}
 
                         {
                             imageEventMap?.length > 0 && (

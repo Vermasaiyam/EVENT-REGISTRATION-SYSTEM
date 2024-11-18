@@ -5,13 +5,12 @@ import { clubFormSchema, ClubFormSchema } from "@/schema/clubSchema";
 import { useClubStore } from "@/store/useClubStore";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-// "Hackathons", "Workshops", "KT Sessions", "Coding Competitions", "Tech Quizzes"
-// "Piyush Pandey", "Amritansh Tripathi", "Shally Agarwal"
+
 const Club = () => {
     const [input, setInput] = useState<ClubFormSchema>({
         clubName: "",
         eventTypes: [],
-        coreTeam: [],
+        // coreTeam: [],
         instaHandle: "",
         linkedinHandle: "",
         xHandle: "",
@@ -51,7 +50,7 @@ const Club = () => {
             const formData = new FormData();
             formData.append("clubName", input.clubName);
             formData.append("eventTypes", JSON.stringify(input.eventTypes));
-            formData.append("coreTeam", JSON.stringify(input.coreTeam));
+            // formData.append("coreTeam", JSON.stringify(input.coreTeam));
 
             if (input.instaHandle){
                 formData.append("instaHandle", input.instaHandle);
@@ -95,9 +94,9 @@ const Club = () => {
                     eventTypes: club.eventTypes
                     ? club.eventTypes.map((event: string) => event)
                     : [],
-                    coreTeam: club.coreTeam
-                    ? club.coreTeam.map((member: string) => member)
-                    : [],
+                    // coreTeam: club.coreTeam
+                    // ? club.coreTeam.map((member: string) => member)
+                    // : [],
                     instaHandle: club.instaHandle || "",
                     linkedinHandle: club.linkedinHandle || "",
                     xHandle: club.xHandle || "",
@@ -158,7 +157,7 @@ const Club = () => {
                                     </span>
                                 )}
                             </div>
-                            <div>
+                            {/* <div>
                                 <Label>Core Team</Label>
                                 <Input
                                     type="text"
@@ -174,7 +173,7 @@ const Club = () => {
                                         {errors.coreTeam}
                                     </span>
                                 )}
-                            </div>
+                            </div> */}
                             <div>
                                 <Label>Instagram Handle</Label>
                                 <Input
