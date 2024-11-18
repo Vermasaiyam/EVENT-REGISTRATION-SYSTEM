@@ -141,7 +141,7 @@ const CounselorUsers = () => {
             paginatedUsers?.map((el, index) => (
               <TableRow key={index} className="dark:bg-black dark:hover:bg-black bg-white hover:bg-white">
                 <TableCell className="font-medium">{(currentPage - 1) * entriesPerPage + index + 1}</TableCell>
-                <TableCell>{el?.fullname}</TableCell>
+                <TableCell>{el?.fullname}{" "}{(el?.admin && el?.membersClubName === user?.counselorClubName) && ("(P)")} </TableCell>
                 <TableCell>{el?.email}</TableCell>
                 <TableCell>{el?.contact}</TableCell>
                 <TableCell>{el?.addmission_no === "Addmission Number" ? "-" : el.addmission_no}</TableCell>
