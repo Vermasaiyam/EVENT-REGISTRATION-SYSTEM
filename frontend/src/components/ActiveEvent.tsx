@@ -170,11 +170,13 @@ const ActiveEvent: React.FC<ActiveEventProps> = ({ events }) => {
                 </div>
             )}
 
-            {events.length === 0 && (
-                <div className="flex items-center justify-center w-full mx-auto">
-                    <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Active Events Found.</p>
-                </div>
-            )}
+            {
+                events.length === 0 && (
+                    <div className="flex items-center justify-center w-full mx-auto">
+                        <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Active Events Found.</p>
+                    </div>
+                )
+            }
         </div>
     );
 };

@@ -43,7 +43,7 @@ const AllEvents = () => {
     // for past events
 
     const [pastEventsPerPage, setPastEventsPerPage] = useState(6);
-    
+
     const [currentPastPage, setCurrentPastPage] = useState(1);
     const totalPastPages = Math.ceil(pastEvents.length / pastEventsPerPage);
 
@@ -248,6 +248,15 @@ const AllEvents = () => {
                     )
                 }
 
+                {/* if 0 active events */}
+                {
+                    activeEvents.length === 0 && (
+                        <div className="flex items-center justify-center w-full mx-auto mb-12">
+                            <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Active Events Found.</p>
+                        </div>
+                    )
+                }
+
 
             </div>
             <div className="flex flex-col w-full">
@@ -374,6 +383,15 @@ const AllEvents = () => {
                                     Last
                                 </button>
                             </div>
+                        </div>
+                    )
+                }
+
+                {/* if 0 past events */}
+                {
+                    pastEvents.length === 0 && (
+                        <div className="flex items-center justify-center w-full mx-auto mb-12">
+                            <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Past Events Found.</p>
                         </div>
                     )
                 }

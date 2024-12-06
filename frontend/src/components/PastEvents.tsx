@@ -159,9 +159,11 @@ const PastEvent: React.FC<PastEventProps> = ({ events }) => {
 
 
             <div className="flex items-center justify-center w-full mx-auto">
-                {events.length === 0 && (
-                    <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Past Events Found.</p>
-                )}
+                {
+                    events.length === 0 && (
+                        <p className="text-sm text-gray-800 dark:text-gray-400 text-center">No Past Events Found.</p>
+                    )
+                }
             </div>
 
 
