@@ -48,14 +48,14 @@ const EventHighlights: React.FC<EventProps> = ({ events }) => {
     const currentImageData = imageEventMap[currentIndex];
 
     return (
-        <div className="mx-2">
-            <div className="event-highlights max-w-7xl mx-auto my-10 py-8">
-                <h2 className="text-2xl font-semibold mb-6">Events at a Glance</h2>
+        <>
+            {imageEventMap?.length > 0 && (
+                <div className="mx-2">
+                    <div className="event-highlights max-w-7xl mx-auto my-10 py-8">
+                        <h2 className="text-2xl font-semibold mb-6">Events at a Glance</h2>
 
-                {/* Carousel Container */}
-                <div className="carousel-container relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
-                    {imageEventMap?.length > 0 ? (
-                        <>
+                        {/* Carousel Container */}
+                        <div className="carousel-container relative w-full h-80 overflow-hidden rounded-lg shadow-lg">
                             {/* Image */}
                             <div className="carousel-image-container w-full h-full">
                                 <img
@@ -98,13 +98,11 @@ const EventHighlights: React.FC<EventProps> = ({ events }) => {
                                     ></span>
                                 ))}
                             </div>
-                        </>
-                    ) : (
-                        <p className="text-center text-gray-500">No images available for this event.</p>
-                    )}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 };
 
