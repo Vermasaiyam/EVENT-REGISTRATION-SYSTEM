@@ -58,12 +58,20 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
 
     const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log("clicked");
+
         const result = editEventSchema.safeParse(input);
         if (!result.success) {
+            console.log("Validation Failed:", result.error.formErrors.fieldErrors);
+            console.log("Image Type:", input.image);
+            console.log("Instance Check:", input.image instanceof File);
+
             const fieldErrors = result.error.formErrors.fieldErrors;
             setError(fieldErrors as Partial<EditEventFormSchema>);
             return;
         }
+
+        console.log("clicked2");
 
         // api
         try {
@@ -140,17 +148,22 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
             description: selectedEvent?.description || "",
             mode: selectedEvent?.mode || "Offline",
             registrationFee: selectedEvent?.registrationFee || 0,
-            registrationEndDate: selectedEvent?.registrationEndDate || "",
-            eventStartDate: selectedEvent?.eventStartDate || "",
-            eventEndDate: selectedEvent?.eventEndDate || "",
+            registrationEndDate: selectedEvent?.registrationEndDate
+                ? new Date(selectedEvent.registrationEndDate).toISOString().split("T")[0]
+                : "",
+            eventStartDate: selectedEvent?.eventStartDate
+                ? new Date(selectedEvent.eventStartDate).toISOString().split("T")[0]
+                : "",
+            eventEndDate: selectedEvent?.eventEndDate
+                ? new Date(selectedEvent.eventEndDate).toISOString().split("T")[0]
+                : "",
             startTime: selectedEvent?.startTime || "",
             endTime: selectedEvent?.endTime || "",
-            image: undefined,
+            image: selectedEvent?.image ? selectedEvent.image : undefined,
             formLink: selectedEvent?.formLink || "",
             images: selectedEvent?.images || [],
         });
     }, [selectedEvent]);
-
 
 
     return (
@@ -196,22 +209,25 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                     <div>
                         <Label>Event Mode</Label>
                         <Select
-                            // onValueChange={(newMode) => handleModeChange(newMode)}
-                            defaultValue={input.mode} // Ensure you have a mode property in your input state
+                            value={input.mode} // Controlled component
+                            onValueChange={(newMode) =>
+                                setInput((prev) => ({ ...prev, mode: newMode as "Online" | "Offline" }))
+                            }
                         >
                             <SelectTrigger>
                                 <SelectValue placeholder="Select Event Mode" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    {["Online", "Offline"].map((mode: string, index: number) => (
-                                        <SelectItem key={index} value={mode.toLowerCase()}>
+                                    {["Online", "Offline"].map((mode) => (
+                                        <SelectItem key={mode} value={mode}> {/* Keep value as "Online"/"Offline" */}
                                             {mode}
                                         </SelectItem>
                                     ))}
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
+
                         {error && (
                             <span className="text-xs font-medium text-red-600">
                                 {error.mode}
@@ -316,22 +332,37 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                         <Input
                             type="file"
                             name="image"
-                            onChange={(e) =>
-                                setInput({
-                                    ...input,
-                                    image: e.target.files?.[0] || undefined,
-                                })
-                            }
+                            accept="image/*"
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                setInput((prev) => ({
+                                    ...prev,
+                                    image: file || undefined, // Ensure it's a file, not a string
+                                }));
+                            }}
                         />
-                        {error && (
-                            <span className="text-xs font-medium text-red-600">
-                                {error.image?.name}
-                            </span>
+
+                        {input.image && (
+                            <div className="mt-3 relative inline-block">
+                                <img
+                                    src={typeof input.image === "string" ? input.image : URL.createObjectURL(input.image)}
+                                    alt="Event Image Preview"
+                                    className="w-40 h-40 object-contain rounded-lg shadow-lg border border-gray-300"
+                                />
+                                <button
+                                    type="button"
+                                    className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center shadow-md hover:bg-red-700 transition-all"
+                                    onClick={() => setInput({ ...input, image: undefined })}
+                                >
+                                    <X />
+                                </button>
+                            </div>
                         )}
+
                     </div>
 
                     <div>
-                        <Label>Registration From Link</Label>
+                        <Label>Registration Form Link</Label>
                         <Input
                             type="text"
                             name="formLink"
@@ -348,17 +379,21 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
 
                     <div>
                         <Label>Event Highlights <span className="text-xs text-gray-600">(Upload after event is over)</span></Label>
-                        {(input.images?.length ?? 0) > 0 && (
+                        {Array.isArray(input.images) && input.images.length > 0 && (
                             <div className="flex gap-2 mb-3">
-                                {input.images?.map((image, index) => (
+                                {input.images.map((image, index) => (
                                     <div key={index} className="relative">
-                                        <img src={URL.createObjectURL(image)} alt={`Event Image ${index + 1}`} className="w-24 h-24 object-cover" />
+                                        <img
+                                            src={typeof image === "string" ? image : URL.createObjectURL(image)}
+                                            alt={`Event Image ${index + 1}`}
+                                            className="w-24 h-24 object-cover rounded-md border border-gray-300 shadow-sm"
+                                        />
                                         <button
                                             type="button"
-                                            className="absolute top-1 right-1 text-red-600"
+                                            className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center shadow-md hover:bg-red-700 transition-all"
                                             onClick={() => handleDeleteImage(index)}
                                         >
-                                            <X className="w-5 h-5" />
+                                            <X />
                                         </button>
                                     </div>
                                 ))}
@@ -382,7 +417,7 @@ const EditEvent = ({ selectedEvent, editOpen, setEditOpen }: { selectedEvent: an
                                 Please wait
                             </Button>
                         ) : (
-                            <Button className="w-full bg-green hover:bg-hoverGreen dark:text-white">
+                            <Button type="submit" className="w-full bg-green hover:bg-hoverGreen dark:text-white">
                                 Submit
                             </Button>
                         )}

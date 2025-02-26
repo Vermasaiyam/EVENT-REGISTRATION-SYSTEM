@@ -36,7 +36,10 @@ export const editEventSchema = z.object({
     eventEndDate: z.string().optional(),
     startTime: z.string().nonempty({ message: "Start Time is required." }),
     endTime: z.string().nonempty({ message: "End Time is required." }),
-    image: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "Image file is required" }),
+    // image: z.instanceof(File).optional().refine((file) => file?.size !== 0, { message: "Image file is required" }),
+    image: z
+    .union([z.instanceof(File), z.string().url()])
+    .optional(),
     images: z
         .array(z.instanceof(File))
         .max(3, { message: "You can upload up to 3 images only" })
